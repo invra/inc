@@ -1,7 +1,7 @@
 { lib, ... }:
 {
   flake.modules.homeManager.base =
-    { linux, ... }:
+    { linux, darwin, ... }:
     {
       programs.foot = lib.optionalAttrs linux {
         enable = true;
@@ -12,6 +12,10 @@
 
           colors.alpha = mkForce 0.85;
         };
+      };
+      
+      programs.alacritty = lib.optionalAttrs darwin {
+        enable = true;
       };
     };
 }

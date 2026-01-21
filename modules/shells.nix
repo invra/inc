@@ -1,4 +1,4 @@
-{ config, ... }:
+{ config, lib, ... }:
 let
   polyModule =
     { pkgs, ... }:
@@ -10,7 +10,17 @@ in
 {
   flake.modules = {
     nixos.base = polyModule;
-    darwin.base = polyModule;
+    darwin.base = x@{ pkgs, ... }: (
+      lib.recursiveUpdate {
+        users = {
+          knownUsers = [ config.flake.meta.owner.username ];
+          users.${config.flake.meta.owner.username} = {
+            home = "/Users/${config.flake.meta.owner.username}";
+            uid = 501;
+          };
+        };
+      } (polyModule x)
+    );
   };
 
   flake.modules.homeManager.base = {
