@@ -4,7 +4,7 @@
   ...
 }:
 let
-  polyModule = pkgs: linux: {
+  polyModule = linux: { pkgs, ... }: {
     stylix = {
       enable = true;
       enableReleaseChecks = false;
@@ -42,22 +42,20 @@ let
 in
 {
   flake.modules = {
-    nixos.base =
-      { pkgs, ... }:
-      {
-        imports = [
-          inputs.stylix.nixosModules.stylix
-          (polyModule pkgs true)
-        ];
-        stylix.homeManagerIntegration.autoImport = false;
-      };
+    nixos.base = {
+      imports = [
+        inputs.stylix.nixosModules.stylix
+        (polyModule true)
+      ];
+      stylix.homeManagerIntegration.autoImport = false;
+    };
 
     homeManager.base =
-      { pkgs, linux, ... }:
+      { linux, ... }:
       {
         imports = [
           inputs.stylix.homeModules.stylix
-          (polyModule pkgs linux)
+          (polyModule linux)
         ];
       };
   };

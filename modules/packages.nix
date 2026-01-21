@@ -1,21 +1,22 @@
 { lib, inputs, ... }:
 let
-  polyModule = pkgs: {
-    environment = {
-      systemPackages = with pkgs; [
-        jack2
-      	helix
-        git
-        home-manager
-      ];
+  polyModule =
+    { pkgs, ... }:
+    {
+      environment = {
+        systemPackages = with pkgs; [
+          jack2
+        	helix
+          git
+          home-manager
+        ];
 
-      shells = with pkgs; [
-        bashInteractive
-        fish
-      ];
+        shells = with pkgs; [
+          bashInteractive
+          fish
+        ];
+      };
     };
-  };
-
 in
 {
   nixpkgs.allowedUnfreePackages = [
@@ -23,45 +24,42 @@ in
     "steam"
     "steam-unwrapped"
   ];
-  flake.modules.darwin.base = { pkgs, ... }: polyModule pkgs;
+  flake.modules.darwin.base = polyModule;
   flake.modules.nixos.base =
-    { pkgs, ... }:
-    lib.mkMerge [
-      (polyModule pkgs)
-      {
-        environment = {
-          systemPackages = with pkgs; [
-            lsof
-            foot
-            pciutils
-            nautilus
-            swww
-            firefox
-            xwayland-satellite
-          ];
+    x@{ pkgs, ... }:
+    lib.recursiveUpdate (polyModule x) {
+      environment = {
+        systemPackages = with pkgs; [
+          lsof
+          foot
+          pciutils
+          nautilus
+          swww
+          firefox
+          xwayland-satellite
+        ];
+      };
+
+      programs = {
+        obs-studio = {
+          enable = true;
+          enableVirtualCamera = true;
+          package = (
+            pkgs.obs-studio.override {
+              cudaSupport = true;
+            }
+          );
         };
 
-        programs = {
-          obs-studio = {
-            enable = true;
-            enableVirtualCamera = true;
-            package = (
-              pkgs.obs-studio.override {
-                cudaSupport = true;
-              }
-            );
-          };
-
-          steam = {
-            enable = true;
-            remotePlay.openFirewall = true;
-            dedicatedServer.openFirewall = true;
-            localNetworkGameTransfers.openFirewall = true;
-          };
+        steam = {
+          enable = true;
+          remotePlay.openFirewall = true;
+          dedicatedServer.openFirewall = true;
+          localNetworkGameTransfers.openFirewall = true;
         };
-        documentation.nixos.enable = false;
-      }
-    ];
+      };
+      documentation.nixos.enable = false;
+    };
 
   flake.modules.homeManager.base =
     { pkgs, ... }:
