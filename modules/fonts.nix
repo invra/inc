@@ -18,6 +18,6 @@ in
 {
   flake.modules = {
     nixos.base = polyModule;
-    darwin.basse = polyModule;
+    darwin.base = polyModule;
   };
 }
