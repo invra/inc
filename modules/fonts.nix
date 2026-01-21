@@ -17,7 +17,7 @@ let
 in
 {
   flake.modules = {
-    nixos.base = { ... }: polyModule;
-    darwin.basse = { ... }: polyModule;
+    nixos.base = polyModule;
+    darwin.basse = polyModule;
   };
 }

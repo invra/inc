@@ -3,7 +3,7 @@ let
   polyModule =
     { pkgs, ... }:
     {
-      users.users.${config.flake.meta.owner.name}.shell = pkgs.fish;
+      users.users.${config.flake.meta.owner.username}.shell = pkgs.fish;
       programs.fish.enable = true;
     };
 in
