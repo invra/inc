@@ -16,7 +16,7 @@
             c = "commit -m";
             b = "branch --all";
             co = "checkout -b";
-            m = "commit --ammend";
+            m = "commit --amend";
           };
           init.defaultBranch = "main";
           core.quotepath = "off";

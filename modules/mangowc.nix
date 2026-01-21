@@ -9,12 +9,16 @@
 
   flake.modules.homeManager.base =
     with lib;
-    { pkgs, config, linux, ... }:
+    {
+      pkgs,
+      config,
+      linux,
+      ...
+    }:
     let
       cfg = config.wayland.windowManager.mangowc;
     in
-    lib.optionalAttrs linux
-    {
+    lib.optionalAttrs linux {
       options = {
         wayland.windowManager.mangowc = {
           enable = mkOption {
@@ -142,9 +146,9 @@
 
             settings = {
               exec-once = [
-                "waybar"
-                "mako"
-                "swww-daemon"
+                "${pkgs.waybar}/bin/waybar"
+                "${pkgs.mako}/bin/mako"
+                "${pkgs.swww}/bin/swww-daemon"
               ];
 
               exec = [
@@ -192,7 +196,6 @@
               animation_duration_move = "500";
               animation_duration_open = "400";
 
-              "client.hppduration_tag" = "350";
               animation_duration_close = "800";
               animation_duration_focus = "0";
               animation_curve_open = "0.46,1.0,0.29,1";

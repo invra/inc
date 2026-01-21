@@ -48,7 +48,6 @@
       };
     };
 
-    
     flake.modules.darwin.base = args: {
       nix.nixPath = [
         "nixpkgs=${args.config.nixpkgs.flake.source}"

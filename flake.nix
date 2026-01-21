@@ -5,22 +5,18 @@
   };
 
   inputs = {
-    cpu-microcodes = {
-      flake = false;
-      url = "github:platomav/CPUMicrocodes";
-    };
     dev-nix.url = "gitlab:invra/nix-dev";
     discord-rpc-lsp.url = "gitlab:invra/discord-rpc-lsp";
     flake-parts = {
       url = "github:hercules-ci/flake-parts";
       inputs.nixpkgs-lib.follows = "nixpkgs";
     };
+    helium.url = "github:vikingnope/helium-browser-nix-flake";
     home-manager = {
       url = "github:nix-community/home-manager";
       inputs.nixpkgs.follows = "nixpkgs";
     };
     import-tree.url = "github:vic/import-tree";
-    ip.url = "gitlab:hiten-tandon/some-nix-darwin-packages";
     mango = {
       url = "github:DreamMaoMao/mango";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -30,7 +26,7 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
     nix-darwin = {
-      url = "github:LnL7/nix-darwin/master";
+      url = "github:LnL7/nix-darwin";
       inputs.nixpkgs.follows = "nixpkgs";
     };
     nixos-facter-modules.url = "github:numtide/nixos-facter-modules";
@@ -46,16 +42,15 @@
       url = "github:numtide/treefmt-nix";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-    ucodenix = {
-      url = "github:e-tho/ucodenix";
-      inputs.cpu-microcodes.follows = "cpu-microcodes";
-    };
   };
 
   outputs =
     inputs@{ ... }:
     inputs.flake-parts.lib.mkFlake { inherit inputs; } {
-      imports = [ (inputs.import-tree ./modules) ];
+      imports = [
+        (inputs.import-tree ./hosts)
+        (inputs.import-tree ./modules)
+      ];
 
       _module.args.rootPath = ./.;
     };

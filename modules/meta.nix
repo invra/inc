@@ -4,6 +4,17 @@
   lib,
   ...
 }:
+let
+  gitlab = {
+    domain = "gitlab.com";
+    username = "invra";
+  };
+  forge = "gitlab";
+  owner = gitlab.username;
+  name = "inc";
+  defaultBranch = "main";
+  flakeUri = "git+https://${gitlab.domain}/${owner}/${name}";
+in
 {
   imports = [ inputs.flake-parts.flakeModules.modules ];
 
@@ -18,11 +29,22 @@
     ];
 
     flake = {
-      meta.owner = {
-        email = "identificationsucks@gmail.com";
-        name = "Invra";
-        username = "invra";
-        matrix = "@invranet:matrix.org";
+      meta = {
+        owner = {
+          email = "identificationsucks@gmail.com";
+          name = "Invra";
+          username = "invra";
+          matrix = "@invranet:matrix.org";
+        };
+        repo = {
+          inherit
+            forge
+            owner
+            name
+            defaultBranch
+            flakeUri
+            ;
+        };
       };
 
       modules = {

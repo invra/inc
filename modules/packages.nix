@@ -7,10 +7,10 @@ let
         git
         home-manager
       ];
-    
+
       shells = with pkgs; [
         bashInteractive
-        nushell
+        fish
       ];
     };
   };
@@ -23,41 +23,44 @@ in
     "steam-unwrapped"
   ];
   flake.modules.darwin.base = { pkgs, ... }: polyModule pkgs;
-  flake.modules.nixos.base = { pkgs, ... }: lib.mkMerge [
-    (polyModule pkgs)
-    {
-      environment = {
-        systemPackages = with pkgs; [
-          lsof
-          foot
-          pciutils
-          nautilus
-          swww
-          firefox
-          xwayland-satellite
-        ];
-      };
-
-      programs = {
-        obs-studio = {
-          enable = true;
-          enableVirtualCamera = true;
-          package = (
-            pkgs.obs-studio.override {
-              cudaSupport = true;
-            }
-          );
+  flake.modules.nixos.base =
+    { pkgs, ... }:
+    lib.mkMerge [
+      (polyModule pkgs)
+      {
+        environment = {
+          systemPackages = with pkgs; [
+            lsof
+            foot
+            pciutils
+            nautilus
+            swww
+            firefox
+            xwayland-satellite
+          ];
         };
 
-        steam = {
-          enable = true;
-          remotePlay.openFirewall = true;
-          dedicatedServer.openFirewall = true;
-          localNetworkGameTransfers.openFirewall = true;
+        programs = {
+          obs-studio = {
+            enable = true;
+            enableVirtualCamera = true;
+            package = (
+              pkgs.obs-studio.override {
+                cudaSupport = true;
+              }
+            );
+          };
+
+          steam = {
+            enable = true;
+            remotePlay.openFirewall = true;
+            dedicatedServer.openFirewall = true;
+            localNetworkGameTransfers.openFirewall = true;
+          };
         };
-      };
-    }
-  ];
+        documentation.nixos.enable = false;
+      }
+    ];
 
   flake.modules.homeManager.base =
     { pkgs, ... }:
@@ -67,13 +70,13 @@ in
         [
           sl
           (inputs.dev-nix.packages.${stdenv.hostPlatform.system}.default)
+          (inputs.helium.packages.${stdenv.hostPlatform.system}.default)
           dbgate
           prismlauncher
           viu
           ffmpeg
           file
           fd
-          tree
           unzip
           nil
           nixd
@@ -87,11 +90,38 @@ in
           insomnia
         ]
         ++ lib.optionals pkgs.stdenv.isDarwin [
-          (inputs.ip.packages.${pkgs.stdenv.hostPlatform.system}.steam)
-          utm
-          pika
-          (inputs.ip.packages.${pkgs.stdenv.hostPlatform.system}.linearmouse)
           alacritty
+          pika
+          utm
+          (pkgs.stdenv.mkDerivation rec {
+            pname = "linearmouse";
+            version = "0.10.1";
+            src = pkgs.fetchurl {
+              url = "https://github.com/linearmouse/linearmouse/releases/download/v${version}/LinearMouse.dmg";
+              sha256 = "sha256-0000000000000000000000000000000000000000000=";
+            };
+            nativeBuildInputs = [
+              pkgs.makeWrapper
+              pkgs.undmg
+            ];
+            installPhase = ''
+              tmp_mount=$(mktemp -d /tmp/${pname}-mount.XXXXXX)
+              /usr/bin/hdiutil attach -nobrowse "$src" -mountpoint "$tmp_mount"
+
+              mkdir -p $out/Applications
+              cp -R "$tmp_mount/${filename}" "$out/Applications/"
+
+              /usr/bin/hdiutil detach "$tmp_mount"
+              rmdir "$tmp_mount"
+
+              mkdir -p $out/bin
+              makeWrapper "$out/Applications/LinearMouse.app/Contents/MacOS/linearmouse" "$out/bin/linearmouse"
+            '';
+            meta = {
+              description = "The mouse and trackpad customizer for macOS.";
+              homepage = "https://linearmouse.org";
+            };
+          })
         ]
         ++ lib.optionals pkgs.stdenv.isLinux [
           wl-clipboard
@@ -99,19 +129,16 @@ in
           helvum
           easyeffects
           vlc
-          gimp3
           pavucontrol
           # davinci-resolve
           krita
           wayvnc
-          libreoffice-qt6-still
-          kdePackages.kdeconnect-kde
         ]
         ++ (lib.optionals (pkgs.stdenv.isLinux && pkgs.stdenv.isx86_64) [
-          # wineWowPackages.waylandFull
-          # winetricks
-          # yabridge
-          # (yabridgectl.override { wine = wineWowPackages.waylandFull; })
+          wineWowPackages.waylandFull
+          winetricks
+          yabridge
+          (yabridgectl.override { wine = wineWowPackages.waylandFull; })
           bitwig-studio
         ]);
 

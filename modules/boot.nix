@@ -1,18 +1,18 @@
-{ inputs, ... }:
 {
   flake.modules.nixos.base =
     {
       pkgs,
-      lib,
-      config,
       ...
     }:
     {
-      imports = [ inputs.ucodenix.nixosModules.default ];
-
       boot = {
         kernelPackages = pkgs.linuxPackages_latest;
-        kernelParams = lib.optional config.services.ucodenix.enable "microcode.amd_sha_check=off";
+
+        kernelParams = [
+          # To fix `can't set config #1` for Novation Launchpad Pro MK3
+          "usbcore.quirks=1235:012f:m"
+        ];
+
         loader.systemd-boot.enable = true;
 
         kernel.sysctl = {

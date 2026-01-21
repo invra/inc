@@ -1,11 +1,39 @@
-{ lib, ... }: {
+{ lib, ... }:
+{
+  flake.modules.nixos.base =
+    { pkgs, ... }:
+    {
+      xdg.portal = {
+        enable = true;
+        wlr.enable = true;
+        extraPortals = with pkgs; [ xdg-desktop-portal-gtk ];
+        config = {
+          preferred = {
+            default = "gtk";
+            "org.freedesktop.impl.portal.ScreenCast" = "wlr";
+            "org.freedesktop.impl.portal.Screenshot" = "wlr";
+          };
+        };
+      };
+    };
   flake.modules.homeManager.base =
-    { config, pkgs, linux, ... }:
+    {
+      config,
+      pkgs,
+      linux,
+      ...
+    }:
     {
       config = lib.optionalAttrs linux {
         xdg = {
           enable = true;
           mime.enable = true;
+          terminal-exec = {
+            enable = true;
+            settings = {
+              default = [ "foot.desktop" ];
+            };
+          };
           mimeApps = {
             enable = true;
             defaultApplications = {
