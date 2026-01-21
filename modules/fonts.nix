@@ -1,5 +1,5 @@
-{
-  flake.modules.nixos.base =
+let
+  polyModule = 
     { pkgs, ... }:
     {
       fonts = {
@@ -14,4 +14,10 @@
         ];
       };
     };
+in
+{
+  flake.modules = {
+    nixos.base = { ... }: polyModule;
+    darwin.basse = { ... }: polyModule;
+  };
 }

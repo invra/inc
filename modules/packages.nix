@@ -4,6 +4,7 @@ let
     environment = {
       systemPackages = with pkgs; [
         jack2
+      	helix
         git
         home-manager
       ];
@@ -93,35 +94,6 @@ in
           alacritty
           pika
           utm
-          (pkgs.stdenv.mkDerivation rec {
-            pname = "linearmouse";
-            version = "0.10.1";
-            src = pkgs.fetchurl {
-              url = "https://github.com/linearmouse/linearmouse/releases/download/v${version}/LinearMouse.dmg";
-              sha256 = "sha256-0000000000000000000000000000000000000000000=";
-            };
-            nativeBuildInputs = [
-              pkgs.makeWrapper
-              pkgs.undmg
-            ];
-            installPhase = ''
-              tmp_mount=$(mktemp -d /tmp/${pname}-mount.XXXXXX)
-              /usr/bin/hdiutil attach -nobrowse "$src" -mountpoint "$tmp_mount"
-
-              mkdir -p $out/Applications
-              cp -R "$tmp_mount/${filename}" "$out/Applications/"
-
-              /usr/bin/hdiutil detach "$tmp_mount"
-              rmdir "$tmp_mount"
-
-              mkdir -p $out/bin
-              makeWrapper "$out/Applications/LinearMouse.app/Contents/MacOS/linearmouse" "$out/bin/linearmouse"
-            '';
-            meta = {
-              description = "The mouse and trackpad customizer for macOS.";
-              homepage = "https://linearmouse.org";
-            };
-          })
         ]
         ++ lib.optionals pkgs.stdenv.isLinux [
           wl-clipboard

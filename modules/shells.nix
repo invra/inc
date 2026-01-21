@@ -1,11 +1,16 @@
+{ config, ... }:
+let
+  polyModule =
+    { pkgs, ... }:
+    {
+      users.users.${config.flake.meta.owner.name}.shell = pkgs.fish;
+      programs.fish.enable = true;
+    };
+in
 {
   flake.modules = {
-    nixos.base =
-      { pkgs, ... }:
-      {
-        users.defaultUserShell = pkgs.fish;
-        programs.fish.enable = true;
-      };
+    nixos.base = polyModule;
+    darwin.base = polyModule;
   };
 
   flake.modules.homeManager.base = {
