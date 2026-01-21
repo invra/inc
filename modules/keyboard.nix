@@ -1,6 +1,12 @@
+{ lib, ... }:
 {
   flake.modules = {
     nixos.base = {
+      services.xserver.xkb = {
+        layout = "us,us";
+        options = "grp:alt_shift_toggle,caps:escape";
+        variant = ",workman";
+      };
     };
 
     darwin.base = {
@@ -11,5 +17,19 @@
         swapLeftCommandAndLeftAlt = true;
       };
     };
+
+    homeManager.base = { linux, darwin }: {
+      targets.darwin = lib.optionalAttrs darwin {
+        defaults.NSGlobalDomain.KeyRepeat = 2;
+      };
+      wayland.windowManager.mangowc = lib.optionalAttrs linux {
+        numlockon = "0";
+        repeat_rate = "85";
+        repeat_delay = "400";
+        xkb_rules_layout = "us,us";
+        xkb_rules_variant = ",workman";
+        xkb_rules_options = "grp:alt_shift_toggle,eurosign:e,caps:escape";
+      };
+    };   
   };
 }

@@ -24,11 +24,6 @@
           xserver = {
             enable = true;
             excludePackages = with pkgs; [ xterm ];
-            xkb = {
-              layout = "us,us";
-              options = "grp:alt_shift_toggle,caps:escape";
-              variant = ",workman";
-            };
           };
           fwupd.enable = true;
           pipewire = {

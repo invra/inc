@@ -240,14 +240,6 @@
               cursor_size = "24";
               drag_tile_to_tile = "1";
 
-              # keyboard
-              repeat_rate = "85";
-              repeat_delay = "400";
-              numlockon = "0";
-              xkb_rules_layout = "us,us";
-              xkb_rules_variant = ",workman";
-              xkb_rules_options = "grp:alt_shift_toggle,eurosign:e,caps:escape";
-
               # Trackpad
               # need relogin to make it apply
               disable_trackpad = "0";
