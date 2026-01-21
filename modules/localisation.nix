@@ -22,4 +22,17 @@
       };
     };
   };
+  flake.modules.darwin.base = {
+    targets.darwin.defaults.NSGlobalDomain = {
+      NSAutomaticQuoteSubstitutionEnabled = false;
+      NSAutomaticPeriodSubstitutionEnabled = false;
+      NSAutomaticDashSubstitutionEnabled = false;
+      NSAutomaticInlinePredictionEnabled = false;
+      NSAutomaticCapitalizationEnabled = false;
+      AppleICUForce24HourTime = true;
+      AppleTemperatureUnit = "Celsius";
+      AppleMeasurementUnits = "Centimeters";
+      AppleMetricUnits = true; 
+    };   
+  };
 }
