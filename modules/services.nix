@@ -45,14 +45,17 @@
           openssh.enable = true;
           mongodb.enable = true;
         };
-        networking.firewall = {
-          enable = false;
-          allowedTCPPorts = [
-            22
-            80
-            443
-            8080
-          ];
+        networking = {
+          networkmanager.enable = true;
+          firewall = {
+            enable = false;
+            allowedTCPPorts = [
+              22
+              80
+              443
+              8080
+            ];
+          };
         };
       };
 
