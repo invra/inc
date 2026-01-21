@@ -2,22 +2,20 @@ let
   polyModule = 
     { pkgs, ... }:
     {
-      fonts = {
-        fontconfig.defaultFonts.monospace = [ "JetBrainsMono" ];
-
-        packages = with pkgs; [
-          nerd-fonts.jetbrains-mono
-          font-awesome
-          liberation_ttf
-          noto-fonts
-          noto-fonts-color-emoji
-        ];
-      };
+      fonts.packages = with pkgs; [
+        nerd-fonts.jetbrains-mono
+        font-awesome
+        liberation_ttf
+        noto-fonts
+        noto-fonts-color-emoji
+      ];
     };
 in
 {
   flake.modules = {
-    nixos.base = polyModule;
+    nixos.base = polyModule // {
+      fonts.fontconfig.defaultFonts.monospace = [ "JetBrainsMono" ];
+    };
     darwin.base = polyModule;
   };
 }
