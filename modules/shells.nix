@@ -11,7 +11,7 @@ in
   flake.modules = {
     nixos.base = polyModule;
     darwin.base =
-      x:
+      args:
       (lib.recursiveUpdate {
         users = {
           knownUsers = [ config.flake.meta.owner.username ];
@@ -20,7 +20,7 @@ in
             uid = 501;
           };
         };
-      } (polyModule x));
+      } (polyModule args));
   };
 
   flake.modules.homeManager.base = {
