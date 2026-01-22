@@ -65,7 +65,7 @@ in
           vimcmd_visual_symbol = "[<](bold yellow)";
         };
         continuation_prompt = "[.](bright-black) ";
-        format = "$username$directory$git_branch$git_status$bun$deno$rust$golang$haskell$haxe$zig$c$cpp$cmake$swift$dotnet$nix_shell$time\n$character";
+        format = "$directory$git_branch$git_status$bun$deno$rust$golang$haskell$haxe$zig$c$cpp$cmake$swift$dotnet$nix_shell$time\n$character";
         bun.symbol = "bun ";
         c.symbol = "c ";
         cmake.symbol = "cmake ";
