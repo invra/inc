@@ -32,7 +32,7 @@
       AppleICUForce24HourTime = true;
       AppleTemperatureUnit = "Celsius";
       AppleMeasurementUnits = "Centimeters";
-      AppleMetricUnits = true; 
-    };   
+      AppleMetricUnits = true;
+    };
   };
 }

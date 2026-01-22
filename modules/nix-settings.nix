@@ -26,7 +26,11 @@ let
         extra-system-features = [
           "recursive-nix"
         ];
-        trusted-users = [ "root" "@wheel" config.flake.meta.owner.username ];
+        trusted-users = [
+          "root"
+          "@wheel"
+          config.flake.meta.owner.username
+        ];
       };
     };
 in

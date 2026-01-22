@@ -6,7 +6,7 @@ let
       environment = {
         systemPackages = with pkgs; [
           jack2
-        	helix
+          helix
           git
           home-manager
         ];

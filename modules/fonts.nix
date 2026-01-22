@@ -1,6 +1,6 @@
 { lib, ... }:
 let
-  polyModule = 
+  polyModule =
     { pkgs, ... }:
     {
       fonts.packages = with pkgs; [
@@ -14,11 +14,11 @@ let
 in
 {
   flake.modules = {
-    nixos.base = x@{ pkgs, ... }: (
-      lib.recursiveUpdate {
+    nixos.base =
+      x:
+      (lib.recursiveUpdate {
         fonts.fontconfig.defaultFonts.monospace = [ "JetBrainsMono" ];
-      } (polyModule x)
-    );
+      } (polyModule x));
     darwin.base = polyModule;
   };
 }
