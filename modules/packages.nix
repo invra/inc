@@ -138,6 +138,11 @@ in
       programs = {
         ripgrep.enable = true;
 
+        zed-editor = {
+          enable = true;          
+          extensions = [ "nix" "zig" "toml" "rose-pine-theme" ];
+        };
+
         btop = {
           enable = true;
           settings = {
