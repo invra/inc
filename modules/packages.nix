@@ -25,41 +25,40 @@ in
     "steam-unwrapped"
   ];
   flake.modules.darwin.base = polyModule;
-  flake.modules.nixos.base =
-    x@{ pkgs, ... }:
-    lib.recursiveUpdate (polyModule x) {
-      environment = {
-        systemPackages = with pkgs; [
-          lsof
-          foot
-          pciutils
-          nautilus
-          swww
-          firefox
-          xwayland-satellite
-        ];
-      };
-
-      programs = {
-        obs-studio = {
-          enable = true;
-          enableVirtualCamera = true;
-          package = (
-            pkgs.obs-studio.override {
-              cudaSupport = true;
-            }
-          );
-        };
-
-        steam = {
-          enable = true;
-          remotePlay.openFirewall = true;
-          dedicatedServer.openFirewall = true;
-          localNetworkGameTransfers.openFirewall = true;
-        };
-      };
-      documentation.nixos.enable = false;
+  flake.modules.nixos.base = { pkgs, ...}: {
+    imports = [ polyModule ];
+    environment = {
+      systemPackages = with pkgs; [
+        lsof
+        foot
+        pciutils
+        nautilus
+        swww
+        firefox
+        xwayland-satellite
+      ];
     };
+
+    programs = {
+      obs-studio = {
+        enable = true;
+        enableVirtualCamera = true;
+        package = (
+          pkgs.obs-studio.override {
+            cudaSupport = true;
+          }
+        );
+      };
+
+      steam = {
+        enable = true;
+        remotePlay.openFirewall = true;
+        dedicatedServer.openFirewall = true;
+        localNetworkGameTransfers.openFirewall = true;
+      };
+    };
+    documentation.nixos.enable = false;
+  };
 
   flake.modules.homeManager.base =
     { pkgs, ... }:

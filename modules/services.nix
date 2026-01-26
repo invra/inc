@@ -38,7 +38,7 @@
 
           libinput.enable = true;
           openssh.enable = true;
-          mongodb.enable = true;
+          # mongodb.enable = true;
         };
         networking = {
           networkmanager.enable = true;

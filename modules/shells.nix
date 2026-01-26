@@ -10,17 +10,17 @@ in
 {
   flake.modules = {
     nixos.base = polyModule;
-    darwin.base =
-      args:
-      (lib.recursiveUpdate {
-        users = {
-          knownUsers = [ config.flake.meta.owner.username ];
-          users.${config.flake.meta.owner.username} = {
-            home = "/Users/${config.flake.meta.owner.username}";
-            uid = 501;
-          };
+    darwin.base = { pkgs, ... }: {
+      imports = [ polyModule ];
+
+      users = {
+        knownUsers = [ config.flake.meta.owner.username ];
+        users.${config.flake.meta.owner.username} = {
+          home = "/Users/${config.flake.meta.owner.username}";
+          uid = 501;
         };
-      } (polyModule args));
+      };
+    };
   };
 
   flake.modules.homeManager.base = {
