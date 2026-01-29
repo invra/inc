@@ -297,6 +297,14 @@
               bind = [
                 # reload config
                 "Super,R,reload_config"
+
+                # "special" keys
+                "bind=NONE,XF86AudioRaiseVolume,spawn,${pkgs.wireplumber}/bin/wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%+"
+                "bind=NONE,XF86AudioLowerVolume,spawn,${pkgs.wireplumber}/bin/wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%-"
+                "bind=NONE,XF86AudioMute,spawn,${pkgs.wireplumber}/bin/wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle"
+                "bind=NONE,XF86AudioMicMute,spawn,${pkgs.wireplumber}/bin/wpctl set-mute @DEFAULT_AUDIO_SOURCE@ toggle"
+                "bind=NONE,XF86MonBrightnessUp,spawn,${pkgs.brightnessctl}/bin/brightnessctl set +5%"
+                "bind=NONE,XF86MonBrightnessDown,spawn,${pkgs.brightnessctl}/bin/brightnessctl set 5%-"
                 "Super,space,spawn,${pkgs.tofi}/bin/tofi-drun --drun-launch=true"
                 "Super+SHIFT,S,spawn,${pkgs.hyprshot}/bin/hyprshot -m region --clipboard-only"
                 "Super,Return,spawn,${pkgs.foot}/bin/foot"
