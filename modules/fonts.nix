@@ -1,4 +1,3 @@
-{ lib, ... }:
 let
   polyModule =
     { pkgs, ... }:
@@ -14,7 +13,7 @@ let
 in
 {
   flake.modules = {
-    nixos.base = { pkgs, ... }: {
+    nixos.base = {
       imports = [ polyModule ];
       fonts.fontconfig.defaultFonts.monospace = [ "JetBrainsMono" ];
     };
