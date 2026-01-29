@@ -1,4 +1,4 @@
-{ config, lib, ... }:
+{ config, ... }:
 let
   polyModule =
     { pkgs, ... }:
@@ -10,7 +10,7 @@ in
 {
   flake.modules = {
     nixos.base = polyModule;
-    darwin.base = { pkgs, ... }: {
+    darwin.base = {
       imports = [ polyModule ];
 
       users = {
@@ -42,6 +42,12 @@ in
 
         set fish_greeting ""
         alias tree "eza --tree"
+
+        if status is-interactive
+          if not set -q TMUX
+            tmux
+          end
+        end
       '';
     };
 
