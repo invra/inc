@@ -11,6 +11,7 @@
           "audio"
           "video"
         ];
+        time.timeZone = "Australia/Sydney";
         hardware.graphics = {
           enable = true;
           enable32Bit = pkgs.stdenv.isx86_64;
