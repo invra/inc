@@ -1,7 +1,8 @@
+{ config, ... }:
 {
   flake.modules.nixos.base = {
+    users.groups.libvirtd.members = [ config.flake.meta.owner.username ];
     programs.virt-manager.enable = true;
-
     virtualisation = {
       libvirtd.enable = true;
 
