@@ -122,7 +122,7 @@ in
         settings = {
           logo.source = "nixos";
           display = {
-          size.binaryPrefix = "si";
+            size.binaryPrefix = "si";
             color = "blue";
             separator = " ";
           };
