@@ -8,7 +8,7 @@
         server.enable = true;
 
         settings = with lib; {
-          main.font = mkForce "JetBrainsMono Nerd Font:size=14";
+          main.font = mkForce "JetBrainsMono Nerd Font:size=18";
 
           colors.alpha = mkForce 0.85;
         };
