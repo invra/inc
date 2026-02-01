@@ -1,4 +1,4 @@
-{ inputs, config, ... }:
+{ config, ... }:
 {
   nixpkgs.allowedUnfreePackages = [
     "mongodb"

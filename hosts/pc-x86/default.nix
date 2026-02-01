@@ -30,7 +30,7 @@ in
         "thunderbolt"
       ];
     };
-    
+
     services.xserver.videoDrivers = [
       "modesetting"
       "amdgpu"
