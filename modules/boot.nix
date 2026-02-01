@@ -9,6 +9,16 @@
       boot = {
         kernelPackages = pkgs.linuxPackages_latest;
 
+        kernel.sysctl = {
+          "vm.max_map_count" = 2147483642;
+          "vm.swappiness" = 10;
+        };
+
+        initrd = {
+          systemd.enable = true;
+          includeDefaultModules = false;
+        };
+
         kernelParams = [
           # Helpful for plymouth
           "splash"
@@ -22,26 +32,13 @@
           "usbcore.quirks=1235:012f:m"
         ];
 
-        initrd = {
-          systemd.enable = true;
-          includeDefaultModules = false;
-        };
-
-        # Graphical boot
-        plymouth = {
-          enable = true;
-          extraConfig = ''
-            [Daemon]
-            ShowDelay=0
-          '';
-        };
         loader = {
           timeout = 1;
-
           grub = {
             enable = true;
             efiSupport = true;
-            efiInstallAsRemovable = true; # Otherwise /boot/EFI/BOOT/BOOTX64.EFI isn't generated
+            # Otherwise /boot/EFI/BOOT/BOOTX64.EFI isn't generated
+            efiInstallAsRemovable = true;
             devices = [ "nodev" ];
             useOSProber = true;
             extraEntriesBeforeNixOS = false;
@@ -56,13 +53,20 @@
           };
         };
 
-        kernel.sysctl = {
-          "vm.max_map_count" = 2147483642;
-          "vm.swappiness" = 10;
+        # Graphical boot
+        plymouth = {
+          enable = true;
+          extraConfig = ''
+            [Daemon]
+            ShowDelay=0
+          '';
         };
-      };
 
+      };
       # Disadbled because of slowness, and CPU has trust.
       systemd.services.systemd-boot-random-seed.enable = false;
+
+      # Greeter
+      services.displayManager.gdm.enable = true;
     };
 }
