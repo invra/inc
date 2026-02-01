@@ -1,4 +1,4 @@
-{ config, ... }:
+{ lib, config, ... }:
 {
   flake.modules.nixos.base = {
     users.groups.libvirtd.members = [ config.flake.meta.owner.username ];
@@ -13,6 +13,11 @@
         cores = 8;
         diskSize = 128 * 1024;
       };
+    };
+
+    systemd.services = {
+      libvirtd.serviceConfig.Type = lib.mkForce "idle";
+      libvirt-guests.enable = false;
     };
   };
 }

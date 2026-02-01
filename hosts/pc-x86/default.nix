@@ -13,20 +13,24 @@ in
     };
     facter.reportPath = ./facter.json;
 
-    boot = {
-      initrd.availableKernelModules = [
+    boot.initrd = {
+      kernelModules = [
+        "xhci_hcd"
         "xhci_pci"
-        "thunderbolt"
         "usbhid"
-        "usb_storage"
-        "sd_mod"
-        "vmd"
-        "ahci"
+        "hid_generic"
         "nvme"
+        "ahci"
+        "sd_mod"
+        "kvm-amd"
       ];
-      kernelModules = [ "kvm-amd" ];
-    };
 
+      availableKernelModules = [
+        "usb_storage"
+        "thunderbolt"
+      ];
+    };
+    
     services.xserver.videoDrivers = [
       "modesetting"
       "amdgpu"

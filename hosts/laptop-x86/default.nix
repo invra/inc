@@ -18,7 +18,12 @@ in
 
       boot = {
         initrd.availableKernelModules = [
+          "xhci_hcd"
           "xhci_pci"
+          "usbhid"
+          "xhci_hcd"
+          "xhci_pci"
+          "usbhid"
           "thunderbolt"
           "vmd"
           "ahci"
