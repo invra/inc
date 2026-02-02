@@ -1,4 +1,4 @@
-{ config, ... }:
+{ lib, config, ... }:
 let
   polyModule =
     { pkgs, ... }:
@@ -23,7 +23,7 @@ in
     };
   };
 
-  flake.modules.homeManager.base = {
+  flake.modules.homeManager.base = { linux, darwin, ... }: {
     stylix.targets.fish.enable = false;
     programs = {
       fish = {
@@ -210,5 +210,20 @@ in
     };
 
     stylix.targets.starship.enable = false;
+
+    programs.foot = lib.optionalAttrs linux {
+      enable = true;
+      server.enable = true;
+
+      settings = with lib; {
+        main.font = mkForce "JetBrainsMono Nerd Font:size=18";
+
+        colors.alpha = mkForce 0.85;
+      };
+    };
+
+    programs.alacritty = lib.optionalAttrs darwin {
+      enable = true;
+    };
   };
 }
