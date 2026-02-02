@@ -8,11 +8,15 @@
       defaults = {
         NSGlobalDomain = {
           AppleShowAllExtensions = false;
-          NSWindowShouldDragOnGesture = true; # Cmd + Ctrl to drag from window anywhere not needing it's chrome
+          # Cmd + Ctrl to drag from window anywhere not needing it's chrome
+          NSWindowShouldDragOnGesture = true;
           NSAutomaticSpellingCorrectionEnabled = false;
-          NSDocumentSaveNewDocumentsToCloud = false; # Default save files to disk not iCloud
-          NSTableViewDefaultSizeMode = 2; # Force set icon size to default value
-          AppleInterfaceStyle = "Dark"; # Singular enum, of value Dark. https://mynixos.com/nix-darwin/option/system.defaults.NSGlobalDomain.AppleInterfaceStyle
+          # Default save files to disk not iCloud
+          NSDocumentSaveNewDocumentsToCloud = false;
+          # Force set icon size to default value
+          NSTableViewDefaultSizeMode = 2;
+          # Singular enum, of value Dark. https://mynixos.com/nix-darwin/option/system.defaults.NSGlobalDomain.AppleInterfaceStyle
+          AppleInterfaceStyle = "Dark";
           AppleHighlightColor = "0.968627 0.831373 1.000000 Purple";
           AppleAccentColor = 5;
         };
@@ -41,12 +45,18 @@
 
         "com.apple.finder" = {
           AppleShowAllExtensions = true;
-          FXPreferredViewStyle = "Nlsv"; # List view
-          FXDefaultSearchScope = "SCcf"; # Search the current folder
-          _FXSortFoldersFirst = true; # List with directorys at first
-          FinderSpawnTab = false; # Disable finder tabs (due to WM)
-          FXRemoveOldTrashItems = true; # Delete bin in 30 days
-          FXEnableExtensionChangeWarning = false; # Disable change fs-extension warning
+          # List view
+          FXPreferredViewStyle = "Nlsv";
+          # Search the current folder
+          FXDefaultSearchScope = "SCcf";
+          # List with directorys at first
+          _FXSortFoldersFirst = true;
+          # Disable finder tabs (due to WM)
+          FinderSpawnTab = false;
+          # Delete bin in 30 days
+          FXRemoveOldTrashItems = true;
+          # Disable change fs-extension warning
+          FXEnableExtensionChangeWarning = false;
           showWindowTitlebarIcons = false;
           NSToolbarTitleViewRolloverDelay = 0.2;
           AppleShowAllFiles = true;
@@ -66,7 +76,8 @@
           size-immutable = true;
         };
 
-        "com.apple.CloudSubscriptionFeatures.optIn"."545129924" = false; # Disable AI bullshit
+        # Disable AI bullshit
+        "com.apple.CloudSubscriptionFeatures.optIn"."545129924" = false;
       };
     };
   };
