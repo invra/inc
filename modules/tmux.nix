@@ -115,6 +115,7 @@
         set -as terminal-features ",*:RGB"
         set -a terminal-features 'foot*:sixel'
         set -g set-clipboard on
+        set -g escape-time 0
       '';
     };
   };
