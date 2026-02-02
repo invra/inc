@@ -24,8 +24,6 @@ in
   };
 
   flake.modules.homeManager.base = {
-    home.file.".hushlogin".text = "";
-
     stylix.targets.fish.enable = false;
     programs = {
       fish = {
