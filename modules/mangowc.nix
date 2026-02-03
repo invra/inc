@@ -146,7 +146,7 @@
 
             settings = {
               exec-once = [
-                "${pkgs.eww}/bin/eww"
+                "${pkgs.eww}/bin/eww open bar"
                 "${pkgs.mako}/bin/mako"
                 "${pkgs.swww}/bin/swww-daemon"
               ];
