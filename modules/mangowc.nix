@@ -146,7 +146,7 @@
 
             settings = {
               exec-once = [
-                "${pkgs.waybar}/bin/waybar"
+                "${pkgs.eww}/bin/eww"
                 "${pkgs.mako}/bin/mako"
                 "${pkgs.swww}/bin/swww-daemon"
               ];
@@ -302,7 +302,7 @@
                 "NONE,XF86AudioPlay,spawn,${pkgs.playerctl}/bin/playerctl play-pause"
                 "NONE,XF86AudioNext,spawn,${pkgs.playerctl}/bin/playerctl next"
                 "NONE,XF86AudioPrev,spawn,${pkgs.playerctl}/bin/playerctl previous"
-                "NONE,XF86AudioRaiseVolume,spawn,${pkgs.wireplumber}/bin/wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%+"
+                "NONE,XF86AudioRaiseVolume,spawn,${pkgs.wireplumber}/bin/wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%+ -l 1.5"
                 "NONE,XF86AudioLowerVolume,spawn,${pkgs.wireplumber}/bin/wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%-"
                 "NONE,XF86AudioMute,spawn,${pkgs.wireplumber}/bin/wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle"
                 "NONE,XF86AudioMicMute,spawn,${pkgs.wireplumber}/bin/wpctl set-mute @DEFAULT_AUDIO_SOURCE@ toggle"

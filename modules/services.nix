@@ -15,6 +15,9 @@
         hardware.graphics = {
           enable = true;
           enable32Bit = pkgs.stdenv.isx86_64;
+          extraPackages = with pkgs; [
+            rocmPackages.clr.icd
+          ];
         };
         services = {
           tailscale.enable = true;
