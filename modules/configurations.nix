@@ -49,7 +49,8 @@
 
             modules = [
               (
-                { darwin, ... }: {
+                { darwin, ... }:
+                {
                   nixpkgs.config = config.nixpkgs.config;
                   home = {
                     stateVersion = "25.11";
