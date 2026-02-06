@@ -50,7 +50,7 @@ in
           '';
         };
 
-        programs.tmux = {
+        tmux = {
           enable = true;
 
           terminal = "tmux-256color";
