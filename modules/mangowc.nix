@@ -404,8 +404,11 @@
                 # 1440p Monitor (Left): Positioned at 0, 0
                 "DP-6,1,1,tile,0,1,0,0,2560,1440,180"
 
-                # 1080p Monitor (Right): Positioned at 2560, 0
-                "HDMI-A-2,1,1,tile,0,1,2560,0,1920,1080,180"
+                # 1440p Monitor (Right): Positioned at 2560, 0
+                "HDMI-A-2,1,1,tile,0,1,2560,0,2560,1440,180"
+
+                # 1440p Monitor (Right): Positioned at 2560, 0
+                "DP-3,1,1,tile,0,1,2560,0,2560,1440,180"
               ];
             };
           };
