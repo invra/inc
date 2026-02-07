@@ -13,7 +13,13 @@
             all: unset;
           }
 
-          .bar {
+          .bar0 {
+            background-color: #191724;
+            color: #e0def4;
+            padding: 10px;
+          }
+
+          .bar1 {
             background-color: #191724;
             color: #e0def4;
             padding: 10px;
@@ -50,7 +56,12 @@
           }
         '';
         ".config/eww/eww.yuck".text = ''
-          (defwidget bar []
+          (defwidget bar0 []
+            (centerbox :orientation "h"
+              (workspaces)
+              (music)
+              (sidestuff)))
+          (defwidget bar1 []
             (centerbox :orientation "h"
               (workspaces)
               (music)
@@ -106,7 +117,7 @@
           (defpoll time :interval "10ms"
             "date '+%H:%M'")
 
-          (defwindow bar
+          (defwindow bar0
             :monitor 0
             :windowtype "desktop"
             :stacking "fg"
@@ -117,7 +128,19 @@
                                 :width "100%"
                                 :height "20px"
                                 :anchor "top center")
-            (bar))
+            (bar0))
+          (defwindow bar1
+            :monitor 1
+            :windowtype "desktop"
+            :stacking "fg"
+            :exclusive true
+            :focusable false
+            :geometry (geometry :x "0%"
+                                :y "0%"
+                                :width "100%"
+                                :height "20px"
+                                :anchor "top center")
+            (bar1))
         '';
       };
     };

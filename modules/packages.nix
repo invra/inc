@@ -109,7 +109,7 @@ in
           wineWowPackages.waylandFull
           winetricks
           yabridge
-          (yabridgectl.override { wine = wineWowPackages.waylandFull; })
+          yabridgectl
           bitwig-studio
         ]);
 

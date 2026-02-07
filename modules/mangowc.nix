@@ -146,7 +146,8 @@
 
             settings = {
               exec-once = [
-                "${pkgs.eww}/bin/eww open bar"
+                "${pkgs.eww}/bin/eww open bar0"
+                "${pkgs.eww}/bin/eww open bar1"
                 "${pkgs.mako}/bin/mako"
                 "${pkgs.swww}/bin/swww-daemon"
               ];
@@ -244,9 +245,9 @@
               numlockon = "0";
               repeat_rate = "85";
               repeat_delay = "400";
-              xkb_rules_layout = "us,us";
-              xkb_rules_variant = ",workman";
-              xkb_rules_options = "grp:alt_shift_toggle,eurosign:e,caps:escape";
+              xkb_rules_layout = "us";
+              xkb_rules_variant = "workman";
+              xkb_rules_options = "caps:escape";
 
               # Trackpad
               # need relogin to make it apply
