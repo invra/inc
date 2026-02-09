@@ -10,7 +10,7 @@
     config = {
       allowUnfreePredicate = lib.mkOption {
         type = lib.types.functionTo lib.types.bool;
-        default = _: false;
+        default = pkg: builtins.elem (lib.getName pkg) config.nixpkgs.allowedUnfreePackages;
       };
     };
     overlays = lib.mkOption {
@@ -46,6 +46,10 @@
         pkgs = withSystem nixosArgs.config.facter.report.system (psArgs: psArgs.pkgs);
         hostPlatform = nixosArgs.config.facter.report.system;
       };
+    };
+
+    flake.modules.homeManager.base = _: {
+      nixpkgs.config.allowUnfree = true;
     };
 
     flake.modules.darwin.base = args: {
