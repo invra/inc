@@ -23,6 +23,12 @@
         };
       };
 
+      programs.mercurial = {
+        enable = true;
+        userName = "Invra";
+        userEmail = "identificationsucks@gmail.com";
+      };
+
       home.packages = with pkgs; [
         darcs
         glab
