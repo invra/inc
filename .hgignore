@@ -1,0 +1,6 @@
+syntax: glob
+.git*
+result
+*.qcow2
+.DS_Store
+nix.conf
