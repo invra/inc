@@ -23,7 +23,7 @@
     };
   };
 
-  config = {
+  config = rec {
     nixpkgs.config.allowUnfreePredicate =
       pkg: builtins.elem (lib.getName pkg) config.nixpkgs.allowedUnfreePackages;
 
@@ -48,9 +48,7 @@
       };
     };
 
-    flake.modules.homeManager.base = _: {
-      nixpkgs.config.allowUnfree = true;
-    };
+    flake.modules.homeManager.base.nixpkgs.config.allowUnfree = true;
 
     flake.modules.darwin.base = args: {
       nix.nixPath = [
