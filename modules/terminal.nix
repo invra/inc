@@ -37,16 +37,77 @@ in
             fuckoff = "exit";
             edit = "taskset -c 0-7 hx";
           };
-
           interactiveShellInit = ''
-            #!/bin/env fish
+          #!/bin/env fish
 
-            set fish_greeting ""
-            alias tree "eza --tree"
+          set fish_greeting """"
+          alias tree "eza --tree"
 
-            if status is-interactive && not set -q TMUX
+          if status is-interactive && not set -q TMUX
               tmux
+          end
+
+          # Enable informative status for Git and Hg
+          set -g fish_prompt_git_show_informative_status 1
+          set -g fish_prompt_hg_show_informative_status 1
+
+          function fish_prompt
+            # Last command exit status
+            set -l last_status $status
+            set -l stat
+            if test $last_status -ne 0
+              set stat (set_color red)"[$last_status]"(set_color normal)
             end
+
+            # Current directory
+            set -l dir (prompt_pwd)
+
+            # VCS info
+            set -l vcs ""
+            set -l vcs_status ""  # For [M?] etc.
+
+            # --- Git ---
+            if type -q git
+                if git rev-parse --is-inside-work-tree >/dev/null 2>&1
+                    set -l branch (git rev-parse --abbrev-ref HEAD)
+                    set -l status_chars (git status --short 2>/dev/null | string sub -l 1 | string join '''''')
+                    if test -n "$status_chars"
+                        set vcs_status (set_color red)" [$status_chars]"(set_color normal)
+                    end
+                    set vcs (set_color yellow)"git on $branch"(set_color normal)
+                end
+            end
+
+            # --- Mercurial ---
+            if type -q hg
+                if hg root >/dev/null 2>&1
+                    set -l branch (hg branch)
+                    set -l status_chars (hg status 2>/dev/null | string sub -l 1 | string join '''''')
+                    if test -n "$status_chars"
+                        set vcs_status (set_color red)" [$status_chars]"(set_color normal)
+                    end
+                    set vcs (set_color yellow)"hg on $branch"(set_color normal)
+                end
+            end
+
+            # --- SVN ---
+            if type -q svn
+                if svn info >/dev/null 2>&1
+                    set vcs (set_color yellow)"svn"(set_color normal)
+                end
+            end
+
+            # Build prompt
+            set -l prompt (set_color blue)$dir(set_color normal)
+            if test -n "$vcs"
+                set prompt $prompt" "$vcs$vcs_status
+            end
+            if test -n "$stat"
+                set prompt $prompt" "$stat
+            end
+            echo -n $prompt'
+          > '
+          end
           '';
         };
 
@@ -173,52 +234,6 @@ in
           enable = true;
           enableFishIntegration = true;
           icons = "always";
-        };
-
-        starship = {
-          enable = true;
-          enableFishIntegration = true;
-          settings = {
-            character = {
-              error_symbol = "[ 󱞪](bold red)";
-              success_symbol = "[ 󱞪](bold green)";
-              vimcmd_replace_one_symbol = "[<](bold purple)";
-              vimcmd_replace_symbol = "[<](bold purple)";
-              vimcmd_symbol = "[<](bold green)";
-              vimcmd_visual_symbol = "[<](bold yellow)";
-            };
-            continuation_prompt = "[.](bright-black) ";
-            format = "$directory$git_branch$git_status$bun$deno$rust$golang$haskell$haxe$zig$c$cpp$cmake$swift$dotnet$nix_shell$time\n$character";
-            bun.symbol = "bun ";
-            c.symbol = "c ";
-            cmake.symbol = "cmake ";
-            cpp.symbol = "c++ ";
-            deno.symbol = "deno ";
-            directory.read_only = " ro";
-            dotnet = {
-              format = "via [$symbol($version )(target $tfm )]($style)";
-              symbol = ".net ";
-            };
-            git_branch = {
-              symbol = "git ";
-              truncation_symbol = "...";
-            };
-            git_commit.tag_symbol = " tag ";
-            git_status = {
-              ahead = ">";
-              behind = "<";
-              deleted = "x";
-              diverged = "<>";
-              renamed = "r";
-            };
-            haskell.symbol = "haskell ";
-            haxe.symbol = "haxe ";
-            nix_shell.symbol = "nix ";
-            package.symbol = "pkg ";
-            rust.symbol = "rust ";
-            swift.symbol = "swift ";
-            zig.symbol = "zig ";
-          };
         };
 
         carapace = {
