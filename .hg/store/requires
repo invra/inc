@@ -1,0 +1,8 @@
+dotencode
+fncache
+generaldelta
+persistent-nodemap
+revlog-compression-zstd
+revlogv1
+sparserevlog
+store
