@@ -1,0 +1,25 @@
+= Contributing
+
+Thanks for showing interest in contributing! Your help is appreciated.  
+
+---
+
+== Guidelines
+
+* **Test on all platforms if possible**  
+  - I would love to support platforms: aarch64-linux, x86_64-linux, aarch64-darwin
+  - If you cannot test on a platform, submit your changes on a separate branch and clearly describe what you changed.
+
+* **Code formatting**
+  - Always run `nix fmt` on your changes before committing.
+  - Well-formatted code helps everyone understand and maintain the project.
+
+* **Submission method**
+  - Contributions **must** be submitted via GitLab merge requests.
+  - Any contributions sent elsewhere are considered a waste of time and may not be reviewed.
+
+* **Documentation updates**
+  - If your changes affect user-facing behavior, update the relevant documentation in the Wiki or README.
+
+That's it! I don't actually expect much from contributions because it's all about having something that works — not
+something which is __perfect__ to look at. As long as the code works and is reasonably logical, it will be accepted.
