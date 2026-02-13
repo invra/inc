@@ -27,6 +27,14 @@
         enable = true;
         userName = "Invra";
         userEmail = "identificationsucks@gmail.com";
+        aliases = {
+          a = "add";
+          p = "push -v";
+          s = "status";
+          c = "commit -m";
+          b = "branch";
+          m = "commit --amend";
+        };
       };
 
       home.packages = with pkgs; [
