@@ -42,16 +42,12 @@
       {
         homeConfigurations = lib.optionalAttrs (system != "") {
           "${name}" = inputs.home-manager.lib.homeManagerConfiguration {
-            pkgs = import inputs.nixpkgs {
-              inherit system;
-              inherit (config.nixpkgs) config overlays;
-            };
+            pkgs = import inputs.nixpkgs { inherit system; };
 
             modules = [
               (
                 { darwin, ... }:
                 {
-                  nixpkgs.config = config.nixpkgs.config;
                   home = {
                     stateVersion = "25.11";
                     username = config.flake.meta.owner.username;
@@ -72,16 +68,11 @@
         };
 
         nixosConfigurations = lib.optionalAttrs isLinux {
-          "${name}" = lib.nixosSystem {
-            inherit system;
-            modules = [ cfg.module ];
-          };
+          "${name}" = lib.nixosSystem { modules = [ cfg.module ]; };
         };
 
         darwinConfigurations = lib.optionalAttrs isDarwin {
-          "${name}" = inputs.nix-darwin.lib.darwinSystem {
-            modules = [ cfg.module ];
-          };
+          "${name}" = inputs.nix-darwin.lib.darwinSystem { modules = [ cfg.module ]; };
         };
       }
     ) config.configurations

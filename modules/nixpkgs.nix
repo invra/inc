@@ -1,8 +1,7 @@
 {
   lib,
-  config,
   inputs,
-  withSystem,
+  config,
   ...
 }:
 {
@@ -23,32 +22,32 @@
     };
   };
 
-  config = rec {
-    nixpkgs.config.allowUnfreePredicate =
-      pkg: builtins.elem (lib.getName pkg) config.nixpkgs.allowedUnfreePackages;
-
+  config = {
     flake.meta.nixpkgs.allowedUnfreePackages = config.nixpkgs.allowedUnfreePackages;
-
-    perSystem =
-      { system, ... }:
-      {
-        _module.args.pkgs = import inputs.nixpkgs {
-          inherit system;
-          inherit (config.nixpkgs) config overlays;
-        };
-      };
 
     flake.modules.nixos.base = nixosArgs: {
       nix.nixPath = [
         "nixpkgs=${nixosArgs.config.nixpkgs.flake.source}"
       ];
       nixpkgs = {
-        pkgs = withSystem nixosArgs.config.facter.report.system (psArgs: psArgs.pkgs);
+        pkgs = import inputs.nixpkgs {
+          inherit (nixosArgs.config.facter.report) system;
+          inherit (config.nixpkgs) overlays;
+          
+          config.allowUnfreePredicate =
+            pkg: builtins.elem (lib.getName pkg) config.nixpkgs.allowedUnfreePackages;
+        };
         hostPlatform = nixosArgs.config.facter.report.system;
       };
     };
 
-    flake.modules.homeManager.base.nixpkgs.config.allowUnfree = true;
+    flake.modules.homeManager.base.nixpkgs = {
+      config = {
+        inherit (config.nixpkgs) overlays;
+        allowUnfreePredicate =
+          pkg: builtins.elem (lib.getName pkg) config.nixpkgs.allowedUnfreePackages;
+      };
+    };
 
     flake.modules.darwin.base = args: {
       nix.nixPath = [
@@ -57,7 +56,10 @@
       nixpkgs = {
         pkgs = import inputs.nixpkgs {
           system = "aarch64-darwin";
-          inherit (config.nixpkgs) config overlays;
+          inherit (config.nixpkgs) overlays;
+          
+          config.allowUnfreePredicate =
+            pkg: builtins.elem (lib.getName pkg) config.nixpkgs.allowedUnfreePackages;
         };
         hostPlatform = "aarch64-darwin";
       };
