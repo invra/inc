@@ -3,8 +3,18 @@ let
   polyModule =
     { pkgs, ... }:
     {
-      users.users.${config.flake.meta.owner.username}.shell = pkgs.fish;
-      programs.fish.enable = true;
+      users.users.${config.flake.meta.owner.username}.shell = pkgs.elvish;
+      environment.etc."elvish/rc.elv".text = ''
+        #!/usr/bin/env elvish
+        set paths = [
+          ~/.nix-profile/bin
+          ~/.local/state/nix/profile/bin
+          /run/wrappers/bin
+          /nix/var/nix/profiles/default/bin
+          /run/current-system/sw/bin
+          $@paths
+        ]
+      '';
     };
 in
 {
@@ -24,87 +34,77 @@ in
   };
 
   flake.modules.homeManager.base =
-    { linux, darwin, ... }:
+    { pkgs, linux, darwin, ... }:
     {
-      stylix.targets.fish.enable = false;
-      programs = {
-        fish = {
-          enable = true;
-          shellAliases = {
-            l = "ls -l";
-            la = "ls -al";
-            ":q" = "exit";
-            fuckoff = "exit";
-            edit = "taskset -c 0-7 hx";
+      home.packages = with pkgs; [
+        eza
+        zoxide
+        carapace
+      ];
+      home.file = {
+        ".config/elvish/lib/github.com/zzamboni/elvish-modules" = {
+          recursive = true;
+          source = pkgs.stdenv.mkDerivation {
+            name = "elvish-modules-patched";
+            src = pkgs.fetchFromGitHub {
+              owner = "zzamboni";
+              repo = "elvish-modules";
+              rev = "9005c970346ab06214b3cd3ed3e70f04f3c632ba";
+              sha256 = "/Dwtl12QzPvMoMMGoj+v3dwX2ZwFT8t/bohVy1zDE0c=";
+            };
+            patches = [
+              ../patches/elvish-modules-nix.elv.patch
+            ];
+            buildInputs = [];
+            installPhase = ''
+              mkdir -p $out
+              cp -r ./* $out/
+            '';
           };
-          interactiveShellInit = ''
-            #!/bin/env fish
+        };
+        ".config/elvish/rc.elv" = {
+          executable = true;
+          text = ''
+            #!/usr/bin/env elvish
+            use str
+            use path
+            use github.com/zzamboni/elvish-modules/nix
+            use github.com/zzamboni/elvish-modules/alias
 
-            set fish_greeting """"
-            alias tree "eza --tree"
+            set paths = [
+              ~/.nix-profile/bin
+              ~/.local/state/nix/profile/bin
+              /run/wrappers/bin
+              /nix/var/nix/profiles/default/bin
+              /run/current-system/sw/bin
+              $@paths
+            ]
+            nix:multi-user-setup
 
-            if status is-interactive && not set -q TMUX
-                tmux
-            end
+            # Output for Left Prompt
+            set edit:prompt = {
+              styled (tilde-abbr $pwd) blue
+              styled "\nλ " green
+            }
+            # No Right Prompt
+            set edit:rprompt = { put "" }
+            set edit:insert:binding[Alt-x] = { exit }
 
-            set -g fish_prompt_git_show_informative_status 1
-            set -g fish_prompt_hg_show_informative_status 1
+            alias:new &save ls eza --icons 
+            alias:new &save l eza --icons -l
+            alias:new &save la eza --icons -al
+            alias:new &save edit taskset -c 0-7 hx
+            alias:new &save fuckoff exit
+            alias:new &save q exit
 
-            function fish_prompt
-              set -l last_status $status
-
-              set -l arrow_color
-              if test $last_status -eq 0
-                set arrow_color (set_color green)
-              else
-                set arrow_color (set_color red)
-              end
-
-              set -l dir (prompt_pwd)
-
-              set -l vcs ""
-              set -l vcs_status ""
-
-              if type -q git
-                  if git rev-parse --is-inside-work-tree >/dev/null 2>&1
-                      set -l branch (git rev-parse --abbrev-ref HEAD)
-                      set -l status_chars (git status --short 2>/dev/null | string sub -l 1 | string join '''''')
-                      if test -n "$status_chars"
-                          set vcs_status (set_color red)" [$status_chars]"(set_color normal)
-                      end
-                      set vcs (set_color yellow)"git on $branch"(set_color normal)
-                  end
-              end
-
-              if type -q hg
-                  if hg root >/dev/null 2>&1
-                      set -l branch (hg branch)
-                      set -l status_chars (hg status 2>/dev/null | string sub -l 1 | string join '''''')
-                      if test -n "$status_chars"
-                          set vcs_status (set_color red)" [$status_chars]"(set_color normal)
-                      end
-                      set vcs (set_color yellow)"hg on $branch"(set_color normal)
-                  end
-              end
-
-              if type -q svn
-                  if svn info >/dev/null 2>&1
-                      set vcs (set_color yellow)"svn"(set_color normal)
-                  end
-              end
-
-              set -l prompt (set_color blue)$dir(set_color normal)
-              if test -n "$vcs"
-                  set prompt $prompt" "$vcs$vcs_status
-              end
-
-              echo -n $prompt
-              echo
-              echo -n $arrow_color'> '(set_color normal)
-            end
+            set-env CARAPACE_BRIDGES 'zsh,fish,bash,inshellisense'
+            eval (carapace _carapace | slurp)
+            eval (zoxide init elvish --cmd cd | slurp)
           '';
         };
-
+      };
+      
+      programs = {
         tmux = {
           enable = true;
 
@@ -224,24 +224,6 @@ in
           '';
         };
 
-        eza = {
-          enable = true;
-          enableFishIntegration = true;
-          icons = "always";
-        };
-
-        carapace = {
-          enable = true;
-          enableZshIntegration = true;
-          enableFishIntegration = true;
-        };
-
-        zoxide = {
-          enable = true;
-          enableFishIntegration = true;
-          options = [ "--cmd cd" ];
-        };
-
         fastfetch = {
           enable = true;
 
@@ -337,19 +319,15 @@ in
         };
       };
 
-      stylix.targets.starship.enable = false;
-
       programs.foot = lib.optionalAttrs linux {
         enable = true;
         server.enable = true;
 
         settings = with lib; {
-          main.font = mkForce "JetBrainsMono Nerd Font:size=18";
-
+          main.font = mkForce "JetBrainsMono Nerd Font:size=24";
           colors.alpha = mkForce 0.85;
         };
       };
-
       programs.alacritty.enable = lib.mkIf darwin true;
     };
 }
