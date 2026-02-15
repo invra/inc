@@ -47,26 +47,24 @@ in
                 tmux
             end
 
-            # Enable informative status for Git and Hg
             set -g fish_prompt_git_show_informative_status 1
             set -g fish_prompt_hg_show_informative_status 1
 
             function fish_prompt
-              # Last command exit status
               set -l last_status $status
-              set -l stat
-              if test $last_status -ne 0
-                set stat (set_color red)"[$last_status]"(set_color normal)
+
+              set -l arrow_color
+              if test $last_status -eq 0
+                set arrow_color (set_color green)
+              else
+                set arrow_color (set_color red)
               end
 
-              # Current directory
               set -l dir (prompt_pwd)
 
-              # VCS info
               set -l vcs ""
-              set -l vcs_status ""  # For [M?] etc.
+              set -l vcs_status ""
 
-              # --- Git ---
               if type -q git
                   if git rev-parse --is-inside-work-tree >/dev/null 2>&1
                       set -l branch (git rev-parse --abbrev-ref HEAD)
@@ -78,7 +76,6 @@ in
                   end
               end
 
-              # --- Mercurial ---
               if type -q hg
                   if hg root >/dev/null 2>&1
                       set -l branch (hg branch)
@@ -90,23 +87,20 @@ in
                   end
               end
 
-              # --- SVN ---
               if type -q svn
                   if svn info >/dev/null 2>&1
                       set vcs (set_color yellow)"svn"(set_color normal)
                   end
               end
 
-              # Build prompt
               set -l prompt (set_color blue)$dir(set_color normal)
               if test -n "$vcs"
                   set prompt $prompt" "$vcs$vcs_status
               end
-              if test -n "$stat"
-                  set prompt $prompt" "$stat
-              end
-              echo -n $prompt'
-            > '
+
+              echo -n $prompt
+              echo
+              echo -n $arrow_color'> '(set_color normal)
             end
           '';
         };
@@ -356,8 +350,6 @@ in
         };
       };
 
-      programs.alacritty = lib.optionalAttrs darwin {
-        enable = true;
-      };
+      programs.alacritty.enable = lib.mkIf darwin true;
     };
 }
