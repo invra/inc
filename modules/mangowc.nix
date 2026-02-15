@@ -245,9 +245,9 @@
               numlockon = "0";
               repeat_rate = "85";
               repeat_delay = "400";
-              xkb_rules_layout = "us";
-              xkb_rules_variant = "workman";
-              xkb_rules_options = "caps:escape";
+              xkb_rules_layout = "us,us";
+              xkb_rules_variant = ",workman";
+              xkb_rules_options = "grp:alt_shift_toggle,caps:escape";
 
               # Trackpad
               # need relogin to make it apply
