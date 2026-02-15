@@ -72,7 +72,6 @@ in
           sl
           (inputs.dev-nix.packages.${stdenv.hostPlatform.system}.default)
           (inputs.helium.packages.${stdenv.hostPlatform.system}.default)
-          dbgate
           prismlauncher
           viu
           ffmpeg
@@ -86,9 +85,6 @@ in
           wget
           firefox
           killall
-        ]
-        ++ lib.optionals (!(stdenv.isLinux && stdenv.isAarch64)) [
-          insomnia
         ]
         ++ lib.optionals pkgs.stdenv.isDarwin [
           alacritty

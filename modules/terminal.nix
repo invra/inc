@@ -323,9 +323,12 @@ in
         enable = true;
         server.enable = true;
 
-        settings = with lib; {
-          main.font = mkForce "Fira Mono:size=24";
-          colors.alpha = mkForce 0.85;
+        settings = {
+          main = {
+            font = lib.mkForce "JetBrainsMono Nerd Font:size=20";
+            dpi-aware = lib.mkForce "yes";
+          };
+          colors.alpha = lib.mkForce 0.85;
         };
       };
       programs.alacritty.enable = lib.mkIf darwin true;
