@@ -1,4 +1,9 @@
-{ config, inputs, lib, ... }:
+{
+  config,
+  inputs,
+  lib,
+  ...
+}:
 {
   flake.modules.nixos.base = {
     imports = [
@@ -7,131 +12,137 @@
     programs.mango.enable = true;
   };
 
-  flake.modules.homeManager.mangowc = { pkgs, lib, config, ... }:
-  with lib;
-  let
-    cfg = config.wayland.windowManager.mangowc;
-  in
-  {
-    options = with lib; {
-      wayland.windowManager.mangowc = {
-        enable = mkOption {
-          type = types.bool;
-          default = false;
-          description = "Whether to enable MangoWC.";
-        };
+  flake.modules.homeManager.mangowc =
+    {
+      pkgs,
+      lib,
+      config,
+      ...
+    }:
+    with lib;
+    let
+      cfg = config.wayland.windowManager.mangowc;
+    in
+    {
+      options = with lib; {
+        wayland.windowManager.mangowc = {
+          enable = mkOption {
+            type = types.bool;
+            default = false;
+            description = "Whether to enable MangoWC.";
+          };
 
-        systemd = {
-          enable = mkEnableOption null // {
-            default = true;
+          systemd = {
+            enable = mkEnableOption null // {
+              default = true;
+              description = ''
+                Whether to enable {file}`hyprland-session.target` on
+                hyprland startup. This links to `graphical-session.target`.
+                Some important environment variables will be imported to systemd
+                and D-Bus user environment before reaching the target, including
+                - `DISPLAY`
+                - `XDG_CURRENT_DESKTOP`
+              '';
+            };
+
+            variables = mkOption {
+              type = with types; listOf str;
+              default = [
+                "DISPLAY"
+                "XDG_CURRENT_DESKTOP"
+              ];
+              example = [ "--all" ];
+              description = ''
+                Environment variables to be imported in the systemd & D-Bus user
+                environment.
+              '';
+            };
+          };
+
+          package = mkPackageOption pkgs "mangowc" {
+            nullable = true;
+            extraDescription = "Set this to null if you use the NixOS module to install MangoWC.";
+          };
+
+          settings = mkOption {
+            type =
+              with types;
+              let
+                valueType =
+                  nullOr (oneOf [
+                    bool
+                    int
+                    float
+                    str
+                    path
+                    (attrsOf valueType)
+                    (listOf valueType)
+                  ])
+                  // {
+                    description = "MangoWC configuration value";
+                  };
+              in
+              valueType;
+            default = { };
             description = ''
-              Whether to enable {file}`hyprland-session.target` on
-              hyprland startup. This links to `graphical-session.target`.
-              Some important environment variables will be imported to systemd
-              and D-Bus user environment before reaching the target, including
-              - `DISPLAY`
-              - `XDG_CURRENT_DESKTOP`
+              MangoWC configuration written in Nix.
+              See <https://github.com/DreamMaoMao/mangowc/wiki> for more examples.
+
+              You do not need to provide exec-once for a startup.sh, this is managed
+              for you.
             '';
           };
 
-          variables = mkOption {
-            type = with types; listOf str;
-            default = [
-              "DISPLAY"
-              "XDG_CURRENT_DESKTOP"
-            ];
-            example = [ "--all" ];
-            description = ''
-              Environment variables to be imported in the systemd & D-Bus user
-              environment.
+          autostartSh = mkOption {
+            type = types.nullOr types.lines;
+            default = ''
+              #!/bin/sh
+              dbus-update-activation-environment --systemd WAYLAND_DISPLAY XDG_CURRENT_DESKTOP=wlroots
+              systemctl --user restart xdg-desktop-portal
+              systemctl --user restart xdg-desktop-portal-wlr
             '';
           };
         };
+      };
 
-        package = mkPackageOption pkgs "mangowc" {
-          nullable = true;
-          extraDescription = "Set this to null if you use the NixOS module to install MangoWC.";
-        };
+      config = mkIf cfg.enable {
+        assertions = [
+          {
+            assertion = pkgs.stdenv.isLinux;
+            message = "mangowc is only supported on linux and bsd.";
+          }
+        ];
 
-        settings = mkOption {
-          type =
-            with types;
-            let
-              valueType =
-                nullOr (oneOf [
-                  bool
-                  int
-                  float
-                  str
-                  path
-                  (attrsOf valueType)
-                  (listOf valueType)
-                ])
-                // {
-                  description = "MangoWC configuration value";
-                };
-            in
-            valueType;
-          default = { };
-          description = ''
-            MangoWC configuration written in Nix.
-            See <https://github.com/DreamMaoMao/mangowc/wiki> for more examples.
+        home.packages = [ cfg.package ];
 
-            You do not need to provide exec-once for a startup.sh, this is managed
-            for you.
-          '';
-        };
+        xdg.configFile = {
+          "mango/startup.sh" = mkIf (!(cfg.autostartSh == null || cfg.autostartSh == "")) {
+            executable = true;
+            text = cfg.autostartSh or "";
+          };
 
-        autostartSh = mkOption {
-          type = types.nullOr types.lines;
-          default = ''
-            #!/bin/sh
-            dbus-update-activation-environment --systemd WAYLAND_DISPLAY XDG_CURRENT_DESKTOP=wlroots
-            systemctl --user restart xdg-desktop-portal
-            systemctl --user restart xdg-desktop-portal-wlr
-          '';
+          "mango/config.conf" = mkIf (cfg.settings != { }) {
+            text = ''
+              # This is generated by home-manager.
+              ${
+                (generators.toKeyValue {
+                  listsAsDuplicateKeys = true;
+                  indent = "";
+                })
+                (
+                  attrsets.zipAttrsWith (_: v: lists.flatten v) [
+                    cfg.settings
+                    (optionalAttrs (!(cfg.autostartSh == null || cfg.autostartSh == "")) {
+                      exec-once = [ "${config.xdg.configHome}/mango/startup.sh" ];
+                    })
+                  ]
+                )
+              }
+            '';
+          };
         };
       };
     };
-
-    config = mkIf cfg.enable {
-      assertions = [
-        {
-          assertion = pkgs.stdenv.isLinux;
-          message = "mangowc is only supported on linux and bsd.";
-        }
-      ];
-
-      home.packages = [ cfg.package ];
-
-      xdg.configFile = {
-        "mango/startup.sh" = mkIf (!(cfg.autostartSh == null || cfg.autostartSh == "")) {
-          executable = true;
-          text = cfg.autostartSh or "";
-        };
-
-        "mango/config.conf" = mkIf (cfg.settings != { }) {
-          text = ''
-            # This is generated by home-manager.
-            ${
-              (generators.toKeyValue {
-                listsAsDuplicateKeys = true;
-                indent = "";
-              })
-              (
-                attrsets.zipAttrsWith (_: v: lists.flatten v) [
-                  cfg.settings
-                  (optionalAttrs (!(cfg.autostartSh == null || cfg.autostartSh == "")) {
-                    exec-once = [ "${config.xdg.configHome}/mango/startup.sh" ];
-                  })
-                ]
-              )
-            }
-          '';
-        };
-      };
-    };
-  };
 
   flake.modules.homeManager.base =
     {
