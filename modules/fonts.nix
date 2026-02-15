@@ -3,11 +3,15 @@ let
     { pkgs, ... }:
     {
       fonts.packages = with pkgs; [
-        nerd-fonts.jetbrains-mono
-        font-awesome
-        liberation_ttf
+        hack-font
+        fira-code
         noto-fonts
+        liberation_ttf
+        fira-code-symbols
+        noto-fonts-cjk-sans
+        nerd-fonts.fira-mono
         noto-fonts-color-emoji
+        nerd-fonts.jetbrains-mono
       ];
     };
 in
@@ -15,7 +19,13 @@ in
   flake.modules = {
     nixos.base = {
       imports = [ polyModule ];
-      fonts.fontconfig.defaultFonts.monospace = [ "JetBrainsMono" ];
+      fonts = {
+        fontDir.enable = true;
+        fontconfig = {
+          useEmbeddedBitmaps = true;
+          defaultFonts.monospace = [ "Fira Mono" ];
+        };
+      };
     };
     darwin.base = polyModule;
   };

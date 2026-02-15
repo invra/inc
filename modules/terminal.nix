@@ -324,7 +324,7 @@ in
         server.enable = true;
 
         settings = with lib; {
-          main.font = mkForce "JetBrainsMono Nerd Font:size=24";
+          main.font = mkForce "Fira Mono:size=24";
           colors.alpha = mkForce 0.85;
         };
       };

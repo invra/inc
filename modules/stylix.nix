@@ -28,16 +28,16 @@ let
         };
         fonts = lib.mkIf linux {
           serif = {
-            package = pkgs.dejavu_fonts;
-            name = "DejaVu Serif";
+            package = pkgs.fira-code;
+            name = "Fira Code";
           };
           sansSerif = {
-            package = pkgs.dejavu_fonts;
-            name = "DejaVu Sans";
+            package = pkgs.fira-code;
+            name = "Fira Code";
           };
           monospace = {
-            package = pkgs.nerd-fonts.jetbrains-mono;
-            name = "JetBrains Mono Nerd Font";
+            package = pkgs.fira-mono;
+            name = "Fira Mono";
           };
         };
       };
