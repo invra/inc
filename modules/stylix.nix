@@ -28,16 +28,16 @@ let
         };
         fonts = lib.mkIf linux {
           serif = {
-            package = pkgs.fira-code;
-            name = "Fira Code";
+            package = pkgs.ibm-plex;
+            name = "IBM Plex Serif";
           };
           sansSerif = {
             package = pkgs.fira-code;
-            name = "Fira Code";
+            name = "IBM Plex Sans";
           };
           monospace = {
-            package = pkgs.fira-mono;
-            name = "Fira Mono";
+            package = pkgs.lilex;
+            name = "Lilex";
           };
         };
       };

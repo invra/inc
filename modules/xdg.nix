@@ -31,7 +31,7 @@
           terminal-exec = {
             enable = true;
             settings = {
-              default = [ "foot.desktop" ];
+              default = [ "alacritty.desktop" ];
             };
           };
           mimeApps = {

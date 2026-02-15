@@ -33,11 +33,11 @@ in
       environment = {
         systemPackages = with pkgs; [
           lsof
-          foot
-          pciutils
-          nautilus
           swww
           firefox
+          pciutils
+          nautilus
+          alacritty
           xwayland-satellite
         ];
       };

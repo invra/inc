@@ -3,11 +3,10 @@ let
     { pkgs, ... }:
     {
       fonts.packages = with pkgs; [
-        hack-font
-        fira-code
+        lilex
+        ibm-plex
         noto-fonts
         liberation_ttf
-        fira-code-symbols
         noto-fonts-cjk-sans
         nerd-fonts.fira-mono
         noto-fonts-color-emoji

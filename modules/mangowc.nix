@@ -316,7 +316,7 @@
             "NONE,XF86MonBrightnessDown,spawn,${pkgs.brightnessctl}/bin/brightnessctl set 5%-"
             "Super,space,spawn,${pkgs.tofi}/bin/tofi-drun --drun-launch=true"
             "Super+SHIFT,S,spawn,${pkgs.hyprshot}/bin/hyprshot -m region --clipboard-only"
-            "Super,Return,spawn,${pkgs.foot}/bin/foot"
+            "Super,Return,spawn,${pkgs.alacritty}/bin/alacritty"
 
             # menu and terminal
             "Super,B,spawn,firefox"

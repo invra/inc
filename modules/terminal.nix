@@ -95,6 +95,7 @@ in
             alias:new &save la eza --icons -al
             alias:new &save edit taskset -c 0-7 hx
             alias:new &save fuckoff exit
+            alias:new &save doas sudo
             alias:new &save q exit
 
             set-env CARAPACE_BRIDGES 'zsh,fish,bash,inshellisense'
@@ -319,18 +320,14 @@ in
         };
       };
 
-      programs.foot = lib.optionalAttrs linux {
-        enable = true;
-        server.enable = true;
-
-        settings = {
-          main = {
-            font = lib.mkForce "JetBrainsMono Nerd Font:size=20";
-            dpi-aware = lib.mkForce "yes";
+      programs = {
+        alacritty = {
+          enable = true;
+          settings = {
+            font.size = lib.mkForce 16.0;
+            window.opacity = lib.mkForce 0.85;
           };
-          colors.alpha = lib.mkForce 0.85;
         };
       };
-      programs.alacritty.enable = lib.mkIf darwin true;
     };
 }
