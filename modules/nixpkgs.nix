@@ -33,7 +33,7 @@
         pkgs = import inputs.nixpkgs {
           inherit (nixosArgs.config.facter.report) system;
           inherit (config.nixpkgs) overlays;
-          
+
           config.allowUnfreePredicate =
             pkg: builtins.elem (lib.getName pkg) config.nixpkgs.allowedUnfreePackages;
         };
@@ -44,8 +44,7 @@
     flake.modules.homeManager.base.nixpkgs = {
       config = {
         inherit (config.nixpkgs) overlays;
-        allowUnfreePredicate =
-          pkg: builtins.elem (lib.getName pkg) config.nixpkgs.allowedUnfreePackages;
+        allowUnfreePredicate = pkg: builtins.elem (lib.getName pkg) config.nixpkgs.allowedUnfreePackages;
       };
     };
 
@@ -57,7 +56,7 @@
         pkgs = import inputs.nixpkgs {
           system = "aarch64-darwin";
           inherit (config.nixpkgs) overlays;
-          
+
           config.allowUnfreePredicate =
             pkg: builtins.elem (lib.getName pkg) config.nixpkgs.allowedUnfreePackages;
         };

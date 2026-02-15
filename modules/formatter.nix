@@ -4,7 +4,7 @@
 
   perSystem = {
     treefmt = {
-      projectRootFile = ".git/config";
+      projectRootFile = "flake.nix";
       programs = {
         nixfmt.enable = true;
         nixf-diagnose.enable = true;

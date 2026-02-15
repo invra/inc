@@ -38,76 +38,76 @@ in
             edit = "taskset -c 0-7 hx";
           };
           interactiveShellInit = ''
-          #!/bin/env fish
+            #!/bin/env fish
 
-          set fish_greeting """"
-          alias tree "eza --tree"
+            set fish_greeting """"
+            alias tree "eza --tree"
 
-          if status is-interactive && not set -q TMUX
-              tmux
-          end
-
-          # Enable informative status for Git and Hg
-          set -g fish_prompt_git_show_informative_status 1
-          set -g fish_prompt_hg_show_informative_status 1
-
-          function fish_prompt
-            # Last command exit status
-            set -l last_status $status
-            set -l stat
-            if test $last_status -ne 0
-              set stat (set_color red)"[$last_status]"(set_color normal)
+            if status is-interactive && not set -q TMUX
+                tmux
             end
 
-            # Current directory
-            set -l dir (prompt_pwd)
+            # Enable informative status for Git and Hg
+            set -g fish_prompt_git_show_informative_status 1
+            set -g fish_prompt_hg_show_informative_status 1
 
-            # VCS info
-            set -l vcs ""
-            set -l vcs_status ""  # For [M?] etc.
+            function fish_prompt
+              # Last command exit status
+              set -l last_status $status
+              set -l stat
+              if test $last_status -ne 0
+                set stat (set_color red)"[$last_status]"(set_color normal)
+              end
 
-            # --- Git ---
-            if type -q git
-                if git rev-parse --is-inside-work-tree >/dev/null 2>&1
-                    set -l branch (git rev-parse --abbrev-ref HEAD)
-                    set -l status_chars (git status --short 2>/dev/null | string sub -l 1 | string join '''''')
-                    if test -n "$status_chars"
-                        set vcs_status (set_color red)" [$status_chars]"(set_color normal)
-                    end
-                    set vcs (set_color yellow)"git on $branch"(set_color normal)
-                end
-            end
+              # Current directory
+              set -l dir (prompt_pwd)
 
-            # --- Mercurial ---
-            if type -q hg
-                if hg root >/dev/null 2>&1
-                    set -l branch (hg branch)
-                    set -l status_chars (hg status 2>/dev/null | string sub -l 1 | string join '''''')
-                    if test -n "$status_chars"
-                        set vcs_status (set_color red)" [$status_chars]"(set_color normal)
-                    end
-                    set vcs (set_color yellow)"hg on $branch"(set_color normal)
-                end
-            end
+              # VCS info
+              set -l vcs ""
+              set -l vcs_status ""  # For [M?] etc.
 
-            # --- SVN ---
-            if type -q svn
-                if svn info >/dev/null 2>&1
-                    set vcs (set_color yellow)"svn"(set_color normal)
-                end
-            end
+              # --- Git ---
+              if type -q git
+                  if git rev-parse --is-inside-work-tree >/dev/null 2>&1
+                      set -l branch (git rev-parse --abbrev-ref HEAD)
+                      set -l status_chars (git status --short 2>/dev/null | string sub -l 1 | string join '''''')
+                      if test -n "$status_chars"
+                          set vcs_status (set_color red)" [$status_chars]"(set_color normal)
+                      end
+                      set vcs (set_color yellow)"git on $branch"(set_color normal)
+                  end
+              end
 
-            # Build prompt
-            set -l prompt (set_color blue)$dir(set_color normal)
-            if test -n "$vcs"
-                set prompt $prompt" "$vcs$vcs_status
+              # --- Mercurial ---
+              if type -q hg
+                  if hg root >/dev/null 2>&1
+                      set -l branch (hg branch)
+                      set -l status_chars (hg status 2>/dev/null | string sub -l 1 | string join '''''')
+                      if test -n "$status_chars"
+                          set vcs_status (set_color red)" [$status_chars]"(set_color normal)
+                      end
+                      set vcs (set_color yellow)"hg on $branch"(set_color normal)
+                  end
+              end
+
+              # --- SVN ---
+              if type -q svn
+                  if svn info >/dev/null 2>&1
+                      set vcs (set_color yellow)"svn"(set_color normal)
+                  end
+              end
+
+              # Build prompt
+              set -l prompt (set_color blue)$dir(set_color normal)
+              if test -n "$vcs"
+                  set prompt $prompt" "$vcs$vcs_status
+              end
+              if test -n "$stat"
+                  set prompt $prompt" "$stat
+              end
+              echo -n $prompt'
+            > '
             end
-            if test -n "$stat"
-                set prompt $prompt" "$stat
-            end
-            echo -n $prompt'
-          > '
-          end
           '';
         };
 
