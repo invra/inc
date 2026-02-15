@@ -21,6 +21,7 @@ in
 {
   nixpkgs.allowedUnfreePackages = [
     "bitwig-studio-unwrapped"
+    "davinci-resolve"
     "steam"
     "steam-unwrapped"
   ];
@@ -101,14 +102,15 @@ in
           easyeffects
           vlc
           pavucontrol
-          # davinci-resolve
+          davinci-resolve
           krita
           wayvnc
         ]
         ++ (lib.optionals (pkgs.stdenv.isLinux && pkgs.stdenv.isx86_64) [
-          wineWowPackages.waylandFull
+          wineWow64Packages.waylandFull
           winetricks
-          yabridge
+          # INFO: Couldn't build - build failure
+          # yabridge
           yabridgectl
           bitwig-studio
         ]);
