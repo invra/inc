@@ -7,8 +7,8 @@
         enable = true;
         enableFishIntegration = true;
       };
-      home.file = {
-        ".config/eww/eww.scss".text = ''
+      xdg.configFile = {
+        "eww/eww.scss".text = ''
           * {
             all: unset;
           }
@@ -55,7 +55,7 @@
             color: #D35D6E;
           }
         '';
-        ".config/eww/eww.yuck".text = ''
+        "eww/eww.yuck".text = ''
           (defwidget bar0 []
             (centerbox :orientation "h"
               (workspaces)

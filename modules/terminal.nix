@@ -41,8 +41,8 @@ in
         zoxide
         carapace
       ];
-      home.file = {
-        ".config/elvish/lib/github.com/zzamboni/elvish-modules" = {
+      xdg.configFile = {
+        "elvish/lib/github.com/zzamboni/elvish-modules" = {
           recursive = true;
           source = pkgs.stdenv.mkDerivation {
             name = "elvish-modules-patched";
@@ -62,7 +62,7 @@ in
             '';
           };
         };
-        ".config/elvish/rc.elv" = {
+        "elvish/rc.elv" = {
           executable = true;
           text = ''
             #!/usr/bin/env elvish
