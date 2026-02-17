@@ -18,7 +18,7 @@
     };
     import-tree.url = "github:vic/import-tree";
     mango = {
-      url = "github:DreamMaoMao/mango";
+      url = "github:ananyatimalsina/mangowc";
       inputs.nixpkgs.follows = "nixpkgs";
     };
     niri.url = "github:sodiboo/niri-flake";

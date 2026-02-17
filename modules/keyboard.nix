@@ -27,7 +27,7 @@
             "com.apple.keyboard.fnState" = true; # Whether fn need to be used to do Brightness, Vol, etc.
           };
         };
-        wayland.windowManager.mangowc.settings = lib.optionalAttrs linux {
+        wayland.windowManager.mango.settings = lib.optionalAttrs linux {
           numlockon = "0";
           repeat_rate = "85";
           repeat_delay = "400";
