@@ -5,13 +5,22 @@
   };
 
   inputs = {
-    dev-nix.url = "gitlab:invra/nix-dev";
-    discord-rpc-lsp.url = "gitlab:invra/discord-rpc-lsp";
+    dev-nix = {
+      url = "gitlab:invra/nix-dev";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+    discord-rpc-lsp = {
+      url = "gitlab:invra/discord-rpc-lsp";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
     flake-parts = {
       url = "github:hercules-ci/flake-parts";
       inputs.nixpkgs-lib.follows = "nixpkgs";
     };
-    helium.url = "github:vikingnope/helium-browser-nix-flake";
+    helium = {
+      url = "github:vikingnope/helium-browser-nix-flake";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
     home-manager = {
       url = "github:nix-community/home-manager";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -21,7 +30,10 @@
       url = "github:ananyatimalsina/mangowc";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-    niri.url = "github:sodiboo/niri-flake";
+    niri = {
+      url = "github:sodiboo/niri-flake";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
     nixcord = {
       url = "github:FlameFlag/nixcord";
       inputs.nixpkgs.follows = "nixpkgs";
