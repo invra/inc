@@ -71,7 +71,6 @@ in
         [
           sl
           (inputs.dev-nix.packages.${stdenv.hostPlatform.system}.default)
-          (inputs.helium.packages.${stdenv.hostPlatform.system}.default)
           prismlauncher
           viu
           ffmpeg
