@@ -34,7 +34,10 @@ in
   };
 
   flake.modules.homeManager.base =
-    { pkgs, linux, darwin, ... }:
+    {
+      pkgs,
+      ...
+    }:
     {
       home.packages = with pkgs; [
         eza
@@ -55,7 +58,7 @@ in
             patches = [
               ../patches/elvish-modules-nix.elv.patch
             ];
-            buildInputs = [];
+            buildInputs = [ ];
             installPhase = ''
               mkdir -p $out
               cp -r ./* $out/
@@ -104,7 +107,7 @@ in
           '';
         };
       };
-      
+
       programs = {
         tmux = {
           enable = true;
