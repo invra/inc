@@ -36,6 +36,7 @@ in
   flake.modules.homeManager.base =
     {
       pkgs,
+      darwin,
       ...
     }:
     {
@@ -98,7 +99,7 @@ in
             alias:new &save la eza --icons -al
             alias:new &save edit taskset -c 0-7 hx
             alias:new &save fuckoff exit
-            alias:new &save doas sudo
+            alias:new &save doas ${if darwin then "sudo" else "${pkgs.doas-sudo-shim}/bin/sudo"}
             alias:new &save q exit
 
             set-env CARAPACE_BRIDGES 'zsh,fish,bash,inshellisense'

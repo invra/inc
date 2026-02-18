@@ -17,9 +17,6 @@
           ];
         };
       };
-      environment.systemPackages = with pkgs; [
-        doas-sudo-shim
-      ];
       users.users.${config.flake.meta.owner.username}.extraGroups = [
         "wheel"
         "systemd-journal"
