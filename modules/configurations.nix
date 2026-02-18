@@ -49,7 +49,7 @@
                 { darwin, ... }:
                 {
                   home = {
-                    stateVersion = "25.11";
+                    stateVersion = "26.05";
                     username = config.flake.meta.owner.username;
                     homeDirectory =
                       if darwin then
