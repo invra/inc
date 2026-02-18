@@ -24,10 +24,17 @@
       wayland.windowManager.mango = {
         enable = true;
 
+        autostart_sh = ''
+          dbus-update-activation-environment --systemd WAYLAND_DISPLAY XDG_CURRENT_DESKTOP=wlroots
+          systemctl --user restart xdg-desktop-portal
+          systemctl --user restart xdg-desktop-portal-wlr
+        '';
+
         settings = {
           exec-once = [
             "${pkgs.eww}/bin/eww open bar0"
             "${pkgs.eww}/bin/eww open bar1"
+            "~/.config/mango/autostart.sh"
             "${pkgs.mako}/bin/mako"
             "${pkgs.swww}/bin/swww-daemon"
           ];
@@ -207,7 +214,6 @@
             "ALT,f,togglemaximizescreen,"
             "ALT,Return,togglefullscreen,"
             "Super+SHIFT,f,togglefakefullscreen,"
-            "Super,i,minimized,"
             "Super,o,toggleoverlay,"
             "Super+SHIFT,I,restore_minimized"
             "ALT,z,toggle_scratchpad"
@@ -275,13 +281,9 @@
 
           monitorrule = [
             # 1440p Monitor (Left): Positioned at 0, 0
-            "DP-6,1,1,tile,0,1,0,0,2560,1440,180"
-
-            # 1440p Monitor (Right): Positioned at 2560, 0
-            "HDMI-A-2,1,1,tile,0,1,2560,0,2560,1440,180"
-
-            # 1440p Monitor (Right): Positioned at 2560, 0
-            "DP-3,1,1,tile,0,1,2560,0,2560,1440,180"
+            "name:DP-3,scale:1,x:0,y:0,width:2560,height:1440,refresh:180.0"
+            # 1440p Monitor (Middle): Positioned at 2560, 0
+            "name:DP-2,scale:1,x:2560,y:0,width:2560,height:1440,refresh:180.0"
           ];
         };
       };
