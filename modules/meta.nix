@@ -5,15 +5,15 @@
   ...
 }:
 let
-  gitlab = {
-    domain = "gitlab.com";
+  hg-sourcehut = {
+    domain = "hg.sr.ht";
     username = "invra";
   };
-  forge = "gitlab";
-  owner = gitlab.username;
+  forge = "hg-sourcehut";
+  owner = hg-sourcehut.username;
   name = "inc";
-  defaultBranch = "main";
-  flakeUri = "git+https://${gitlab.domain}/${owner}/${name}";
+  defaultBranch = "default";
+  flakeUri = "git+https://${hg-sourcehut.domain}/~${owner}/${name}";
 in
 {
   imports = [ inputs.flake-parts.flakeModules.modules ];
@@ -45,6 +45,7 @@ in
             flakeUri
             ;
         };
+        nixpkgs.allowedUnfreePackages = config.nixpkgs.allowedUnfreePackages;
       };
 
       modules = {

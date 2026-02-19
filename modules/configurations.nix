@@ -5,14 +5,32 @@
   ...
 }:
 {
-  options.configurations = lib.mkOption {
-    type = lib.types.lazyAttrsOf (
-      lib.types.submodule {
-        options.module = lib.mkOption {
-          type = lib.types.deferredModule;
+  options = {
+    configurations = lib.mkOption {
+      type = lib.types.lazyAttrsOf (
+        lib.types.submodule {
+          options.module = lib.mkOption {
+            type = lib.types.deferredModule;
+          };
+        }
+      );
+    };
+    nixpkgs = {
+      config = {
+        allowUnfreePredicate = lib.mkOption {
+          type = lib.types.functionTo lib.types.bool;
+          default = pkg: builtins.elem (lib.getName pkg) config.nixpkgs.allowedUnfreePackages;
         };
-      }
-    );
+      };
+      overlays = lib.mkOption {
+        type = lib.types.listOf lib.types.unspecified;
+        default = [ ];
+      };
+      allowedUnfreePackages = lib.mkOption {
+        type = lib.types.listOf lib.types.singleLineStr;
+        default = [ ];
+      };
+    };
   };
 
   config.flake = lib.foldl' lib.recursiveUpdate { } (
@@ -48,6 +66,10 @@
               (
                 { darwin, ... }:
                 {
+                  nixpkgs.config = {
+                    inherit (config.nixpkgs) overlays;
+                    allowUnfreePredicate = pkg: builtins.elem (lib.getName pkg) config.nixpkgs.allowedUnfreePackages;
+                  };
                   home = {
                     stateVersion = "26.05";
                     username = config.flake.meta.owner.username;
@@ -68,11 +90,50 @@
         };
 
         nixosConfigurations = lib.optionalAttrs isLinux {
-          "${name}" = lib.nixosSystem { modules = [ cfg.module ]; };
+          "${name}" = lib.nixosSystem {
+            modules = [
+              (args: {
+                nix.nixPath = [
+                  "nixpkgs=${args.config.nixpkgs.flake.source}"
+                ];
+                nixpkgs = {
+                  pkgs = import inputs.nixpkgs {
+                    inherit (args.config.facter.report) system;
+                    inherit (config.nixpkgs) overlays;
+                    inherit (config.nixpkgs) allowUnfreePredicate;
+
+                    config.allowUnfreePredicate =
+                      pkg: builtins.elem (lib.getName pkg) config.nixpkgs.allowedUnfreePackages;
+                  };
+                  hostPlatform = args.config.facter.report.system;
+                };
+              })
+              cfg.module
+            ];
+          };
         };
 
         darwinConfigurations = lib.optionalAttrs isDarwin {
-          "${name}" = inputs.nix-darwin.lib.darwinSystem { modules = [ cfg.module ]; };
+          "${name}" = inputs.nix-darwin.lib.darwinSystem {
+            modules = [
+              (args: {
+                nix.nixPath = [
+                  "nixpkgs=${args.config.nixpkgs.flake.source}"
+                ];
+                nixpkgs = {
+                  pkgs = import inputs.nixpkgs {
+                    system = "aarch64-darwin";
+                    inherit (config.nixpkgs) overlays;
+
+                    config.allowUnfreePredicate =
+                      pkg: builtins.elem (lib.getName pkg) config.nixpkgs.allowedUnfreePackages;
+                  };
+                  hostPlatform = "aarch64-darwin";
+                };
+              })
+              cfg.module
+            ];
+          };
         };
       }
     ) config.configurations
