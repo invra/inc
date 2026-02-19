@@ -6,11 +6,9 @@ let
         lilex
         ibm-plex
         noto-fonts
-        liberation_ttf
         noto-fonts-cjk-sans
-        nerd-fonts.fira-mono
+        noto-fonts-cjk-serif
         noto-fonts-color-emoji
-        nerd-fonts.jetbrains-mono
       ];
     };
 in
