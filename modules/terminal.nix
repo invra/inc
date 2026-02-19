@@ -237,7 +237,7 @@ in
             display = {
               size.binaryPrefix = "si";
               color = "blue";
-              separator = " ";
+              separator = "  ";
             };
             modules = [
               {
@@ -318,6 +318,25 @@ in
                 type = "dns";
                 key = "dns  ";
                 keyColor = "yellow";
+              }
+              "break"
+              {
+                type = "custom";
+                key = "hg   ";
+                format = "https://hg.sr.ht/~invra/";
+                keyColor = "magenta";
+              }
+              {
+                type = "custom";
+                key = "git  ";
+                format = "https://gitlab.com/invra/";
+                keyColor = "magenta";
+              }
+              {
+                type = "custom";
+                key = "darcs";
+                format = "https://hub.darcs.net/invra/";
+                keyColor = "magenta";
               }
             ];
           };
