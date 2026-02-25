@@ -9,10 +9,6 @@
       url = "gitlab:invra/nix-dev";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-    discord-rpc-lsp = {
-      url = "gitlab:invra/discord-rpc-lsp";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
     flake-parts = {
       url = "github:hercules-ci/flake-parts";
       inputs.nixpkgs-lib.follows = "nixpkgs";
@@ -30,16 +26,13 @@
       url = "github:sodiboo/niri-flake";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-    nixcord = {
-      url = "github:FlameFlag/nixcord";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
     nix-darwin = {
       url = "github:LnL7/nix-darwin";
       inputs.nixpkgs.follows = "nixpkgs";
     };
     nixos-facter-modules.url = "github:numtide/nixos-facter-modules";
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
+    nixpkgs-23-05.url = "github:NixOS/nixpkgs/nixos-23.05";
     stylix = {
       url = "github:danth/stylix";
       inputs = {

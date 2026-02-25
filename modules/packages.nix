@@ -21,7 +21,6 @@ in
 {
   nixpkgs.allowedUnfreePackages = [
     "bitwig-studio-unwrapped"
-    "davinci-resolve"
     "steam"
     "steam-unwrapped"
   ];
@@ -64,7 +63,7 @@ in
     };
 
   flake.modules.homeManager.base =
-    { pkgs, ... }:
+    { pkgs, pkgs-23-05, ... }:
     {
       home.packages =
         with pkgs;
@@ -97,15 +96,15 @@ in
           easyeffects
           vlc
           pavucontrol
-          davinci-resolve
-          krita
+          blender
+          # INFO: Couldn't build - build failure
+          # krita
           wayvnc
         ]
         ++ (lib.optionals (pkgs.stdenv.isLinux && pkgs.stdenv.isx86_64) [
           wineWow64Packages.waylandFull
           winetricks
-          # INFO: Couldn't build - build failure
-          # yabridge
+          yabridge
           yabridgectl
           bitwig-studio
         ]);

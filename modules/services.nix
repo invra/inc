@@ -1,8 +1,5 @@
 { config, ... }:
 {
-  nixpkgs.allowedUnfreePackages = [
-    "mongodb"
-  ];
   flake.modules = {
     nixos.base =
       { pkgs, ... }:

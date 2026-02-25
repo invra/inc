@@ -16,14 +16,8 @@
           defaultEditor = true;
 
           languages = {
-            language-server.discord-rpc.command = "discord-rpc-lsp";
-
             language = [
               {
-                language-servers = [
-                  "discord-rpc"
-                  "rust-analyzer"
-                ];
                 name = "rust";
                 indent = {
                   tab-width = 2;
@@ -32,32 +26,10 @@
               }
               {
                 language-servers = [
-                  "discord-rpc"
                   "nixd"
                   "nil"
                 ];
                 name = "nix";
-              }
-              {
-                language-servers = [
-                  "discord-rpc"
-                  "zls"
-                ];
-                name = "zig";
-              }
-              {
-                language-servers = [
-                  "discord-rpc"
-                  "typescript-langague-server"
-                ];
-                name = "typescript";
-              }
-              {
-                language-servers = [
-                  "discord-rpc"
-                  "gopls"
-                ];
-                name = "go";
               }
             ];
           };
@@ -142,7 +114,6 @@
             marksman
             markdownlint-cli2
             bash-language-server
-            inputs.discord-rpc-lsp.packages.${stdenv.hostPlatform.system}.default
           ];
         };
       };

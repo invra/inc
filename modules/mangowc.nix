@@ -195,7 +195,6 @@
             # menu and terminal
             "Super,B,spawn,firefox"
             "Super,F,spawn,${pkgs.nautilus}/bin/nautilus"
-            "Super,D,spawn,discord"
 
             # exit
             "Super+Shift,Q,quit"

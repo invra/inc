@@ -53,6 +53,9 @@
 
         extraSpecialArgs = {
           inherit inputs;
+          pkgs-23-05 = import inputs.nixpkgs-23-05 {
+            inherit system;
+          };
           linux = isLinux;
           darwin = isDarwin;
         };
