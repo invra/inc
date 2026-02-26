@@ -45,6 +45,7 @@ in
         zoxide
         carapace
       ];
+      home.file.".hushlogin".text = "";
       xdg.configFile = {
         "elvish/lib/github.com/zzamboni/elvish-modules" = {
           recursive = true;
@@ -347,7 +348,13 @@ in
         alacritty = {
           enable = true;
           settings = {
-            font.size = lib.mkForce 16.0;
+            font = {
+              size = lib.mkForce 16.0;
+              normal.family = lib.mkForce "Lilex";
+              bold.family = lib.mkForce "Lilex";
+              italic.family = lib.mkForce "Lilex";
+              bold_italic.family = lib.mkForce "Lilex";
+            };
             window.opacity = lib.mkForce 0.85;
           };
         };

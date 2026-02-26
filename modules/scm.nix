@@ -25,6 +25,7 @@
 
       programs.mercurial = {
         enable = true;
+        package = pkgs.mercurial.override { rustSupport = true; };
         userName = "Invra";
         userEmail = "identificationsucks@gmail.com";
         aliases = {

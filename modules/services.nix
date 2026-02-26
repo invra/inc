@@ -1,4 +1,4 @@
-{ config, ... }:
+{ lib, config, ... }:
 {
   flake.modules = {
     nixos.base =
@@ -60,9 +60,9 @@
       };
 
     homeManager.base =
-      { pkgs, ... }:
+      { pkgs, linux, ... }:
       {
-        services.udiskie = {
+        services.udiskie = lib.optionalAttrs linux {
           enable = true;
           settings = {
             # workaround for

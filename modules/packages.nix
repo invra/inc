@@ -63,7 +63,7 @@ in
     };
 
   flake.modules.homeManager.base =
-    { pkgs, pkgs-23-05, ... }:
+    { pkgs, ... }:
     {
       home.packages =
         with pkgs;
@@ -78,7 +78,8 @@ in
           unzip
           nil
           nixd
-          yt-dlp
+          # INFO: Couldn't build - python errors
+          # yt-dlp
           yazi
           wget
           firefox
