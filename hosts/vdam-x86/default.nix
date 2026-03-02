@@ -3,7 +3,7 @@ let
   this = config;
 in
 {
-  configurations.pc-x86.module = {
+  configurations.vdam-x86.module = {
     imports = with this.flake.modules.nixos; [
       base
     ];
