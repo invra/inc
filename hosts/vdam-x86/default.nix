@@ -23,6 +23,10 @@ in
         "ahci"
         "sd_mod"
         "kvm-amd"
+        "virtio"
+        "virtio_pci"
+        "virtio_blk"
+        "virtio_gpu"
       ];
 
       availableKernelModules = [
@@ -33,7 +37,7 @@ in
 
     services.xserver.videoDrivers = [
       "modesetting"
-      "amdgpu"
+      "virtio"
     ];
 
     fileSystems = {
