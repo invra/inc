@@ -65,6 +65,9 @@ in
   flake.modules.homeManager.base =
     { pkgs, ... }:
     {
+      imports = [
+        inputs.nix-doom-emacs-unstraightened.homeModule
+      ];
       home.packages =
         with pkgs;
         [
@@ -136,6 +139,10 @@ in
 
       programs = {
         ripgrep.enable = true;
+
+        # doom-emacs = {
+        #   enable = true;
+        # };
 
         zed-editor = {
           enable = true;
