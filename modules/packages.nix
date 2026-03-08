@@ -146,6 +146,11 @@ in
 
         zed-editor = {
           enable = true;
+          extraPackages = with pkgs; [
+            nil
+            nixd
+            rust-analyzer
+          ];
           extensions = [
             "nix"
             "zig"
