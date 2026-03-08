@@ -34,7 +34,7 @@
           repeat_rate = "85";
           repeat_delay = "400";
           xkb_rules_layout = "us,us";
-          xkb_rules_variant = "workman,";
+          xkb_rules_variant = ",workman";
           xkb_rules_options = "grp:alt_shift_toggle,caps:escape";
         };
       };
