@@ -98,6 +98,7 @@ in
             alias:new &save ls eza --icons 
             alias:new &save l eza --icons -l
             alias:new &save la eza --icons -al
+            alias:new &save tree eza --icons --tree 
             alias:new &save edit taskset -c 0-7 hx
             alias:new &save fuckoff exit
             alias:new &save doas ${if darwin then "sudo" else "${pkgs.doas-sudo-shim}/bin/sudo"}
