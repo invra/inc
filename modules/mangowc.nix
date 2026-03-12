@@ -118,7 +118,6 @@
           no_border_when_single = "0";
           axis_bind_apply_timeout = "100";
           focus_on_activate = "1";
-          inhibit_regardless_of_visibility = "0";
           sloppyfocus = "1";
           warpcursor = "1";
           focus_cross_monitor = "0";
@@ -264,7 +263,6 @@
           mousebind = [
             "Super,btn_left,moveresize,curmove"
             "Super,btn_right,moveresize,curresize"
-            "NONE,btn_left,toggleoverview,1"
           ];
 
           # layer rule

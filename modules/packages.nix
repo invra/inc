@@ -81,8 +81,7 @@ in
           unzip
           nil
           nixd
-          # INFO: Couldn't build - python errors
-          # yt-dlp
+          yt-dlp
           yazi
           wget
           firefox
@@ -96,13 +95,12 @@ in
         ++ lib.optionals pkgs.stdenv.isLinux [
           wl-clipboard
           wayvnc
-          helvum
+          crosspipe
           easyeffects
           vlc
           pavucontrol
           blender
-          # INFO: Couldn't build - build failure
-          # krita
+          krita
           wayvnc
         ]
         ++ (lib.optionals (pkgs.stdenv.isLinux && pkgs.stdenv.isx86_64) [
