@@ -104,7 +104,7 @@ in
           wayvnc
         ]
         ++ (lib.optionals (pkgs.stdenv.isLinux && pkgs.stdenv.isx86_64) [
-          wineWow64Packages.waylandFull
+          wineWow64Packages.stable
           winetricks
           yabridge
           yabridgectl
