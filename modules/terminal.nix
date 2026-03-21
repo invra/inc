@@ -104,6 +104,8 @@ in
             alias:new &save doas ${if darwin then "sudo" else "${pkgs.doas-sudo-shim}/bin/sudo"}
             alias:new &save q exit
 
+            set E:VISUAL = "${pkgs.helix}/bin/hx"
+            set E:EDITOR = "${pkgs.helix}/bin/hx";
             set-env CARAPACE_BRIDGES 'zsh,fish,bash,inshellisense'
             eval (carapace _carapace | slurp)
             eval (zoxide init elvish --cmd cd | slurp)
