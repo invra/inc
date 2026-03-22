@@ -33,7 +33,6 @@ in
         systemPackages = with pkgs; [
           lsof
           swww
-          firefox
           pciutils
           nautilus
           alacritty
@@ -84,7 +83,6 @@ in
           yt-dlp
           yazi
           wget
-          firefox
           killall
         ]
         ++ lib.optionals pkgs.stdenv.isDarwin [
@@ -111,29 +109,7 @@ in
           bitwig-studio
         ]);
 
-      programs.firefox = {
-        enable = true;
-
-        profiles = {
-          main = {
-            id = 0;
-            isDefault = true;
-            settings = {
-              "browser.newtab.pinned" = [
-                {
-                  title = "nixos";
-                  url = "https://nixos.org";
-                }
-              ];
-            };
-          };
-        };
-      };
-
-      stylix.targets = {
-        firefox.profileNames = [ "main" ];
-        btop.enable = false;
-      };
+      stylix.targets.btop.enable = false;
 
       programs = {
         ripgrep.enable = true;

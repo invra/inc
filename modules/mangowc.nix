@@ -192,7 +192,6 @@
             "Super,Return,spawn,${pkgs.alacritty}/bin/alacritty"
 
             # menu and terminal
-            "Super,B,spawn,firefox"
             "Super,F,spawn,${pkgs.nautilus}/bin/nautilus"
 
             # exit
