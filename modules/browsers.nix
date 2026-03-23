@@ -4,7 +4,7 @@
   };
   flake.modules.homeManager.base = { pkgs, linux, ... }: {
     imports = [
-      inputs.zen-browser.homeModules.default
+      inputs.zen-browser.homeModules.twilight
     ];
     stylix.targets = {
       firefox.profileNames = [ "main" ];
@@ -127,6 +127,7 @@
           };
           settings = {
             "zen.workspaces.continue-where-left-off" = true;
+            "zen.window-sync.enabled" = false;
             "zen.workspaces.natural-scroll" = true;
             "zen.view.compact.hide-tabbar" = true;
             "zen.view.compact.hide-toolbar" = true;
@@ -142,6 +143,6 @@
       };
     };
   } // lib.optionalAttrs linux {
-    wayland.windowManager.mango.settings.bind = ["Super,B,spawn,zen-beta"];
+    wayland.windowManager.mango.settings.bind = ["Super,B,spawn,zen-twilight"];
   };
 }
