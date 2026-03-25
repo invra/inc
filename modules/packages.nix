@@ -23,6 +23,7 @@ in
     "bitwig-studio-unwrapped"
     "steam"
     "steam-unwrapped"
+    "discord"
   ];
   flake.modules.darwin.base = polyModule;
   flake.modules.nixos.base =
@@ -71,6 +72,7 @@ in
         with pkgs;
         [
           sl
+          discord
           (inputs.dev-nix.packages.${stdenv.hostPlatform.system}.default)
           prismlauncher
           viu

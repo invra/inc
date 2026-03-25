@@ -4,7 +4,7 @@
   };
   flake.modules.homeManager.base = { pkgs, linux, ... }: {
     imports = [
-      inputs.zen-browser.homeModules.twilight
+      inputs.zen-browser.homeModules.beta
     ];
     stylix.targets = {
       firefox.profileNames = [ "main" ];
@@ -12,19 +12,16 @@
     };
     programs.firefox = {
       enable = true;
-
-      profiles = {
-        main = {
-          id = 0;
-          isDefault = true;
-          settings = {
-            "browser.newtab.pinned" = [
-              {
-                title = "nixos";
-                url = "https://nixos.org";
-              }
-            ];
-          };
+      profiles.main = {
+        id = 0;
+        isDefault = true;
+        settings = {
+          "browser.newtab.pinned" = [
+            {
+              title = "nixos";
+              url = "https://nixos.org";
+            }
+          ];
         };
       };
     };
@@ -70,7 +67,7 @@
       );
     in {
       enable = true;
-      darwinDefaultsId = "org.mozilla.firefox.plist";
+      darwinDefaultsId = "app.zen-browser.zen";
       policies = {
         AutofillAddressEnabled = true;
         AutofillCreditCardEnabled = false;
@@ -105,42 +102,40 @@
         };
       };
 
-      profiles = {
-        main = {
-          id = 0;
-          isDefault = true;
-          search = {
-            default = "Startpage";
-            force = true;
-            order = [ "Startpage" ];
-            engines = {
-              Startpage = {
-                urls = [{ template = "https://www.startpage.com/sp/search?q={searchTerms}"; }];
-                definedAliases = [ "@sp" ];
-              };
-              NixOS = {
-                urls = [{ template = "https://search.nixos.org/options?query={searchTerms}"; }];
-                icon = "${pkgs.nixos-icons}/share/icons/hicolor/scalable/apps/nix-snowflake.svg";
-                definedAliases = [ "@nix" ];
-              };
+      profiles.default = {
+        id = 0;
+        isDefault = true;
+        search = {
+          default = "Startpage";
+          force = true;
+          order = [ "Startpage" ];
+          engines = {
+            Startpage = {
+              urls = [{ template = "https://www.startpage.com/sp/search?q={searchTerms}"; }];
+              definedAliases = [ "@sp" ];
             };
-          };
-          settings = {
-            "zen.workspaces.continue-where-left-off" = true;
-            "zen.window-sync.enabled" = false;
-            "zen.workspaces.natural-scroll" = true;
-            "zen.view.compact.hide-tabbar" = true;
-            "zen.view.compact.hide-toolbar" = true;
-            "zen.view.compact.animate-sidebar" = false;
-            "zen.welcome-screen.seen" = true;
-            "zen.urlbar.behavior" = "float";
-            browser = {
-              tabs.warnOnClose = false;
-              download.panel.shown = false;
+            NixOS = {
+              urls = [{ template = "https://search.nixos.org/options?query={searchTerms}"; }];
+              icon = "${pkgs.nixos-icons}/share/icons/hicolor/scalable/apps/nix-snowflake.svg";
+              definedAliases = [ "@nix" ];
             };
           };
         };
-      };
+        settings = {
+          "zen.workspaces.continue-where-left-off" = true;
+          "zen.window-sync.enabled" = false;
+          "zen.workspaces.natural-scroll" = true;
+          "zen.view.compact.hide-tabbar" = true;
+          "zen.view.compact.hide-toolbar" = true;
+          "zen.view.compact.animate-sidebar" = false;
+          "zen.welcome-screen.seen" = true;
+          "zen.urlbar.behavior" = "float";
+          browser = {
+            tabs.warnOnClose = false;
+            download.panel.shown = false;
+          };
+        };
+      };      
     };
   } // lib.optionalAttrs linux {
     wayland.windowManager.mango.settings.bind = ["Super,B,spawn,zen-twilight"];
