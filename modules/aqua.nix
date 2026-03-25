@@ -62,7 +62,7 @@
             FXPreferredViewStyle = "Nlsv";
             # Search the current folder
             FXDefaultSearchScope = "SCcf";
-            # List with directorys at first
+            # List with directories at first
             _FXSortFoldersFirst = true;
             # Disable finder tabs (due to WM)
             FinderSpawnTab = false;

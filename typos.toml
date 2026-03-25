@@ -1,0 +1,25 @@
+[default]
+extend-ignore-re = [
+  'cl\[ist]',
+  '\[lan\]guage',
+  '"ba"',
+  '_hda_',
+  "doas",
+  # magic
+  'facter',
+  # used in shell config
+  'thm',
+  # macOS version
+  "Big Sur",
+]
+check-filename = true
+
+[files]
+ignore-files = true
+ignore-hidden = false
+extend-exclude = [
+  ".hg/",
+  "*.patch",
+  # Contributor names aren't typos.
+  ".mailmap",
+]

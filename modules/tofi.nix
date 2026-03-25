@@ -9,7 +9,8 @@
         enable = true;
 
         settings = {
-          prompt-text = "\"󱞪 \""; # Generator doesnt wrap "" so intentional space is excaped.
+          # Generator doesnt wrap "" so intentional space is escaped.
+          prompt-text = "\"󱞪 \"";
           text-color = "#e0def4";
           prompt-color = "#ebbcba";
           selection-color = "#c4a7e7";
