@@ -1,5 +1,8 @@
 { config, ... }:
 {
+  flake.modules.darwin.base = {
+    system.primaryUser = config.flake.meta.owner.username;
+  };
   flake.modules.nixos.base = {
     security = {
       rtkit.enable = true;

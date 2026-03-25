@@ -1,13 +1,23 @@
 { lib, ... }:
 {
+  flake.modules.darwin.base = {
+    system.defaults.dock = {
+      autohide = true;
+      orientation = "bottom";
+      show-recents = false;
+      tilesize = 48;
+      slow-motion-allowed = true;
+      
+      wvous-tl-corner = 1;
+      wvous-tr-corner = 1;
+      wvous-bl-corner = 1;
+      wvous-br-corner = 1;
+    };
+  };
   flake.modules.homeManager.base =
     { darwin, ... }:
     lib.optionalAttrs darwin {
       targets.darwin = {
-        # dock = {
-        #   enable = true;
-        # };
-
         defaults = {
           NSGlobalDomain = {
             AppleShowAllExtensions = false;
