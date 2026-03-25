@@ -58,7 +58,7 @@ index 60c9d9a..bfbed0f 100644
 -  }
 -
 -  set E:NIX_SSL_CERT_FILE = "/nix/var/nix/profiles/default/etc/ssl/certs/ca-bundle.crt"
-+  set E:NIX_SSL_CERT_FILE = "/etc/ssl/certs/ca-bundle.crt"
++  set E:NIX_SSL_CERT_FILE = ""
    set E:NIX_PATH = "/nix/var/nix/profiles/per-user/root/channels"
 -  # E:MANPATH = ~/.nix-profile/share/man
 -  set paths = [
