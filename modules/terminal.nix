@@ -36,6 +36,7 @@ in
   flake.modules.homeManager.base =
     {
       pkgs,
+      linux,
       darwin,
       ...
     }:
@@ -358,7 +359,12 @@ in
               italic.family = lib.mkForce "Lilex";
               bold_italic.family = lib.mkForce "Lilex";
             };
-            window.opacity = lib.mkForce 0.85;
+            window = {
+              opacity = if linux
+                then lib.mkForce 0.85
+                else lib.mkForce 0.95;
+              decorations = "Buttonless";
+            };
           };
         };
       };
