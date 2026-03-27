@@ -138,6 +138,6 @@
       };      
     };
   } // lib.optionalAttrs linux {
-    wayland.windowManager.mango.settings.bind = ["Super,B,spawn,zen-twilight"];
+    wayland.windowManager.mango.settings.bind = ["Super,B,spawn,zen-beta"];
   };
 }
