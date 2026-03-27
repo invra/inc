@@ -360,9 +360,7 @@ in
               bold_italic.family = lib.mkForce "Lilex";
             };
             window = {
-              opacity = if linux
-                then lib.mkForce 0.85
-                else lib.mkForce 0.95;
+              opacity = if linux then lib.mkForce 0.85 else lib.mkForce 0.95;
               decorations = "Buttonless";
             };
           };
