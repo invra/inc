@@ -75,11 +75,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1774557679,
-        "narHash": "sha256-rgR5PB4CXkFC9EqcTWbprji6jUVrF4q7n2Qaoh21EGI=",
+        "lastModified": 1774623780,
+        "narHash": "sha256-VjhZhPtvBgHEKt1yRqJFHV2GRqzcR15rc6JHeC35tlw=",
         "owner": "invra",
         "repo": "nix-dev",
-        "rev": "2574b9dcffd6eee8e2080d15f87af8639aef054d",
+        "rev": "21f2fc273a2ee55831a3fe1b8257905da94f9ae7",
         "type": "gitlab"
       },
       "original": {
