@@ -34,6 +34,7 @@
       url = "github:marienz/nix-doom-emacs-unstraightened";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    nixcord.url = "github:FlameFlag/nixcord";
     nixos-facter-modules.url = "github:numtide/nixos-facter-modules";
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
     nixpkgs-23-05.url = "github:NixOS/nixpkgs/nixos-23.05";

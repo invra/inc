@@ -67,12 +67,12 @@ in
     {
       imports = [
         inputs.nix-doom-emacs-unstraightened.homeModule
+        inputs.nixcord.homeModules.nixcord
       ];
       home.packages =
         with pkgs;
         [
           sl
-          discord
           (inputs.dev-nix.packages.${stdenv.hostPlatform.system}.default)
           prismlauncher
           viu
@@ -115,6 +115,17 @@ in
 
       programs = {
         ripgrep.enable = true;
+        nixcord = {
+          enable = true;
+          discord = {
+            vencord.enable = false;
+            equicord.enable = true;
+          };
+
+          config.plugins = {
+            # nothing yet
+          };
+        };
 
         # doom-emacs = {
         #   enable = true;

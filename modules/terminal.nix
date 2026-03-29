@@ -105,6 +105,7 @@ in
             alias:new &save doas ${if darwin then "sudo" else "${pkgs.doas-sudo-shim}/bin/sudo"}
             alias:new &save q exit
 
+            set E:NIX_SSL_CERT_FILE = "${pkgs.cacert}/etc/ssl/certs/ca-bundle.crt";
             set E:VISUAL = "${pkgs.helix}/bin/hx"
             set E:EDITOR = "${pkgs.helix}/bin/hx";
             set-env CARAPACE_BRIDGES 'zsh,fish,bash,inshellisense'
@@ -360,9 +361,7 @@ in
               bold_italic.family = lib.mkForce "Lilex";
             };
             window = {
-              opacity = if linux
-                then lib.mkForce 0.85
-                else lib.mkForce 0.95;
+              opacity = if linux then lib.mkForce 0.85 else lib.mkForce 0.95;
               decorations = "Buttonless";
             };
           };

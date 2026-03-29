@@ -10,35 +10,55 @@
             "28" = {
               enabled = false;
               value = {
-                parameters = [51 20 1179648];
+                parameters = [
+                  51
+                  20
+                  1179648
+                ];
                 type = "standard";
               };
             };
             "29" = {
               enabled = false;
               value = {
-                parameters = [51 20 1441792];
+                parameters = [
+                  51
+                  20
+                  1441792
+                ];
                 type = "standard";
               };
             };
             "30" = {
               enabled = false;
               value = {
-                parameters = [52 21 1179648];
+                parameters = [
+                  52
+                  21
+                  1179648
+                ];
                 type = "standard";
               };
             };
             "31" = {
               enabled = false;
               value = {
-                parameters = [52 21 1441792];
+                parameters = [
+                  52
+                  21
+                  1441792
+                ];
                 type = "standard";
               };
             };
             "184" = {
               enabled = false;
               value = {
-                parameters = [53 23 1179648];
+                parameters = [
+                  53
+                  23
+                  1179648
+                ];
                 type = "standard";
               };
             };
