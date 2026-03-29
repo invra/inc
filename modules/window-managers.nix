@@ -4,66 +4,95 @@
   ...
 }:
 {
-  flake.modules.darwin.base = { pkgs, ... }: {
-    system.defaults.dock = {
-      autohide = true;
-      orientation = "bottom";
-      show-recents = false;
-      tilesize = 48;
-      slow-motion-allowed = true;
-      
-      wvous-tl-corner = 1;
-      wvous-tr-corner = 1;
-      wvous-bl-corner = 1;
-      wvous-br-corner = 1;
-    };
-    services.aerospace = {
-      enable = true;
-      settings = {
-        gaps = {
-          inner = {
-            horizontal = 12;
-            vertical = 12;
+  flake.modules.darwin.base =
+    { pkgs, ... }:
+    {
+      system.defaults.dock = {
+        autohide = true;
+        orientation = "bottom";
+        show-recents = false;
+        tilesize = 48;
+        slow-motion-allowed = true;
+
+        wvous-tl-corner = 1;
+        wvous-tr-corner = 1;
+        wvous-bl-corner = 1;
+        wvous-br-corner = 1;
+      };
+      services.aerospace = {
+        enable = true;
+        settings = {
+          gaps = {
+            inner = {
+              horizontal = 12;
+              vertical = 12;
+            };
+            outer = {
+              left = 10;
+              right = 10;
+              top = 10;
+              bottom = 10;
+            };
           };
-          outer = {
-            left = 10;
-            right = 10;
-            top = 10;
-            bottom = 10;
+          after-startup-command = [
+            "exec-and-forget ${pkgs.jankyborders}/bin/borders active_color=0xebbcbaff inactive_color=0x00000000 width=10.0"
+          ];
+          mode.main.binding = {
+            cmd-1 = "workspace 1";
+            cmd-shift-1 = [
+              "move-node-to-workspace 1"
+              "workspace 1"
+            ];
+            cmd-2 = "workspace 2";
+            cmd-shift-2 = [
+              "move-node-to-workspace 2"
+              "workspace 2"
+            ];
+            cmd-3 = "workspace 3";
+            cmd-shift-3 = [
+              "move-node-to-workspace 3"
+              "workspace 3"
+            ];
+            cmd-4 = "workspace 4";
+            cmd-shift-4 = [
+              "move-node-to-workspace 4"
+              "workspace 4"
+            ];
+            cmd-5 = "workspace 5";
+            cmd-shift-5 = [
+              "move-node-to-workspace 5"
+              "workspace 5"
+            ];
+            cmd-6 = "workspace 6";
+            cmd-shift-6 = [
+              "move-node-to-workspace 6"
+              "workspace 6"
+            ];
+            cmd-7 = "workspace 7";
+            cmd-shift-7 = [
+              "move-node-to-workspace 7"
+              "workspace 7"
+            ];
+            cmd-8 = "workspace 8";
+            cmd-shift-8 = [
+              "move-node-to-workspace 8"
+              "workspace 8"
+            ];
+            cmd-9 = "workspace 9";
+            cmd-shift-9 = [
+              "move-node-to-workspace 9"
+              "workspace 9"
+            ];
+            alt-space = "layout floating tiling";
+            alt-enter = "fullscreen";
+            cmd-enter = "exec-and-forget ${pkgs.alacritty}/bin/alacritty";
+            cmd-shift-s = "exec-and-forget screencapture -i -c";
+            cmd-h = [ ];
+            cmd-alt-h = [ ];
           };
-        };
-        after-startup-command = [
-          "exec-and-forget ${pkgs.jankyborders}/bin/borders active_color=0xebbcbaff inactive_color=0x00000000 width=10.0"
-        ];
-        mode.main.binding = {
-          cmd-1 = "workspace 1";
-          cmd-shift-1 = ["move-node-to-workspace 1" "workspace 1"];
-          cmd-2 = "workspace 2";
-          cmd-shift-2 = ["move-node-to-workspace 2" "workspace 2"];
-          cmd-3 = "workspace 3";
-          cmd-shift-3 = ["move-node-to-workspace 3" "workspace 3"];
-          cmd-4 = "workspace 4";
-          cmd-shift-4 = ["move-node-to-workspace 4" "workspace 4"];
-          cmd-5 = "workspace 5";
-          cmd-shift-5 = ["move-node-to-workspace 5" "workspace 5"];
-          cmd-6 = "workspace 6";
-          cmd-shift-6 = ["move-node-to-workspace 6" "workspace 6"];
-          cmd-7 = "workspace 7";
-          cmd-shift-7 = ["move-node-to-workspace 7" "workspace 7"];
-          cmd-8 = "workspace 8";
-          cmd-shift-8 = ["move-node-to-workspace 8" "workspace 8"];
-          cmd-9 = "workspace 9";
-          cmd-shift-9 = ["move-node-to-workspace 9" "workspace 9"];
-          alt-space = "layout floating tiling";
-          alt-enter = "fullscreen";
-          cmd-enter = "exec-and-forget ${pkgs.alacritty}/bin/alacritty";
-          cmd-shift-s = "exec-and-forget screencapture -i -c";
-          cmd-h = [];
-          cmd-alt-h = [];
         };
       };
     };
-  };
   flake.modules.nixos.base = {
     imports = [
       inputs.mango.nixosModules.mango
