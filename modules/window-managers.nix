@@ -125,11 +125,11 @@
             "${pkgs.eww}/bin/eww open bar1"
             "~/.config/mango/autostart.sh"
             "${pkgs.mako}/bin/mako"
-            "${pkgs.swww}/bin/swww-daemon"
+            "${pkgs.swaybg}/bin/swaybg"
           ];
 
           exec = [
-            "swww img ${../wallpapers/flake.jpg}"
+            "${pkgs.swaybg}/bin/swaybg --image ${../wallpapers/flake.jpg}"
           ];
 
           # Window effect

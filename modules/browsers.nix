@@ -3,33 +3,82 @@
   flake.modules.nixos.base =
     { pkgs, ... }:
     {
-      environment.systemPackages = with pkgs; [ firefox ];
+      environment.systemPackages = with pkgs; [ ungoogled-chromium ];
     };
   flake.modules.homeManager.base =
-    { pkgs, linux, ... }:
+    { config, pkgs, linux, ... }:
     {
       imports = [
         inputs.zen-browser.homeModules.beta
       ];
-      stylix.targets = {
-        firefox.profileNames = [ "main" ];
-        zen-browser.enable = false;
-      };
-      programs.firefox = {
-        enable = true;
-        profiles.main = {
-          id = 0;
-          isDefault = true;
-          settings = {
-            "browser.newtab.pinned" = [
-              {
-                title = "nixos";
-                url = "https://nixos.org";
-              }
-            ];
+
+      programs.chromium =
+      let
+        mkExtensionFor = browserVersion: { id, sha256, version }: {
+          inherit id;
+          crxPath = builtins.fetchurl {
+            url = "https://clients2.google.com/service/update2/crx?response=redirect&acceptformat=crx2,crx3&prodversion=${browserVersion}&x=id%3D${id}%26installsource%3Dondemand%26uc";
+            name = "${id}.crx";
+            inherit sha256;
           };
+          inherit version;
         };
+        mkExtension = mkExtensionFor (lib.versions.major pkgs.nur.repos.Ev357.helium.version);
+        extraOpts = {
+          ExtensionSettings =
+            # allow added extensions
+            (builtins.listToAttrs (
+              map
+                (ext: {
+                  name = if builtins.isAttrs ext then ext.id else ext;
+                  value = {
+                    installation_mode = "allowed";
+                  };
+                })
+                (
+                  config.programs.chromium.extensions
+                  ++ [
+                    "ocaahdebbfolfmndjeplogmgcagdmblk" # chromium web store
+                    "oladmjdebphlnjjcnomfhhbfdldiimaf" # libredirect
+                  ]
+                )
+            ))
+            // {
+              "*" = {
+                installation_mode = "blocked"; # Block by default
+                blocked_install_message = "Add in nixos module!";
+              };
+
+              # Pin ublock
+              "cjpalhdlnbpafiamejdnhcphjbkeiagm" = {
+                installation_mode = "allowed";
+                "toolbar_pin" = "force_pinned";
+              };
+              # Pin noscript
+              "doojmbjmlfjjnbmnoijecmcbfeoakpjm" = {
+                installation_mode = "allowed";
+                "toolbar_pin" = "force_pinned";
+              };
+            };
+          };
+      in
+      {
+        enable = true;
+        package = pkgs.ungoogled-chromium;
+        # package = pkgs.nur.repos.Ev357.helium;
+        extensions = [
+          (mkExtension {
+            # dark reader
+            id = "eimadpbcbfnmbkopoojfekhnkhdbieeh";
+            sha256 = "sha256-47DEQpj8HBSa+/TImW+5JCeuQeRkm5NMpJWZG3hSuFU=";
+            version = "4.9.34";
+          })
+        ];
+        # inherit extraOpts;
       };
+
+      stylix.targets.zen-browser.enable = false;
+
       programs.zen-browser =
         let
           # Generates the URL for the .xpi extension file
