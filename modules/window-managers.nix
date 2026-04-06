@@ -115,12 +115,18 @@
           modifier = "Mod4";
           output."*".bg = "${../wallpapers/flake.jpg} fill";
           gaps = {
-            inner = 15;
-            outer = 15;
+            inner = 10;
+            outer = 10;
           };
           window = {
             border = 5;
             titlebar = false;
+            commands = [
+              {
+                criteria.title = "Picture-in-Picture";
+                command = "floating enable, resize set width 700 height 400, sticky enable";
+              }
+            ];
           };
           colors = let
             mkColorSet = color: {
