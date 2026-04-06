@@ -29,13 +29,12 @@
         };
       }
       // lib.optionalAttrs linux {
-        wayland.windowManager.mango.settings = {
-          numlockon = "0";
-          repeat_rate = "85";
-          repeat_delay = "400";
-          xkb_rules_layout = "us,us";
-          xkb_rules_variant = ",workman";
-          xkb_rules_options = "grp:alt_shift_toggle,caps:escape";
+        wayland.windowManager.sway.config.input."*" = {
+          repeat_rate = "50";
+          repeat_delay = "250";
+          xkb_layout = "us,us";
+          xkb_variant = ",workman";
+          xkb_options = "grp:alt_shift_toggle,caps:escape";
         };
       };
   };

@@ -198,6 +198,6 @@
         };
     }
     // lib.optionalAttrs linux {
-      wayland.windowManager.mango.settings.bind = [ "Super,B,spawn,zen-beta" ];
+      wayland.windowManager.sway.config.keybindings."Mod4+b" = "exec zen-beta";
     };
 }
