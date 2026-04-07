@@ -7,7 +7,7 @@
         enable = true;
         enableFishIntegration = true;
       };
-      wayland.windowManager.sway.config.bars = [];
+      wayland.windowManager.sway.config.bars = [ ];
       xdg.configFile = {
         "eww/eww.scss".text = ''
           * {

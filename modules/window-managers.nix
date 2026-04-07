@@ -93,12 +93,14 @@
       };
     };
 
-  flake.modules.nixos.base = { pkgs, ... }: {
-    programs.sway = {
-      enable = true;
-      package = pkgs.swayfx;
+  flake.modules.nixos.base =
+    { pkgs, ... }:
+    {
+      programs.sway = {
+        enable = true;
+        package = pkgs.swayfx;
+      };
     };
-  };
 
   flake.modules.homeManager.base =
     {
@@ -128,20 +130,22 @@
               }
             ];
           };
-          colors = let
-            mkColorSet = color: {
-              border = color;
-              background = color;
-              childBorder = color;
-              indicator = color;
-              text = color;
+          colors =
+            let
+              mkColorSet = color: {
+                border = color;
+                background = color;
+                childBorder = color;
+                indicator = color;
+                text = color;
+              };
+            in
+            lib.mkForce {
+              focused = mkColorSet "#ebbcbaff";
+              unfocused = mkColorSet "#00000000";
+              focusedInactive = mkColorSet "#00000000";
+              urgent = mkColorSet "#eb6f92ff";
             };
-          in lib.mkForce {
-            focused = mkColorSet "#ebbcbaff";
-            unfocused = mkColorSet "#00000000";
-            focusedInactive = mkColorSet "#00000000";
-            urgent = mkColorSet "#eb6f92ff";
-          };
           keybindings = {
             # Compositor embeded bindings
             #   E.g kill active client, switch spaces.
