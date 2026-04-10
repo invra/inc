@@ -68,26 +68,6 @@
         "type": "github"
       }
     },
-    "dev-nix": {
-      "inputs": {
-        "nixpkgs": [
-          "nixpkgs"
-        ]
-      },
-      "locked": {
-        "lastModified": 1774623780,
-        "narHash": "sha256-VjhZhPtvBgHEKt1yRqJFHV2GRqzcR15rc6JHeC35tlw=",
-        "owner": "invra",
-        "repo": "nix-dev",
-        "rev": "21f2fc273a2ee55831a3fe1b8257905da94f9ae7",
-        "type": "gitlab"
-      },
-      "original": {
-        "owner": "invra",
-        "repo": "nix-dev",
-        "type": "gitlab"
-      }
-    },
     "doomemacs": {
       "flake": false,
       "locked": {
@@ -495,7 +475,6 @@
     },
     "root": {
       "inputs": {
-        "dev-nix": "dev-nix",
         "flake-parts": "flake-parts",
         "home-manager": "home-manager",
         "import-tree": "import-tree",

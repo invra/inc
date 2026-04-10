@@ -1,4 +1,4 @@
-{ lib, inputs, ... }:
+{ self, lib, inputs, ... }:
 let
   polyModule =
     { pkgs, ... }:
@@ -72,7 +72,7 @@ in
         with pkgs;
         [
           sl
-          (inputs.dev-nix.packages.${stdenv.hostPlatform.system}.default)
+          self.packages.${pkgs.stdenv.system}.dev
           prismlauncher
           viu
           ffmpeg
