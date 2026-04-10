@@ -73,6 +73,7 @@ in
         [
           sl
           self.packages.${pkgs.stdenv.system}.dev
+          self.packages.${pkgs.stdenv.system}.certified-by-lincoln
           prismlauncher
           viu
           ffmpeg
