@@ -59,7 +59,7 @@ in
               sha256 = "/Dwtl12QzPvMoMMGoj+v3dwX2ZwFT8t/bohVy1zDE0c=";
             };
             patches = [
-              ../patches/elvish-modules-nix.elv.patch
+              ../custom/patches/elvish-modules-nix.elv.patch
             ];
             buildInputs = [ ];
             installPhase = ''

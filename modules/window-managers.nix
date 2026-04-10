@@ -1,4 +1,5 @@
 {
+  self,
   lib,
   ...
 }:
@@ -109,7 +110,9 @@
       ...
     }:
     lib.optionalAttrs linux {
-      wayland.windowManager.sway = {
+      wayland.windowManager.sway = let
+        swaywpo = "${self.packages.${pkgs.stdenv.system}.swaywpo}/bin/swaywpo";
+      in {
         enable = true;
         package = pkgs.swayfx;
         checkConfig = false;
@@ -154,26 +157,16 @@
             "Mod1+Return" = "fullscreen";
             "Mod4+q" = "kill";
 
-            "Mod4+1" = "workspace number 1";
-            "Mod4+Shift+1" = "move container to workspace 1";
-            "Mod4+2" = "workspace number 2";
-            "Mod4+Shift+2" = "move container to workspace 2";
-            "Mod4+3" = "workspace number 3";
-            "Mod4+Shift+3" = "move container to workspace 3";
-            "Mod4+4" = "workspace number 4";
-            "Mod4+Shift+4" = "move container to workspace 4";
-            "Mod4+5" = "workspace number 5";
-            "Mod4+Shift+5" = "move container to workspace 5";
-            "Mod4+6" = "workspace number 6";
-            "Mod4+Shift+6" = "move container to workspace 6";
-            "Mod4+7" = "workspace number 7";
-            "Mod4+Shift+7" = "move container to workspace 7";
-            "Mod4+8" = "workspace number 8";
-            "Mod4+Shift+8" = "move container to workspace 8";
-            "Mod4+9" = "workspace number 9";
-            "Mod4+Shift+9" = "move container to workspace 9";
-            "Mod4+0" = "workspace number 10";
-            "Mod4+Shift+0" = "move container to workspace 10";
+            "Mod4+1" = "exec ${swaywpo} focus 1";
+            "Mod4+Shift+1" = "exec ${swaywpo} container-to 1";
+            "Mod4+2" = "exec ${swaywpo} focus 2";
+            "Mod4+Shift+2" = "exec ${swaywpo} container-to 2";
+            "Mod4+3" = "exec ${swaywpo} focus 3";
+            "Mod4+Shift+3" = "exec ${swaywpo} container-to 3";
+            "Mod4+4" = "exec ${swaywpo} focus 4";
+            "Mod4+Shift+4" = "exec ${swaywpo} container-to 4";
+            "Mod4+5" = "exec ${swaywpo} focus 5";
+            "Mod4+Shift+5" = "exec ${swaywpo} container-to 5";
 
             # Exec bindings
             #   Ones which will do an external action not
