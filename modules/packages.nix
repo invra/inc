@@ -65,7 +65,6 @@ in
     { pkgs, ... }:
     {
       imports = [
-        inputs.nix-doom-emacs-unstraightened.homeModule
         inputs.nixcord.homeModules.nixcord
       ];
       home.packages =
@@ -126,10 +125,6 @@ in
             # nothing yet
           };
         };
-
-        # doom-emacs = {
-        #   enable = true;
-        # };
 
         zed-editor = {
           enable = true;
