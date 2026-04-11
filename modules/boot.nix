@@ -5,7 +5,6 @@
       ...
     }:
     {
-      stylix.targets.plymouth.enable = false;
       boot = {
         kernelPackages = pkgs.linuxPackages_latest;
 
@@ -67,6 +66,6 @@
       systemd.services.systemd-boot-random-seed.enable = false;
 
       # Greeter
-      services.displayManager.gdm.enable = true;
+      services.displayManager.ly.enable = true;
     };
 }

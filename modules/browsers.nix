@@ -16,47 +16,6 @@
         inputs.zen-browser.homeModules.beta
       ];
 
-      programs.chromium =
-        let
-          # mkExtensionFor =
-          #   browserVersion:
-          #   {
-          #     id,
-          #     sha256,
-          #     version,
-          #   }:
-          #   {
-          #     inherit id;
-          #     crxPath = builtins.fetchurl {
-          #       url = "https://clients2.google.com/service/update2/crx?response=redirect&acceptformat=crx2,crx3&prodversion=${browserVersion}&x=id%3D${id}%26installsource%3Dondemand%26uc";
-          #       name = "${id}.crx";
-          #       inherit sha256;
-          #     };
-          #     inherit version;
-          #   };
-          # mkExtension = mkExtensionFor (lib.versions.major pkgs.nur.repos.Ev357.helium.version);
-
-        in
-        {
-          enable = true;
-          package = pkgs.ungoogled-chromium;
-          # package = pkgs.nur.repos.Ev357.helium;
-          # extensions = [
-          #   (mkExtension {
-          #     # dark reader
-          #     id = "eimadpbcbfnmbkopoojfekhnkhdbieeh";
-          #     sha256 = "sha256-47DEQpj8HBSa+/TImW+5JCeuQeRkm5NMpJWZG3hSuFU=";
-          #     version = "4.9.34";
-          #   })
-          # ];
-          # inherit extraOpts;
-          # extensions.test = {
-
-          # };
-        };
-
-      stylix.targets.zen-browser.enable = false;
-
       programs.zen-browser =
         let
           # Generates the URL for the .xpi extension file

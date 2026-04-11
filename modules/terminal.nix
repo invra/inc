@@ -19,7 +19,30 @@ let
 in
 {
   flake.modules = {
-    nixos.base = polyModule;
+    nixos.base = {
+      imports = [ polyModule ];
+      console = {
+        useXkbConfig = true;
+        colors = [
+          "191724"
+          "eb6f92"
+          "31748f"
+          "f6c177"
+          "9ccfd8"
+          "c4a7e7"
+          "ebbcba"
+          "e0def4"
+          "26233a"
+          "eb6f92"
+          "31748f"
+          "f6c177"
+          "9ccfd8"
+          "c4a7e7"
+          "ebbcba"
+          "e0def4"
+        ];
+      };
+    };
     darwin.base = {
       imports = [ polyModule ];
 
@@ -352,13 +375,14 @@ in
       programs = {
         alacritty = {
           enable = true;
+          theme = "rose_pine";
           settings = {
             font = {
-              size = lib.mkForce 16.0;
-              normal.family = lib.mkForce "Lilex";
-              bold.family = lib.mkForce "Lilex";
-              italic.family = lib.mkForce "Lilex";
-              bold_italic.family = lib.mkForce "Lilex";
+              size = 16.0;
+              normal.family = "Lilex";
+              bold.family = "Lilex";
+              italic.family = "Lilex";
+              bold_italic.family = "Lilex";
             };
             window = {
               opacity = if linux then lib.mkForce 0.85 else lib.mkForce 0.95;

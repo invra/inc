@@ -19,7 +19,11 @@ in
         fontDir.enable = true;
         fontconfig = {
           useEmbeddedBitmaps = true;
-          defaultFonts.monospace = [ "Fira Mono" ];
+          defaultFonts = {
+            monospace = [ "Lilex" ];
+            serif = [ "IBM Plex Serif" ];
+            sansSerif = [ "IBM Plex Sans" ];
+          };
         };
       };
     };

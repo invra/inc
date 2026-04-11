@@ -6,8 +6,6 @@
   flake.modules.homeManager.base =
     { linux, ... }:
     {
-      stylix.targets.mako.enable = false;
-
       services.mako = lib.optionalAttrs linux {
         enable = true;
 

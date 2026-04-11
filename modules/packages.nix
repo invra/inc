@@ -110,8 +110,6 @@ in
           bitwig-studio
         ]);
 
-      stylix.targets.btop.enable = false;
-
       programs = {
         ripgrep.enable = true;
         nixcord = {
