@@ -20,7 +20,7 @@ let
 in
 {
   nixpkgs.allowedUnfreePackages = [
-    "bitwig-studio-unwrapped"
+    "bitwig-studio6"
     "steam"
     "steam-unwrapped"
     "discord"
