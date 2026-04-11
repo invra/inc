@@ -64,9 +64,6 @@ in
   flake.modules.homeManager.base =
     { pkgs, ... }:
     {
-      imports = [
-        inputs.nixcord.homeModules.nixcord
-      ];
       home.packages =
         with pkgs;
         [
@@ -84,7 +81,11 @@ in
           yt-dlp
           yazi
           wget
-          killall
+          killall    
+          (discord.override {
+            withOpenASAR = true;
+            withVencord = true;
+          })
         ]
         ++ lib.optionals pkgs.stdenv.isDarwin [
           alacritty
@@ -112,18 +113,6 @@ in
 
       programs = {
         ripgrep.enable = true;
-        nixcord = {
-          enable = true;
-          discord = {
-            vencord.enable = false;
-            equicord.enable = true;
-          };
-
-          config.plugins = {
-            # nothing yet
-          };
-        };
-
         zed-editor = {
           enable = true;
           extraPackages = with pkgs; [
