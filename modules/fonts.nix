@@ -18,6 +18,7 @@ in
       fonts = {
         fontDir.enable = true;
         fontconfig = {
+          enable = true;
           useEmbeddedBitmaps = true;
           defaultFonts = {
             monospace = [ "Lilex" ];
