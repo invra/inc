@@ -2,19 +2,43 @@
   perSystem =
     { pkgs, ... }:
     {
+      devShells.swaywpo = pkgs.mkShell {
+        packages = with pkgs; [
+          zig
+          zls
+          jq
+        ];
+      };
       packages = {
-        swaywpo = pkgs.stdenv.mkDerivation {
+        swaywpo = pkgs.stdenv.mkDerivation (finalAttrs: {
           pname = "swaywpo";
-          version = "1.0.0";
+          version = "release";
+
           src = ./.;
 
-          enableParallelBuilding = true;
           nativeBuildInputs = with pkgs; [
-            meson
-            ninja
-            pkg-config
+            makeWrapper
           ];
-        };
+
+          buildInputs = with pkgs; [
+            zig
+          ];
+
+          zigBuildFlags = [
+            "-Doptimize=ReleaseSafe"
+          ];
+
+            postInstall = ''
+              wrapProgram $out/bin/swaywpo \
+                --prefix PATH : ${pkgs.lib.makeBinPath [ pkgs.jq ]}
+            '';
+
+          outputs = [
+            "out"
+          ];
+
+          meta.mainProgram = "swaywpo";
+        });
       };
     };
 }

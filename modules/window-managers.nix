@@ -157,22 +157,23 @@
             "Mod1+Return" = "fullscreen";
             "Mod4+q" = "kill";
 
-            "Mod4+1" = "exec ${swaywpo} focus 1";
-            "Mod4+Shift+1" = "exec ${swaywpo} container-to 1";
-            "Mod4+2" = "exec ${swaywpo} focus 2";
-            "Mod4+Shift+2" = "exec ${swaywpo} container-to 2";
-            "Mod4+3" = "exec ${swaywpo} focus 3";
-            "Mod4+Shift+3" = "exec ${swaywpo} container-to 3";
-            "Mod4+4" = "exec ${swaywpo} focus 4";
-            "Mod4+Shift+4" = "exec ${swaywpo} container-to 4";
-            "Mod4+5" = "exec ${swaywpo} focus 5";
-            "Mod4+Shift+5" = "exec ${swaywpo} container-to 5";
+            "Mod4+1" = "exec ${swaywpo} workspace 1";
+            "Mod4+Shift+1" = "exec ${swaywpo} move-container-to-workspace 1";
+            "Mod4+2" = "exec ${swaywpo} workspace 2";
+            "Mod4+Shift+2" = "exec ${swaywpo} move-container-to-workspace 2";
+            "Mod4+3" = "exec ${swaywpo} workspace 3";
+            "Mod4+Shift+3" = "exec ${swaywpo} move-container-to-workspace 3";
+            "Mod4+4" = "exec ${swaywpo} workspace 4";
+            "Mod4+Shift+4" = "exec ${swaywpo} move-container-to-workspace 4";
+            "Mod4+5" = "exec ${swaywpo} workspace 5";
+            "Mod4+Shift+5" = "exec ${swaywpo} move-container-to-workspace 5";
 
             # Exec bindings
             #   Ones which will do an external action not
             #   directly tied to sway.
             "Mod4+Return" = "exec alacritty";
             "Mod4+Space" = "exec ${pkgs.tofi}/bin/tofi-drun --drun-launch=true";
+            "Mod4+Shift+s" = "exec ${pkgs.hyprshot}/bin/hyprshot -m region --clipboard-only";
             "XF86AudioRaiseVolume" = "exec wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%+ -l 1.5";
             "XF86AudioLowerVolume" = "exec wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%-";
             "XF86AudioMute" = "exec wpctl set-mute @DEFAULT_AUDIO_SINK@ toggleI";
