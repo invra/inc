@@ -134,7 +134,7 @@
             size-immutable = true;
           };
 
-          # Disable AI bullshit
+          # Disable AI BS.
           "com.apple.CloudSubscriptionFeatures.optIn"."545129924" = false;
         };
       };

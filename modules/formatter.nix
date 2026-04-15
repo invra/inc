@@ -6,6 +6,7 @@
     treefmt = {
       projectRootFile = "flake.nix";
       programs = {
+        zig.enable = true;
         nixfmt.enable = true;
         nixf-diagnose.enable = true;
       };
