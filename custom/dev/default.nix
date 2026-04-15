@@ -22,7 +22,7 @@
           zigBuildFlags = [
             "-Doptimize=ReleaseSafe"
           ];
-  
+
           outputs = [
             "out"
           ];

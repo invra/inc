@@ -28,10 +28,10 @@
             "-Doptimize=ReleaseSafe"
           ];
 
-            postInstall = ''
-              wrapProgram $out/bin/swaywpo \
-                --prefix PATH : ${pkgs.lib.makeBinPath [ pkgs.jq ]}
-            '';
+          postInstall = ''
+            wrapProgram $out/bin/swaywpo \
+              --prefix PATH : ${pkgs.lib.makeBinPath [ pkgs.jq ]}
+          '';
 
           outputs = [
             "out"

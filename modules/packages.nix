@@ -1,4 +1,8 @@
-{ self, lib, inputs, ... }:
+{
+  self,
+  lib,
+  ...
+}:
 let
   polyModule =
     { pkgs, ... }:
@@ -76,7 +80,7 @@ in
           yt-dlp
           yazi
           wget
-          killall    
+          killall
           (discord.override {
             withOpenASAR = true;
             withVencord = true;
