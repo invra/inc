@@ -16,7 +16,7 @@ This is a flake tailored for me, but should be able to work very nicely for peop
 ====
 * JACK2
 * Bitwig Studio
-* Helvum
+* Crosspipe
 * Easy Effects (latest)
 * VST Support (theoretical, still needs testing)
 ====
@@ -29,5 +29,5 @@ This is a flake tailored for me, but should be able to work very nicely for peop
 * gh (GitHub CLI)
 * glab (Gitlab CLI)
 * btop
-* alacritty
+* ghostty
 ====

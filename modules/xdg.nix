@@ -31,7 +31,7 @@
           terminal-exec = {
             enable = true;
             settings = {
-              default = [ "alacritty.desktop" ];
+              default = [ "ghostty.desktop" ];
             };
           };
           mimeApps = {

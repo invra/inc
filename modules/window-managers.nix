@@ -62,7 +62,7 @@
             {
               alt-space = "layout floating tiling";
               alt-enter = "fullscreen";
-              cmd-enter = "exec-and-forget ${pkgs.alacritty}/bin/alacritty";
+              cmd-enter = "exec-and-forget ${pkgs.ghostty-bin}/bin/ghostty";
               cmd-shift-s = "exec-and-forget screencapture -i -c";
               cmd-h = [ ];
               cmd-alt-h = [ ];
@@ -159,7 +159,7 @@
                 # Exec bindings
                 #   Ones which will do an external action not
                 #   directly tied to sway.
-                "Mod4+Return" = "exec alacritty";
+                "Mod4+Return" = "exec ghostty";
                 "Mod4+Space" = "exec ${pkgs.tofi}/bin/tofi-drun --drun-launch=true";
                 "Mod4+Shift+s" = "exec ${pkgs.hyprshot}/bin/hyprshot -m region --clipboard-only";
                 "XF86AudioRaiseVolume" = "exec wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%+ -l 1.5";

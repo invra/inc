@@ -373,21 +373,15 @@ in
       };
 
       programs = {
-        alacritty = {
+        ghostty = {
           enable = true;
-          theme = "rose_pine";
+          package = pkgs.ghostty-bin;
           settings = {
-            font = {
-              size = 16.0;
-              normal.family = "Lilex";
-              bold.family = "Lilex";
-              italic.family = "Lilex";
-              bold_italic.family = "Lilex";
-            };
-            window = {
-              opacity = if linux then lib.mkForce 0.85 else lib.mkForce 0.95;
-              decorations = "Buttonless";
-            };
+            theme = "Rose Pine";
+            font-size = 16.0;
+            font-family = "Lilex";
+            background-opacity = if linux then lib.mkForce 0.85 else lib.mkForce 0.95;
+            macos-titlebar-style = "hidden";
           };
         };
       };

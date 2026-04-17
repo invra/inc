@@ -39,7 +39,7 @@ in
           lsof
           pciutils
           nautilus
-          alacritty
+          ghostty-bin
           xwayland-satellite
         ];
       };
@@ -87,7 +87,7 @@ in
           })
         ]
         ++ lib.optionals pkgs.stdenv.isDarwin [
-          alacritty
+          ghostty-bin
           pika
           utm
         ]
