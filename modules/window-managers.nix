@@ -63,6 +63,7 @@
               alt-space = "layout floating tiling";
               alt-enter = "fullscreen";
               cmd-enter = "exec-and-forget ${pkgs.ghostty-bin}/bin/ghostty";
+              cmd-backslash = "exec-and-forget ${pkgs.emacs}/bin/emacs";
               cmd-shift-s = "exec-and-forget screencapture -i -c";
               cmd-h = [ ];
               cmd-alt-h = [ ];

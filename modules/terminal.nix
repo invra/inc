@@ -3,18 +3,18 @@ let
   polyModule =
     { pkgs, ... }:
     {
-      users.users.${config.flake.meta.owner.username}.shell = pkgs.elvish;
-      environment.etc."elvish/rc.elv".text = ''
-        #!/usr/bin/env elvish
-        set paths = [
-          ~/.nix-profile/bin
-          ~/.local/state/nix/profile/bin
-          /run/wrappers/bin
-          /nix/var/nix/profiles/default/bin
-          /run/current-system/sw/bin
-          $@paths
-        ]
-      '';
+      users.users.${config.flake.meta.owner.username}.shell = pkgs.bash;
+      programs.bash = {
+        enable = true;
+        interactiveShellInit = ''
+          export NIX_SSL_CERT_FILE="${pkgs.cacert}/etc/ssl/certs/ca-bundle.crt"
+          export VISUAL="${pkgs.helix}/bin/hx";
+          export EDITOR="${pkgs.helix}/bin/hx";
+          if ! [ "$TERM" = "dumb" ] && [ -z "$BASH_EXECUTION_STRING" ]; then
+            exec ${pkgs.nushell}/bin/nu
+          fi
+        '';
+      };
     };
 in
 {
@@ -64,81 +64,62 @@ in
       ...
     }:
     {
-      home.packages = with pkgs; [
-        eza
-        zoxide
-        carapace
-      ];
       home.file.".hushlogin".text = "";
-      xdg.configFile = {
-        "elvish/lib/github.com/zzamboni/elvish-modules" = {
-          recursive = true;
-          source = pkgs.stdenv.mkDerivation {
-            name = "elvish-modules-patched";
-            src = pkgs.fetchFromGitHub {
-              owner = "zzamboni";
-              repo = "elvish-modules";
-              rev = "9005c970346ab06214b3cd3ed3e70f04f3c632ba";
-              sha256 = "/Dwtl12QzPvMoMMGoj+v3dwX2ZwFT8t/bohVy1zDE0c=";
-            };
-            patches = [
-              ../custom/patches/elvish-modules-nix.elv.patch
-            ];
-            buildInputs = [ ];
-            installPhase = ''
-              mkdir -p $out
-              cp -r ./* $out/
-            '';
+      programs = {
+        ghostty = {
+          enable = true;
+          package = pkgs.ghostty-bin;
+          settings = {
+            theme = "Rose Pine";
+            font-size = 16.0;
+            font-family = "Lilex";
+            background-opacity = if linux then lib.mkForce 0.85 else lib.mkForce 0.95;
+            macos-titlebar-style = "hidden";
           };
         };
-        "elvish/rc.elv" = {
-          executable = true;
-          text = ''
-            #!/usr/bin/env elvish
-            use str
-            use path
-            use github.com/zzamboni/elvish-modules/nix
-            use github.com/zzamboni/elvish-modules/alias
+        carapace = {
+          enable = true;
+          enableNushellIntegration = true;
+        };
+        zoxide = {
+          enable = true;
+          options = [ "--cmd cd" ];
+          enableNushellIntegration = true;
+        };
+        nushell = {
+          enable = true;
+          shellAliases = let
+            eza = "${pkgs.eza}/bin/eza";
+          in {
+            ls = "${eza} --icons"; 
+            l = "${eza} --icons -l";
+            la = "${eza} --icons -al";
+            tree = "${eza} --icons --tree"; 
+            edit = "taskset -c 0-7 hx";
+            fuckoff = "exit";
+            doas = if darwin then "sudo" else "${pkgs.doas-sudo-shim}/bin/sudo";
+            q = "exit";
+          };
 
-            set paths = [
-              ~/.nix-profile/bin
-              ~/.local/state/nix/profile/bin
-              /run/wrappers/bin
-              /nix/var/nix/profiles/default/bin
-              /run/current-system/sw/bin
-              $@paths
-            ]
-            nix:multi-user-setup
+          settings = {
+            show_banner = false;
+            table = {
+              mode = "none";
+              index_mode = "never";
+            };
+          };
+          extraConfig = ''
+            #!/bin/nu
+            def create_left_prompt [] {
+              let path = (ansi blue) + ($env.PWD | str replace $env.HOME "~")
 
-            # Output for Left Prompt
-            set edit:prompt = {
-              styled (tilde-abbr $pwd) blue
-              styled "\nλ " green
+              $path + (ansi reset) + "\n"
             }
-            # No Right Prompt
-            set edit:rprompt = { put "" }
-            set edit:insert:binding[Alt-x] = { exit }
-
-            alias:new &save ls eza --icons 
-            alias:new &save l eza --icons -l
-            alias:new &save la eza --icons -al
-            alias:new &save tree eza --icons --tree 
-            alias:new &save edit taskset -c 0-7 hx
-            alias:new &save fuckoff exit
-            alias:new &save doas ${if darwin then "sudo" else "${pkgs.doas-sudo-shim}/bin/sudo"}
-            alias:new &save q exit
-
-            set E:NIX_SSL_CERT_FILE = "${pkgs.cacert}/etc/ssl/certs/ca-bundle.crt";
-            set E:VISUAL = "${pkgs.helix}/bin/hx"
-            set E:EDITOR = "${pkgs.helix}/bin/hx";
-            set-env CARAPACE_BRIDGES 'zsh,fish,bash,inshellisense'
-            eval (carapace _carapace | slurp)
-            eval (zoxide init elvish --cmd cd | slurp)
+            $env.PROMPT_COMMAND = { || create_left_prompt };
+            $env.PROMPT_INDICATOR = { || $"(ansi green)λ(ansi reset) " };
           '';
         };
-      };
 
-      programs = {
         fastfetch = {
           enable = true;
 
@@ -249,20 +230,6 @@ in
                 keyColor = "magenta";
               }
             ];
-          };
-        };
-      };
-
-      programs = {
-        ghostty = {
-          enable = true;
-          package = pkgs.ghostty-bin;
-          settings = {
-            theme = "Rose Pine";
-            font-size = 16.0;
-            font-family = "Lilex";
-            background-opacity = if linux then lib.mkForce 0.85 else lib.mkForce 0.95;
-            macos-titlebar-style = "hidden";
           };
         };
       };
