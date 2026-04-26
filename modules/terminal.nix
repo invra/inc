@@ -68,7 +68,7 @@ in
       programs = {
         ghostty = {
           enable = true;
-          package = pkgs.ghostty-bin;
+          package = if pkgs.stdenv.isLinux then pkgs.ghostty else pkgs.ghostty-bin;
           settings = {
             theme = "Rose Pine";
             font-size = 16.0;

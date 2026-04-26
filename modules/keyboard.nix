@@ -34,7 +34,7 @@
           repeat_delay = "250";
           xkb_layout = "us,us";
           xkb_variant = ",workman";
-          xkb_options = "grp:alt_shift_toggle,caps:escape";
+          xkb_options = "grp:caps_toggle";
         };
       };
   };

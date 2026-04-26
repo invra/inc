@@ -39,8 +39,11 @@ in
           lsof
           pciutils
           nautilus
-          ghostty-bin
           xwayland-satellite
+        ] ++ lib.optionals stdenv.isLinux [
+          ghostty
+        ] ++ lib.optionals stdenv.isDarwin [
+          ghostty-bin
         ];
       };
 
