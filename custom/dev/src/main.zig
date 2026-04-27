@@ -3,14 +3,12 @@ const dev = @import("dev");
 
 const EXTRA_ARGS = 4;
 
-pub fn main() !void {
+pub fn main(init: std.process.Init) !void {
     var da = std.heap.DebugAllocator(.{}){};
     defer _ = da.deinit();
     const allocator = da.allocator();
 
-    const iargs = try std.process.argsAlloc(allocator);
-    defer std.process.argsFree(allocator, iargs);
-
+    const iargs = try init.minimal.args.toSlice(init.arena.allocator());
     const argv = iargs[1..];
 
     var has_command = false;
@@ -50,7 +48,7 @@ pub fn main() !void {
 
     const final_args = args[0..j];
 
-    const err = std.process.execv(allocator, final_args);
+    const err = std.process.replace(init.io, .{ .argv = final_args });
     std.debug.print("exec failed: {}\n", .{err});
     if (shell) |s| allocator.free(s);
     return err;
