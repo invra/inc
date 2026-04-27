@@ -4,9 +4,9 @@ const dev = @import("dev");
 const EXTRA_ARGS = 4;
 
 pub fn main() !void {
-    var gpa = std.heap.GeneralPurposeAllocator(.{}){};
-    defer _ = gpa.deinit();
-    const allocator = gpa.allocator();
+    var da = std.heap.DebugAllocator(.{}){};
+    defer _ = da.deinit();
+    const allocator = da.allocator();
 
     const iargs = try std.process.argsAlloc(allocator);
     defer std.process.argsFree(allocator, iargs);
