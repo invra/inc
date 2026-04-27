@@ -20,13 +20,6 @@
     };
     nixos-facter-modules.url = "github:numtide/nixos-facter-modules";
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
-    nur = {
-      url = "github:nix-community/NUR";
-      inputs = {
-        nixpkgs.follows = "nixpkgs";
-        flake-parts.follows = "flake-parts";
-      };
-    };
     treefmt-nix = {
       url = "github:numtide/treefmt-nix";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -40,14 +33,5 @@
     };
   };
 
-  outputs =
-    inputs@{ flake-parts, import-tree, ... }:
-    flake-parts.lib.mkFlake { inherit inputs; } {
-      imports = [
-        (import-tree ./hosts)
-        (import-tree ./custom)
-        (import-tree ./modules)
-      ];
-      _module.args.rootPath = ./.;
-    };
+  outputs = inputs: import ./. { inherit inputs; };
 }

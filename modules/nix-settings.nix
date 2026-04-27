@@ -1,5 +1,4 @@
 {
-  inputs,
   config,
   lib,
   ...
@@ -8,9 +7,6 @@ let
   polyModule =
     { pkgs, ... }:
     {
-      nixpkgs.overlays = [
-        inputs.nur.overlays.default
-      ];
       nix.package =
         pkgs.nixVersions
         |> lib.attrNames
