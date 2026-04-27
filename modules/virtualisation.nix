@@ -1,10 +1,16 @@
 { lib, config, ... }:
 {
-  flake.modules.nixos.base = {
-    users.groups.libvirtd.members = [ config.flake.meta.owner.username ];
+  flake.modules.nixos.base = { pkgs, ... }: {
+    users.groups = {  
+      libvirtd.members = [ config.flake.meta.owner.username ];
+      docker.members = [ config.flake.meta.owner.username ];
+    };
+
     programs.virt-manager.enable = true;
+    environment.systemPackages = with pkgs; [ winboat ];
     virtualisation = {
       libvirtd.enable = true;
+      docker.enable = true;
 
       spiceUSBRedirection.enable = true;
 
