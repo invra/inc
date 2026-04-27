@@ -33,5 +33,5 @@
     };
   };
 
-  outputs = inputs: import ./. { inherit inputs; };
+  outputs = inputs: import ./. inputs;
 }

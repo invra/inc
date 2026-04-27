@@ -1,10 +1,8 @@
 {
-  inputs,
+  flake-parts,
+  import-tree,
   ...
-}:
-let
-  inherit (inputs) flake-parts import-tree;
-in
+}@inputs:
 flake-parts.lib.mkFlake { inherit inputs; } {
   imports = [
     (import-tree ./hosts)
