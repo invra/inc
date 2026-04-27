@@ -1,6 +1,6 @@
 {
   nixConfig = {
-    abort-on-warn = false;
+    abort-on-warn = true;
     extra-experimental-features = [ "pipe-operators" ];
   };
 
