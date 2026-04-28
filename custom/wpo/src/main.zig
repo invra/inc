@@ -23,9 +23,9 @@ const Argv1 = enum {
 };
 
 pub fn main(init: std.process.Init) !void {
-    var da = std.heap.DebugAllocator(.{}){};
-    defer _ = da.deinit();
-    const allocator = da.allocator();
+    var arena: std.heap.ArenaAllocator = .init(std.heap.page_allocator);
+    defer _ = arena.deinit();
+    const allocator = arena.allocator();
     const iargs = try init.minimal.args.toSlice(init.arena.allocator());
     const argv = iargs[1..];
 

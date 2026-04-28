@@ -25,11 +25,7 @@ pub fn get_focused_output(allocator: std.mem.Allocator) ![]u8 {
 }
 
 /// Focus a workspace by name.
-pub fn focus_workspace(workspace: []const u8) !void {
-    var da = std.heap.DebugAllocator(.{}){};
-    defer _ = da.deinit();
-    const allocator = da.allocator();
-
+pub fn focus_workspace(allocator: std.mem.Allocator, workspace: []const u8) !void {
     const args = [_][]const u8{ "swaymsg", "workspace", workspace };
     const result = try lib.proc.exec(allocator, &args);
     defer result.deinit(allocator);
@@ -43,11 +39,7 @@ pub fn focus_workspace(workspace: []const u8) !void {
 }
 
 /// Move the focused container to a workspace by name.
-pub fn container_to_workspace(workspace: []const u8) !void {
-    var da = std.heap.DebugAllocator(.{}){};
-    defer _ = da.deinit();
-    const allocator = da.allocator();
-
+pub fn container_to_workspace(allocator: std.mem.Allocator, workspace: []const u8) !void {
     const args = [_][]const u8{
         "swaymsg", "move", "container", "to", "workspace", workspace,
     };
