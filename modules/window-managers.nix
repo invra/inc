@@ -91,7 +91,7 @@
     lib.optionalAttrs linux {
       wayland.windowManager.sway =
         let
-          swaywpo = "${self.packages.${pkgs.stdenv.system}.swaywpo}/bin/swaywpo";
+          wpo = "${self.packages.${pkgs.stdenv.system}.wpo}/bin/wpo";
         in
         {
           enable = true;
@@ -143,8 +143,8 @@
                         num = toString n;
                       in
                       {
-                        "${mod}+${num}" = "exec ${swaywpo} workspace ${num}";
-                        "${mod}+Shift+${num}" = "exec ${swaywpo} move-container-to-workspace ${num}";
+                        "${mod}+${num}" = "exec ${wpo} workspace ${num}";
+                        "${mod}+Shift+${num}" = "exec ${wpo} move-container-to-workspace ${num}";
                       }
                     ) (lib.range 1 9)
                   );

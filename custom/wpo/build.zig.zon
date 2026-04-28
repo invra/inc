@@ -1,7 +1,7 @@
 .{
-    .name = .swaywpo,
+    .name = .wpo,
     .version = "0.0.0",
-    .fingerprint = 0x4722e2b04ea25030,
+    .fingerprint = 0x5ccda2f82cdb7909,
     .minimum_zig_version = "0.15.2",
     .dependencies = .{},
     .paths = .{

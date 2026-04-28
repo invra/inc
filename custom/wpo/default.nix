@@ -2,7 +2,7 @@
   perSystem =
     { pkgs, ... }:
     {
-      devShells.swaywpo = pkgs.mkShell {
+      devShells.wpo = pkgs.mkShell {
         packages = with pkgs; [
           zig
           zls
@@ -10,8 +10,8 @@
         ];
       };
       packages = {
-        swaywpo = pkgs.stdenv.mkDerivation (finalAttrs: {
-          pname = "swaywpo";
+        wpo = pkgs.stdenv.mkDerivation (finalAttrs: {
+          pname = "wpo";
           version = "release";
 
           src = ./.;
@@ -29,7 +29,7 @@
           ];
 
           postInstall = ''
-            wrapProgram $out/bin/swaywpo \
+            wrapProgram $out/bin/wpo \
               --prefix PATH : ${pkgs.lib.makeBinPath [ pkgs.jq ]}
           '';
 
@@ -37,7 +37,7 @@
             "out"
           ];
 
-          meta.mainProgram = "swaywpo";
+          meta.mainProgram = "wpo";
         });
       };
     };

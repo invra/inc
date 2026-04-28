@@ -4,19 +4,19 @@ pub fn build(b: *std.Build) void {
     const target = b.standardTargetOptions(.{});
     const optimize = b.standardOptimizeOption(.{});
 
-    const mod = b.addModule("swaywpo", .{
-        .root_source_file = b.path("src/root.zig"),
+    const mod = b.addModule("wpo", .{
+        .root_source_file = b.path("src/manager/root.zig"),
         .target = target,
     });
 
     const exe = b.addExecutable(.{
-        .name = "swaywpo",
+        .name = "wpo",
         .root_module = b.createModule(.{
             .root_source_file = b.path("src/main.zig"),
             .target = target,
             .optimize = optimize,
             .imports = &.{
-                .{ .name = "swaywpo", .module = mod },
+                .{ .name = "wpo", .module = mod },
             },
         }),
     });
