@@ -1,10 +1,11 @@
 const std = @import("std");
+const Io = std.Io;
 
 pub const lib = struct {
     pub const proc = struct {
         pub const Proc = struct {
             /// Timings of proc fork-to-exit in nanoseconds
-            elapsed_ns: u64,
+            elapsed_ns: Io.Duration,
             /// Process identifier code
             pid: std.posix.pid_t,
             /// Feed for stdout (caller must free)
@@ -14,7 +15,7 @@ pub const lib = struct {
             /// The POSIX exit-code which was returned
             exit_code: u8,
             /// Force kill knowledge of what signal was given
-            term_signal: ?u32,
+            term_signal: ?std.posix.SIG,
 
             /// Free heap-allocated stdout/stderr slices.
             /// Call this when you're done with the Proc.
@@ -46,42 +47,50 @@ pub const lib = struct {
         ///   defer result.deinit(alloc);
         ///   std.debug.print("{s}\n", .{result.stdout});
         pub fn exec(allocator: std.mem.Allocator, args: []const []const u8) !Proc {
-            var timer_start = try std.time.Timer.start();
+            // Init an Io object inside of here.
+            var threaded: Io.Threaded = .init(allocator, .{});
+            defer threaded.deinit();
+            const io = threaded.io();
+
+            var timer_start = Io.Clock.awake.now(io);
 
             // Build a child process
-            var child = std.process.Child.init(args, allocator);
-            child.stdout_behavior = .Pipe;
-            child.stderr_behavior = .Pipe;
-
-            try child.spawn();
+            var child = try std.process.spawn(io, .{
+                .argv = args,
+                .stdout = .pipe,
+                .stderr = .pipe,
+            });
 
             const pid = child.id;
 
             // Read stdout + stderr concurrently via the stdlib helper
             // so we don't deadlock on full pipe buffers
-            const stdout_buf = try child.stdout.?.readToEndAlloc(allocator, 10 * 1024 * 1024);
-            const stderr_buf = try child.stderr.?.readToEndAlloc(allocator, 1 * 1024 * 1024);
+            var stdout_reader = child.stdout.?.reader(io, &.{});
+            const stdout_contents = try stdout_reader.interface.allocRemaining(allocator, .limited(10 * 1024 * 1024));
 
-            const term = try child.wait();
-            const elapsed = timer_start.read();
+            var stderr_reader = child.stderr.?.reader(io, &.{});
+            const stderr_contents = try stderr_reader.interface.allocRemaining(allocator, .limited(10 * 1024 * 1024));
+
+            const term = try child.wait(io);
+            const elapsed = timer_start.untilNow(io, .awake);
 
             const exit_code: u8 = switch (term) {
-                .Exited => |code| code,
-                .Signal => 0,
-                .Stopped => 0,
-                .Unknown => 0,
+                .exited => |code| code,
+                .signal => 0,
+                .stopped => 0,
+                .unknown => 0,
             };
 
-            const term_signal: ?u32 = switch (term) {
-                .Signal => |sig| sig,
+            const term_signal: ?std.posix.SIG = switch (term) {
+                .signal => |sig| sig,
                 else => null,
             };
 
             return Proc{
                 .elapsed_ns = elapsed,
-                .pid = pid,
-                .stdout = stdout_buf,
-                .stderr = stderr_buf,
+                .pid = pid.?,
+                .stdout = stdout_contents,
+                .stderr = stderr_contents,
                 .exit_code = exit_code,
                 .term_signal = term_signal,
             };
@@ -108,15 +117,15 @@ pub const sway = struct {
             return error.CommandFailed;
         }
 
-        const trimmed = std.mem.trimRight(u8, result.stdout, "\n");
+        const trimmed = std.mem.trimEnd(u8, result.stdout, "\n");
         return allocator.dupe(u8, trimmed);
     }
 
     /// Focus a workspace by name.
     pub fn focus_workspace(workspace: []const u8) !void {
-        var gpa = std.heap.GeneralPurposeAllocator(.{}){};
-        defer _ = gpa.deinit();
-        const allocator = gpa.allocator();
+        var da = std.heap.DebugAllocator(.{}){};
+        defer _ = da.deinit();
+        const allocator = da.allocator();
 
         const args = [_][]const u8{ "swaymsg", "workspace", workspace };
         const result = try lib.proc.exec(allocator, &args);
@@ -132,9 +141,9 @@ pub const sway = struct {
 
     /// Move the focused container to a workspace by name.
     pub fn container_to_workspace(workspace: []const u8) !void {
-        var gpa = std.heap.GeneralPurposeAllocator(.{}){};
-        defer _ = gpa.deinit();
-        const allocator = gpa.allocator();
+        var da = std.heap.DebugAllocator(.{}){};
+        defer _ = da.deinit();
+        const allocator = da.allocator();
 
         const args = [_][]const u8{
             "swaymsg", "move", "container", "to", "workspace", workspace,

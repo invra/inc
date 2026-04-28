@@ -1,75 +1,71 @@
+//! Expects to take in argc <= 2
+//!
+//! Refer to the `Argv1` struct to see what actions are available
+//!
+//! We build a unique workspace name of:
+//!   - focused output
+//!   - the workspace target
+//! which looks like: "<output>-<workspace_target>"
+//!
+//! Example:
+//! focused output (x) = "DP-1"
+//! the target workspace (y) = "8"
+//! therefore: new workspace name = "x-y" => "DP-1-8"
+
 const std = @import("std");
 const swaywpo = @import("swaywpo");
 
 const Argv1 = enum {
-    container_to_workspace,
-    focus_workspace,
-
-    pub fn to_string(self: Argv1) []const u8 {
-        return switch (self) {
-            .container_to_workspace => "move-container-to-workspace",
-            .focus_workspace => "workspace",
-        };
-    }
+    /// Move a "container" to a workspace
+    move_container_to_workspace,
+    /// Move to a workspace
+    workspace,
 };
 
-/// Expects to take in argc <= 2
-/// `argv[1]` = enum /* not really an enum */ {
-///   .ContainerToWorkspace = "move-container-to-workspace"
-///   .FocusWorkspace = "workspace"
-/// }
-/// `argv[2]` = int, which is space for call action to.
-///
-/// output = `swaypo.sway.get_focused_display()`
-/// ^ this is used as a way to create a space name specific
-/// special for that output
-///
-/// workspace_name = argv[2]
-///
-/// Build a unique workspace name: "<output>-<workspace_name>"
-/// e.g. output DP-2, workspace 3 -> "DP-2-3"
-///
-/// Do said action from `argv[1]`
-pub fn main() !void {
-    var gpa = std.heap.GeneralPurposeAllocator(.{}){};
-    defer _ = gpa.deinit();
-    const allocator = gpa.allocator();
-
-    const iargs = try std.process.argsAlloc(allocator);
-    defer std.process.argsFree(allocator, iargs);
-
+pub fn main(init: std.process.Init) !void {
+    var da = std.heap.DebugAllocator(.{}){};
+    defer _ = da.deinit();
+    const allocator = da.allocator();
+    const iargs = try init.minimal.args.toSlice(init.arena.allocator());
     const argv = iargs[1..];
 
+    const constructed_valid_args: []const []const u8 = comptime blk: {
+        const fields = @typeInfo(Argv1).@"enum".fields;
+        var result: [fields.len][]const u8 = undefined;
+        for (fields, 0..) |field, i| {
+            var normalized: []const u8 = "";
+            for (field.name) |c| {
+                normalized = normalized ++ &[_]u8{if (c == '_') '-' else c};
+            }
+            result[i] = normalized;
+        }
+        const final = result;
+        break :blk &final;
+    };
+
     if (argv.len != 2) {
-        std.debug.print("Usage: {s} <container-to-workspace|focus-workspace> <workspace>\n", .{iargs[0]});
+        const joined = try std.mem.join(allocator, "|", constructed_valid_args);
+        defer allocator.free(joined);
+        std.debug.print("Usage: {s} <{s}> <workspace>\n", .{ iargs[0], joined });
         return;
     }
 
     const output = try swaywpo.sway.get_focused_output(allocator);
     defer allocator.free(output);
 
-    if (std.mem.eql(u8, Argv1.container_to_workspace.to_string(), argv[0])) {
-        const str_buf = try std.mem.concat(allocator, u8, &.{
-            output,
-            "-",
-            argv[1],
-        });
-        defer allocator.free(str_buf);
+    const str_buf = try std.mem.concat(allocator, u8, &.{ output, "-", argv[1] });
+    defer allocator.free(str_buf);
 
-        try swaywpo.sway.container_to_workspace(str_buf);
-        return;
-    } else if (std.mem.eql(u8, Argv1.focus_workspace.to_string(), argv[0])) {
-        const str_buf = try std.mem.concat(allocator, u8, &.{
-            output,
-            "-",
-            argv[1],
-        });
-        defer allocator.free(str_buf);
-
-        try swaywpo.sway.focus_workspace(str_buf);
-        return;
-    } else {
-        std.debug.print("{s} is not a valid action.\n", .{argv[0]});
-        return;
+    inline for (constructed_valid_args, 0..) |arg, i| {
+        if (std.mem.eql(u8, arg, argv[0])) {
+            switch (i) {
+                0 => try swaywpo.sway.container_to_workspace(str_buf),
+                1 => try swaywpo.sway.focus_workspace(str_buf),
+                else => unreachable,
+            }
+            return;
+        }
     }
+
+    std.debug.print("{s} is not a valid action.\n", .{argv[0]});
 }
