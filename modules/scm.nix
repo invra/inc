@@ -2,39 +2,48 @@
   flake.modules.homeManager.base =
     { pkgs, ... }:
     {
-      programs.git = {
-        enable = true;
-        settings = {
-          user = {
-            name = "Invra";
-            email = "identificationsucks@gmail.com";
+      programs = {
+        jujutsu = {
+          enable = true;
+          settings = {
+            user = {
+              name = "Invra";
+              email = "identificationsucks@gmail.com";
+            };
+            alias = {
+              a = "add";
+              p = "push -v";
+              s = "status -s";
+              c = "commit -m";
+              b = "branch --all";
+              co = "checkout -b";
+              m = "commit --amend";
+            };
+            init.defaultBranch = "main";
+            core.quotepath = "off";
           };
-          alias = {
+        };
+
+        mercurial = {
+          enable = true;
+          package = pkgs.mercurial.override { rustSupport = true; };
+          userName = "Invra";
+          userEmail = "identificationsucks@gmail.com";
+          aliases = {
             a = "add";
             p = "push -v";
-            s = "status -s";
+            s = "status";
             c = "commit -m";
-            b = "branch --all";
-            co = "checkout -b";
+            b = "branch";
             m = "commit --amend";
           };
-          init.defaultBranch = "main";
-          core.quotepath = "off";
         };
-      };
 
-      programs.mercurial = {
-        enable = true;
-        package = pkgs.mercurial.override { rustSupport = true; };
-        userName = "Invra";
-        userEmail = "identificationsucks@gmail.com";
-        aliases = {
-          a = "add";
-          p = "push -v";
-          s = "status";
-          c = "commit -m";
-          b = "branch";
-          m = "commit --amend";
+        difftastic = {
+          enable = true;
+
+          jujutsu.enable = true;
+          git.enable = true;
         };
       };
 
