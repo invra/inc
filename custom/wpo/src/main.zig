@@ -29,6 +29,7 @@ pub fn main(init: std.process.Init) !void {
     const allocator = arena.allocator();
     const iargs = try init.minimal.args.toSlice(init.arena.allocator());
     const argv = iargs[1..];
+    const io = init.io;
 
     const constructed_valid_args: []const []const u8 = comptime blk: {
         const fields = @typeInfo(Argv1).@"enum".fields;
@@ -51,7 +52,7 @@ pub fn main(init: std.process.Init) !void {
         return;
     }
 
-    const output = try manager.get_focused_output(allocator);
+    const output = try manager.get_focused_output(io, allocator);
     defer allocator.free(output);
 
     const str_buf = try std.mem.concat(allocator, u8, &.{ output, "-", argv[1] });
@@ -60,8 +61,8 @@ pub fn main(init: std.process.Init) !void {
     inline for (constructed_valid_args, 0..) |arg, i| {
         if (std.mem.eql(u8, arg, argv[0])) {
             switch (i) {
-                0 => try manager.container_to_workspace(str_buf),
-                1 => try manager.focus_workspace(str_buf),
+                0 => try manager.container_to_workspace(io, str_buf),
+                1 => try manager.focus_workspace(io, str_buf),
                 else => unreachable,
             }
             return;

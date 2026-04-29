@@ -45,12 +45,7 @@ pub const proc = struct {
     ///   const result = try lib.proc.exec(alloc, &args);
     ///   defer result.deinit(alloc);
     ///   std.debug.print("{s}\n", .{result.stdout});
-    pub fn exec(allocator: std.mem.Allocator, args: []const []const u8) !Proc {
-        // Init an Io object inside of here.
-        var threaded: Io.Threaded = .init(allocator, .{});
-        defer threaded.deinit();
-        const io = threaded.io();
-
+    pub fn exec(io: Io, allocator: std.mem.Allocator, args: []const []const u8) !Proc {
         var timer_start = Io.Clock.awake.now(io);
 
         // Build a child process

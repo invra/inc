@@ -1,16 +1,17 @@
 //! Controller module for Sway.
 
 const std = @import("std");
+const Io = std.Io;
 const lib = @import("lib");
 
 /// Return the name of the currently focused output as reported by Sway.
 /// Caller owns the returned slice — free it with `allocator.free()`.
-pub fn get_focused_output(allocator: std.mem.Allocator) ![]u8 {
+pub fn get_focused_output(io: Io, allocator: std.mem.Allocator) ![]u8 {
     const args = [_][]const u8{
         "sh",                                                              "-c",
         "swaymsg -t get_outputs | jq -r '.[] | select(.focused) | .name'",
     };
-    const result = try lib.proc.exec(allocator, &args);
+    const result = try lib.proc.exec(io, allocator, &args);
     defer result.deinit(allocator);
 
     if (!result.ok()) {
@@ -25,9 +26,9 @@ pub fn get_focused_output(allocator: std.mem.Allocator) ![]u8 {
 }
 
 /// Focus a workspace by name.
-pub fn focus_workspace(allocator: std.mem.Allocator, workspace: []const u8) !void {
+pub fn focus_workspace(io: Io, allocator: std.mem.Allocator, workspace: []const u8) !void {
     const args = [_][]const u8{ "swaymsg", "workspace", workspace };
-    const result = try lib.proc.exec(allocator, &args);
+    const result = try lib.proc.exec(io, allocator, &args);
     defer result.deinit(allocator);
 
     if (!result.ok()) {
@@ -39,11 +40,11 @@ pub fn focus_workspace(allocator: std.mem.Allocator, workspace: []const u8) !voi
 }
 
 /// Move the focused container to a workspace by name.
-pub fn container_to_workspace(allocator: std.mem.Allocator, workspace: []const u8) !void {
+pub fn container_to_workspace(io: Io, allocator: std.mem.Allocator, workspace: []const u8) !void {
     const args = [_][]const u8{
         "swaymsg", "move", "container", "to", "workspace", workspace,
     };
-    const result = try lib.proc.exec(allocator, &args);
+    const result = try lib.proc.exec(io, allocator, &args);
     defer result.deinit(allocator);
 
     if (!result.ok()) {
