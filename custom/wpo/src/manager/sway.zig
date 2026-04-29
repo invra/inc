@@ -1,7 +1,7 @@
 //! Controller module for Sway.
 
 const std = @import("std");
-const lib = @import("./lib.zig");
+const lib = @import("lib");
 
 /// Return the name of the currently focused output as reported by Sway.
 /// Caller owns the returned slice — free it with `allocator.free()`.

@@ -13,7 +13,8 @@
 //! therefore: new workspace name = "x-y" => "DP-1-8"
 
 const std = @import("std");
-const wpo = @import("wpo");
+const lib = @import("lib");
+const manager = @import("manager");
 
 const Argv1 = enum {
     /// Move a "container" to a workspace
@@ -50,7 +51,7 @@ pub fn main(init: std.process.Init) !void {
         return;
     }
 
-    const output = try wpo.get_focused_output(allocator);
+    const output = try manager.get_focused_output(allocator);
     defer allocator.free(output);
 
     const str_buf = try std.mem.concat(allocator, u8, &.{ output, "-", argv[1] });
@@ -59,8 +60,8 @@ pub fn main(init: std.process.Init) !void {
     inline for (constructed_valid_args, 0..) |arg, i| {
         if (std.mem.eql(u8, arg, argv[0])) {
             switch (i) {
-                0 => try wpo.container_to_workspace(str_buf),
-                1 => try wpo.focus_workspace(str_buf),
+                0 => try manager.container_to_workspace(str_buf),
+                1 => try manager.focus_workspace(str_buf),
                 else => unreachable,
             }
             return;
