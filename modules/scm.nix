@@ -23,7 +23,7 @@
             core.quotepath = "off";
           };
         };
-        
+
         git = {
           enable = true;
           settings = {

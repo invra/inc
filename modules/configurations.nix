@@ -39,9 +39,7 @@
       let
         system =
           if lib.hasPrefix "mac" name then
-            if lib.hasPrefix "x86" name then
-              "x86_64-darwin" else
-              "aarch64-darwin"
+            if lib.hasPrefix "x86" name then "x86_64-darwin" else "aarch64-darwin"
           else if lib.hasSuffix "x86" name then
             "x86_64-linux"
           else if lib.hasSuffix "aarch64" name then

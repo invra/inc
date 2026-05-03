@@ -35,16 +35,20 @@ in
     {
       imports = [ polyModule ];
       environment = {
-        systemPackages = with pkgs; [
-          lsof
-          pciutils
-          nautilus
-          xwayland-satellite
-        ] ++ lib.optionals stdenv.isLinux [
-          ghostty
-        ] ++ lib.optionals stdenv.isDarwin [
-          ghostty-bin
-        ];
+        systemPackages =
+          with pkgs;
+          [
+            lsof
+            pciutils
+            nautilus
+            xwayland-satellite
+          ]
+          ++ lib.optionals stdenv.isLinux [
+            ghostty
+          ]
+          ++ lib.optionals stdenv.isDarwin [
+            ghostty-bin
+          ];
       };
 
       programs = {

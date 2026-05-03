@@ -8,9 +8,9 @@
     homeManager.base =
       { pkgs, ... }:
       {
-	home.packages = with pkgs; [
-	  nixd
-	];
+        home.packages = with pkgs; [
+          nixd
+        ];
         programs = {
           emacs = {
             enable = true;
