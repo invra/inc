@@ -109,7 +109,7 @@
               titlebar = false;
               commands = [
                 {
-                  criteria.title = "Picture-in-Picture";
+                  criteria.title = "Picture-in-picture";
                   command = "floating enable, resize set width 700 height 400, sticky enable";
                 }
               ];
