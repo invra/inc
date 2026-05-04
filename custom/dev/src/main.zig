@@ -1,5 +1,5 @@
 const std = @import("std");
-const dev = @import("dev");
+const dev = @import("utils");
 
 const EXTRA_ARGS = 4;
 
