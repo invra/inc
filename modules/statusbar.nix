@@ -5,7 +5,6 @@
     lib.optionalAttrs linux {
       programs.eww = {
         enable = true;
-        enableFishIntegration = true;
       };
       wayland.windowManager.sway.config.bars = [ ];
       xdg.configFile = {

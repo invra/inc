@@ -15,7 +15,6 @@ let
 
         shells = with pkgs; [
           bashInteractive
-          fish
         ];
       };
     };
