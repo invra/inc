@@ -2,3 +2,4 @@ nix.conf
 zig-out/
 result
 .zig-cache/
+zig-pkg/

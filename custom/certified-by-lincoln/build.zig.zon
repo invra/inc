@@ -3,7 +3,12 @@
     .version = "0.0.0",
     .fingerprint = 0x3d641fd088955f0c,
     .minimum_zig_version = "0.15.2",
-    .dependencies = .{},
+    .dependencies = .{
+        .colored = .{
+            .url = "git+https://github.com/invra/colored.zig#54f9cc316f56f70458bacef117fa18a3f1140bee",
+            .hash = "colored-1.0.0-k8xvmZE2AAAf5ABnPMKeJ8vwoZf-XHyh9hVL0Nd_Zqz2",
+        },
+    },
     .paths = .{
         "build.zig",
         "build.zig.zon",

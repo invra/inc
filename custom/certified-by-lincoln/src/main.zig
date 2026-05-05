@@ -1,25 +1,20 @@
 const std = @import("std");
-const print = std.debug.print;
+const colored = @import("colored");
 
-const esc = "\x1b";
+pub fn main(init: std.process.Init) !void {
+    const io = init.io;
 
-const bold = esc ++ "[1m";
-const reset = esc ++ "[0m";
-const green = esc ++ "[32m";
-const cyan = esc ++ "[36m";
+    var buf: [128]u8 = undefined;
+    var file_writer = std.Io.File.stdout().writer(io, &buf);
+    const stdout: *std.Io.Writer = &file_writer.interface;
 
-pub fn main() !void {
-    print("{s}", .{bold});
-    print("This device is certified by:\n", .{});
-    print("{s}", .{reset});
+    try colored.print(stdout, "This device is certified by:\n", .{
+        .styles = &.{.bold},
+    });
+    try stdout.flush();
 
-    print("{s}", .{green});
-    print("Abraham Lincoln", .{});
-    print("{s}", .{reset});
-
-    print(" - ", .{});
-
-    print("{s}", .{cyan});
-    print("16th Prez\n", .{});
-    print("{s}", .{reset});
+    try colored.print(stdout, "Abraham Lincoln", .{ .color = .{ .ansi = .green } });
+    try colored.print(stdout, " - ", .{});
+    try colored.print(stdout, "16th. Prez\n", .{ .color = .{ .ansi = .cyan } });
+    try stdout.flush();
 }

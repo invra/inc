@@ -12,6 +12,9 @@ pub fn build(b: *std.Build) void {
         }),
     });
 
+    const colored_dep = b.dependency("colored", .{});
+    exe.root_module.addImport("colored", colored_dep.module("colored"));
+
     b.installArtifact(exe);
 
     const run_step = b.step("run", "Run the app");
