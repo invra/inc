@@ -4,6 +4,11 @@ const dev = @import("utils");
 const EXTRA_ARGS = 4;
 
 pub fn main(init: std.process.Init) !void {
+    const io = init.io;
+    var buf: [128]u8 = undefined;
+    var file_writer = std.Io.File.stdout().writer(io, &buf);
+    const stdout: *std.Io.Writer = &file_writer.interface;
+
     var da = std.heap.DebugAllocator(.{}){};
     defer _ = da.deinit();
     const allocator = da.allocator();
@@ -49,7 +54,7 @@ pub fn main(init: std.process.Init) !void {
     const final_args = args[0..j];
 
     const err = std.process.replace(init.io, .{ .argv = final_args });
-    std.debug.print("exec failed: {}\n", .{err});
+    try stdout.print("exec failed: {}\n", .{err});
     if (shell) |s| allocator.free(s);
     return err;
 }
