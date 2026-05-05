@@ -1,33 +1,27 @@
-= Invra's Nix Configuration
-
+Invra's Nix Configuration
+=========================
 This is a flake tailored for me, but should be able to work very nicely for people like me!
 
-== Features
+Features
+--------
 
-.Out-of-box configs
-[%collapsible]
-====
+Out-of-box configs
+~~~~~~~~~~~~~~~~~~
 * Rose-pine rice
 * Vencord pre-configured for better workflow & looks
-====
 
-.Music Production & Pro Audio
-[%collapsible]
-====
+Music Production & Pro Audio
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 * JACK2
 * Bitwig Studio
 * Crosspipe
 * Easy Effects (latest)
 * VST Support (theoretical, still needs testing)
-====
 
-
-.Terminal-based workflows
-[%collapsible]
-====
+Terminal-based workflows
+~~~~~~~~~~~~~~~~~~~~~~~~
 * Git
 * gh (GitHub CLI)
 * glab (Gitlab CLI)
 * btop
 * ghostty
-====
