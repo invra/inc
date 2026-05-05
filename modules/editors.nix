@@ -1,10 +1,14 @@
+let
+  polyModule =
+    { pkgs, ... }:
+    {
+      environment.systemPackages = with pkgs; [ helix ];
+    };
+in
 {
   flake.modules = {
-    nixos.base =
-      { pkgs, ... }:
-      {
-        environment.systemPackages = with pkgs; [ helix ];
-      };
+    nixos.base = polyModule;
+    darwin.base = polyModule;
     homeManager.base =
       { pkgs, ... }:
       {
@@ -90,6 +94,20 @@
               marksman
               markdownlint-cli2
               bash-language-server
+            ];
+          };
+          zed-editor = {
+            enable = true;
+            extraPackages = with pkgs; [
+              nil
+              nixd
+              rust-analyzer
+            ];
+            extensions = [
+              "nix"
+              "zig"
+              "toml"
+              "rose-pine-theme"
             ];
           };
         };

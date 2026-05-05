@@ -1,4 +1,16 @@
+let
+  polyModule =
+    { pkgs, ... }:
+    {
+      environment.systemPackages = with pkgs; [
+        git
+        mercurial
+      ];
+    };
+in
 {
+  flake.modules.darwin.base = polyModule;
+  flake.modules.nixos.base = polyModule;
   flake.modules.homeManager.base =
     { pkgs, ... }:
     {

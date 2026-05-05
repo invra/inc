@@ -10,8 +10,6 @@ let
       environment = {
         systemPackages = with pkgs; [
           jack2
-          helix
-          git
           home-manager
         ];
 
@@ -119,21 +117,6 @@ in
 
       programs = {
         ripgrep.enable = true;
-        zed-editor = {
-          enable = true;
-          extraPackages = with pkgs; [
-            nil
-            nixd
-            rust-analyzer
-          ];
-          extensions = [
-            "nix"
-            "zig"
-            "toml"
-            "rose-pine-theme"
-          ];
-        };
-
         btop = {
           enable = true;
           settings = {
