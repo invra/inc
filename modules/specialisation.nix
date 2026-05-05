@@ -5,7 +5,7 @@
       specialisation.nvidia-gpu.configuration = {
         services.xserver.videoDrivers = [ "nvidia" ];
       };
-      obs-studio.package = pkgs.obs-studio.override {
+      programs.obs-studio.package = pkgs.obs-studio.override {
         cudaSupport = true;
       };
       nixpkgs.allowedUnfreePackages = [
