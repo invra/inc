@@ -21,8 +21,6 @@
           blueman.enable = true;
           udisks2.enable = true;
           gvfs.enable = true;
-          qemuGuest.enable = true;
-          spice-vdagentd.enable = true;
           fwupd.enable = true;
           pipewire = {
             enable = true;
@@ -68,7 +66,6 @@
             # workaround for
             # https://github.com/nix-community/home-manager/issues/632
             program_options = {
-              # replace with your favorite file manager
               file_manager = "${pkgs.nautilus}/bin/nautilus";
             };
           };

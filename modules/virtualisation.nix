@@ -23,6 +23,11 @@
         };
       };
 
+      services = {
+        qemuGuest.enable = true;
+        spice-vdagentd.enable = true;
+      };
+
       systemd.services = {
         libvirtd.serviceConfig.Type = lib.mkForce "idle";
         libvirt-guests.enable = false;
