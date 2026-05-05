@@ -63,7 +63,7 @@ let
                       else
                         [ x ];
 
-                    nixFilter = and (x: !(lib.hasInfix "/_" x)) (lib.hasSuffix ".nix");
+                    nixFilter = and (and (x: !(lib.hasInfix "/_" x)) (lib.hasSuffix ".nix")) (x: !lib.hasSuffix ".zon.nix" x);
                     initf = updated.initf or nixFilter;
                     pathFilter = compose (and updated.filterf initf) toString;
                     otherFilter = and updated.filterf (updated.initf or (_: true));
