@@ -1,23 +1,21 @@
+pub const sway = @import("./sway.zig");
+const lib = @import("lib");
 const std = @import("std");
 const Io = std.Io;
-pub const sway = @import("./sway.zig");
-
-pub fn alloca_init() std.mem.Allocator {
-    var arena: std.heap.ArenaAllocator = .init(std.heap.page_allocator);
-    defer _ = arena.deinit();
-    return arena.allocator();
-}
 
 pub fn get_focused_output(io: Io, allocator: std.mem.Allocator) ![]u8 {
-    return try sway.get_focused_output(io, allocator);
+    const stdout = lib.init.stdout_writer(io);
+    return try sway.get_focused_output(io, allocator, stdout);
 }
 
 pub fn focus_workspace(io: Io, workspace: []const u8) !void {
-    const allocator = alloca_init();
-    try sway.focus_workspace(io, allocator, workspace);
+    const stdout = lib.init.stdout_writer(io);
+    const allocator = try lib.init.alloca();
+    try sway.focus_workspace(io, allocator, workspace, stdout);
 }
 
 pub fn container_to_workspace(io: Io, workspace: []const u8) !void {
-    const allocator = alloca_init();
-    try sway.container_to_workspace(io, allocator, workspace);
+    const stdout = lib.init.stdout_writer(io);
+    const allocator = try lib.init.alloca();
+    try sway.container_to_workspace(io, allocator, workspace, stdout);
 }

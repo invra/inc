@@ -24,12 +24,14 @@ const Argv1 = enum {
 };
 
 pub fn main(init: std.process.Init) !void {
+    const io = init.io;
+    const stdout = lib.init.stdout_writer(io);
+
     var arena: std.heap.ArenaAllocator = .init(std.heap.page_allocator);
     defer _ = arena.deinit();
     const allocator = arena.allocator();
     const iargs = try init.minimal.args.toSlice(init.arena.allocator());
     const argv = iargs[1..];
-    const io = init.io;
 
     const constructed_valid_args: []const []const u8 = comptime blk: {
         const fields = @typeInfo(Argv1).@"enum".fields;
@@ -48,7 +50,7 @@ pub fn main(init: std.process.Init) !void {
     if (argv.len != 2) {
         const joined = try std.mem.join(allocator, "|", constructed_valid_args);
         defer allocator.free(joined);
-        std.debug.print("Usage: {s} <{s}> <workspace>\n", .{ iargs[0], joined });
+        try stdout.print("Usage: {s} <{s}> <workspace>\n", .{ iargs[0], joined });
         return;
     }
 
@@ -69,5 +71,5 @@ pub fn main(init: std.process.Init) !void {
         }
     }
 
-    std.debug.print("{s} is not a valid action.\n", .{argv[0]});
+    try stdout.print("{s} is not a valid action.\n", .{argv[0]});
 }
