@@ -83,7 +83,6 @@ in
           nil
           nixd
           yt-dlp
-          yazi
           wget
           killall
           (discord.override {
@@ -100,11 +99,9 @@ in
           wl-clipboard
           wayvnc
           crosspipe
-          easyeffects
           vlc
           pavucontrol
           blender
-          krita
           wayvnc
         ]
         ++ (lib.optionals (pkgs.stdenv.isLinux && pkgs.stdenv.isx86_64) [
