@@ -9,9 +9,9 @@ pub fn main(init: std.process.Init) !void {
     var file_writer = std.Io.File.stdout().writer(io, &buf);
     const stdout: *std.Io.Writer = &file_writer.interface;
 
-    var da = std.heap.DebugAllocator(.{}){};
-    defer _ = da.deinit();
-    const allocator = da.allocator();
+    var arena: std.heap.ArenaAllocator = .init(std.heap.page_allocator);
+    defer _ = arena.deinit();
+    const allocator = arena.allocator();
 
     const iargs = try init.minimal.args.toSlice(init.arena.allocator());
     const argv = iargs[1..];
