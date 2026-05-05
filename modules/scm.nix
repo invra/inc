@@ -81,6 +81,8 @@ in
       };
 
       home.packages = with pkgs; [
+        onefetch
+        tokei
         darcs
         glab
         gh
