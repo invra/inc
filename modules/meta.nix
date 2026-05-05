@@ -4,17 +4,6 @@
   lib,
   ...
 }:
-let
-  hg-sourcehut = {
-    domain = "hg.sr.ht";
-    username = "invra";
-  };
-  forge = "hg-sourcehut";
-  owner = hg-sourcehut.username;
-  name = "inc";
-  defaultBranch = "default";
-  flakeUri = "git+https://${hg-sourcehut.domain}/~${owner}/${name}";
-in
 {
   imports = [ inputs.flake-parts.flakeModules.modules ];
 
@@ -35,15 +24,6 @@ in
           name = "Invra";
           username = "invra";
           matrix = "@invranet:matrix.org";
-        };
-        repo = {
-          inherit
-            forge
-            owner
-            name
-            defaultBranch
-            flakeUri
-            ;
         };
         nixpkgs.allowedUnfreePackages = config.nixpkgs.allowedUnfreePackages;
       };
