@@ -3,8 +3,13 @@ const std = @import("std");
 pub fn build(b: *std.Build) void {
     const target = b.standardTargetOptions(.{});
     const optimize = b.standardOptimizeOption(.{});
-    const pwd_translate_c = b.addTranslateC(.{ .link_libc = true, .target = target, .optimize = optimize, .root_source_file = b.path("src/utils/pwd.h") });
-    const unistd_translate_c = b.addTranslateC(.{ .link_libc = true, .target = target, .optimize = optimize, .root_source_file = b.path("src/utils/unistd.h") });
+
+    const wf = b.addWriteFiles();
+    const generate_pwd_translate_c_h = wf.add("pwd.h", "#include <pwd.h>");
+    const generate_unistd_translate_c_h = wf.add("unistd.h", "#include <unistd.h>");
+
+    const pwd_translate_c = b.addTranslateC(.{ .link_libc = true, .target = target, .optimize = optimize, .root_source_file = generate_pwd_translate_c_h });
+    const unistd_translate_c = b.addTranslateC(.{ .link_libc = true, .target = target, .optimize = optimize, .root_source_file = generate_unistd_translate_c_h });
 
     const utils_mod = b.addModule("dev", .{
         .root_source_file = b.path("src/utils/root.zig"),
