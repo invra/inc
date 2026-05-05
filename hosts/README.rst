@@ -1,3 +1,3 @@
 Host configurations
-
+===================
 Holds configurations which are specialized between hosts.
