@@ -40,7 +40,7 @@ let
                         (
                           { lib, ... }:
                           {
-                            imports = leafs lib arg;
+                            imports = leaves lib arg;
                           }
                         )
                       ];
@@ -48,9 +48,9 @@ let
                   else if updated.lib or null == null then
                     throw "You need to call withLib before trying to read the tree."
                   else
-                    updated.pipef (leafs updated.lib arg);
+                    updated.pipef (leaves updated.lib arg);
 
-                leafs =
+                leaves =
                   lib: root:
                   let
                     isDir = x: isPathLike x && builtins.readFileType (toString x) == "directory";
@@ -106,9 +106,9 @@ let
             withLib = lib: mergeAttrs { inherit lib; };
             initFilter = initf: mergeAttrs { inherit initf; };
             pipeTo = pipef: mergeAttrs { inherit pipef; };
-            leafs = mergeAttrs { pipef = i: i; };
+            leaves = mergeAttrs { pipef = i: i; };
             result = current [ ];
-            files = current.leafs.result;
+            files = current.leaves.result;
             new = callable;
           };
       };

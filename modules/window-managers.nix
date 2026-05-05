@@ -150,7 +150,7 @@
                   );
               in
               {
-                # Compositor embeded bindings
+                # Compositor embedded bindings
                 #   E.g kill active client, switch spaces.
                 "Mod1+f1" = "reload";
                 "Mod1+Shift+f4" = "exit";
