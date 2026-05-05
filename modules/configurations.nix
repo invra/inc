@@ -74,7 +74,7 @@
                   };
                   home = {
                     stateVersion = "26.05";
-                    username = config.flake.meta.owner.username;
+                    inherit (config.flake.meta.owner) username;
                     homeDirectory =
                       if darwin then
                         "/Users/${config.flake.meta.owner.username}"

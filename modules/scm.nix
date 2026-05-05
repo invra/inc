@@ -9,83 +9,85 @@ let
     };
 in
 {
-  flake.modules.darwin.base = polyModule;
-  flake.modules.nixos.base = polyModule;
-  flake.modules.homeManager.base =
-    { pkgs, ... }:
-    {
-      programs = {
-        jujutsu = {
-          enable = true;
-          settings = {
-            user = {
-              name = "Invra";
-              email = "identificationsucks@gmail.com";
+  flake.modules = {
+    darwin.base = polyModule;
+    nixos.base = polyModule;
+    homeManager.base =
+      { pkgs, ... }:
+      {
+        programs = {
+          jujutsu = {
+            enable = true;
+            settings = {
+              user = {
+                name = "Invra";
+                email = "identificationsucks@gmail.com";
+              };
+              alias = {
+                a = "add";
+                p = "push -v";
+                s = "status -s";
+                c = "commit -m";
+                b = "branch --all";
+                co = "checkout -b";
+                m = "commit --amend";
+              };
+              init.defaultBranch = "main";
+              core.quotepath = "off";
             };
-            alias = {
+          };
+
+          git = {
+            enable = true;
+            settings = {
+              user = {
+                name = "Invra";
+                email = "identificationsucks@gmail.com";
+              };
+              alias = {
+                a = "add";
+                p = "push -v";
+                s = "status -s";
+                c = "commit -m";
+                b = "branch --all";
+                co = "checkout -b";
+                m = "commit --amend";
+              };
+              init.defaultBranch = "main";
+              core.quotepath = "off";
+            };
+          };
+
+          mercurial = {
+            enable = true;
+            package = pkgs.mercurial.override { rustSupport = true; };
+            userName = "Invra";
+            userEmail = "identificationsucks@gmail.com";
+            aliases = {
               a = "add";
               p = "push -v";
-              s = "status -s";
+              s = "status";
               c = "commit -m";
-              b = "branch --all";
-              co = "checkout -b";
+              b = "branch";
               m = "commit --amend";
             };
-            init.defaultBranch = "main";
-            core.quotepath = "off";
+          };
+
+          difftastic = {
+            enable = true;
+
+            jujutsu.enable = true;
+            git.enable = true;
           };
         };
 
-        git = {
-          enable = true;
-          settings = {
-            user = {
-              name = "Invra";
-              email = "identificationsucks@gmail.com";
-            };
-            alias = {
-              a = "add";
-              p = "push -v";
-              s = "status -s";
-              c = "commit -m";
-              b = "branch --all";
-              co = "checkout -b";
-              m = "commit --amend";
-            };
-            init.defaultBranch = "main";
-            core.quotepath = "off";
-          };
-        };
-
-        mercurial = {
-          enable = true;
-          package = pkgs.mercurial.override { rustSupport = true; };
-          userName = "Invra";
-          userEmail = "identificationsucks@gmail.com";
-          aliases = {
-            a = "add";
-            p = "push -v";
-            s = "status";
-            c = "commit -m";
-            b = "branch";
-            m = "commit --amend";
-          };
-        };
-
-        difftastic = {
-          enable = true;
-
-          jujutsu.enable = true;
-          git.enable = true;
-        };
+        home.packages = with pkgs; [
+          onefetch
+          tokei
+          darcs
+          glab
+          gh
+        ];
       };
-
-      home.packages = with pkgs; [
-        onefetch
-        tokei
-        darcs
-        glab
-        gh
-      ];
-    };
+  };
 }
