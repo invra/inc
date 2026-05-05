@@ -15,11 +15,15 @@
 
           src = ./.;
 
+          deps = pkgs.callPackage ./build.zig.zon.nix {name = "${finalAttrs.pname}-cache-${finalAttrs.version}";};
+
           buildInputs = with pkgs; [
             zig
           ];
 
           zigBuildFlags = [
+            "--system"
+            "${finalAttrs.deps}"
             "-Doptimize=ReleaseSafe"
           ];
 
