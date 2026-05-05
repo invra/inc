@@ -44,7 +44,7 @@ pub const proc = struct {
     /// Example (want stdout):
     ///   const result = try lib.proc.exec(alloc, &args);
     ///   defer result.deinit(alloc);
-    ///   std.debug.print("{s}\n", .{result.stdout});
+    ///   var stdout = result.stdout;
     pub fn exec(io: Io, allocator: std.mem.Allocator, args: []const []const u8) !Proc {
         var timer_start = Io.Clock.awake.now(io);
 
