@@ -97,6 +97,7 @@
           {
             enable = true;
             package = pkgs.swayfx;
+            systemd.enable = true;
             checkConfig = false;
             config = {
               modifier = "Mod4";
@@ -106,7 +107,7 @@
                 outer = 10;
               };
               window = {
-                border = 5;
+                border = 3;
                 titlebar = false;
                 commands = [
                   {
@@ -175,9 +176,6 @@
                 { command = "systemctl --user restart xdg-desktop-portal-wlr"; }
               ];
             };
-            extraConfig = ''
-              corner_radius 12
-            '';
           };
       };
   };
