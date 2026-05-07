@@ -16,15 +16,15 @@
 
           width = "100%";
           padding-left = "35%";
-          padding-top = "30%";
+          padding-top = "25%";
           height = "100%";
           border-width = 0;
           outline-width = 0;
-          result-spacing = 14;
-          num-results = 8;
-          font = "JetBrains Mono Nerd Font";
+          result-spacing = 10;
+          num-results = 14;
+          font = "Lilex";
           font-variations = "wght 600";
-          font-size = 26;
+          font-size = 22;
         };
       };
     };
