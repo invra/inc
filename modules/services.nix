@@ -9,12 +9,12 @@
           "video"
         ];
         time.timeZone = "Australia/Sydney";
-        hardware.graphics = {
-          enable = true;
-          enable32Bit = pkgs.stdenv.isx86_64;
-          extraPackages = with pkgs; [
-            rocmPackages.clr.icd
-          ];
+        hardware = {
+          amdgpu.opencl.enable = true;
+          graphics = {
+            enable = true;
+            enable32Bit = pkgs.stdenv.isx86_64;
+          };
         };
         services = {
           tailscale.enable = true;
