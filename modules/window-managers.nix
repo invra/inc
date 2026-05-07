@@ -130,19 +130,16 @@ in
                 urgent = mkColorSet "#eb6f92ff";
               };
             keybindings = {
-              # Compositor embedded bindings
-              #   E.g kill active client, switch spaces.
+              # Compositor embedded bindings - e.g killactive, & fullscreen.
               "Mod1+f1" = "reload";
               "Mod1+Shift+f4" = "exit";
               "Mod1+Return" = "fullscreen";
               "Mod1+q" = "kill";
 
               # Exec bindings
-              #   Ones which will do an external action not
-              #   directly tied to sway.
               "Mod4+Return" = "exec ghostty";
-              "Mod4+Space" = "exec ${pkgs.tofi}/bin/tofi-drun --drun-launch=true";
-              "Mod4+Shift+s" = "exec ${pkgs.hyprshot}/bin/hyprshot -m region --clipboard-only";
+              "Mod1+Space" = "exec ${pkgs.tofi}/bin/tofi-drun --drun-launch=true";
+              "Mod1+Shift+s" = "exec ${pkgs.hyprshot}/bin/hyprshot -m region --clipboard-only";
               "XF86AudioRaiseVolume" = "exec wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%+ -l 1.5";
               "XF86AudioLowerVolume" = "exec wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%-";
               "XF86AudioMute" = "exec wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle";
