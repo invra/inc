@@ -9,7 +9,7 @@ let
         enableReleaseChecks = false;
         image = ../wallpapers/flake.jpg;
         base16Scheme = "${pkgs.base16-schemes}/share/themes/rose-pine.yaml";
-    
+
         icons = {
           enable = true;
           dark = "Papirus-Dark";
@@ -72,7 +72,7 @@ in
     };
 
     darwin.base = {
-      imports =[
+      imports = [
         stylixModule
         polyModule
       ];
