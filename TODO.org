@@ -1,0 +1,3 @@
+* TODO
+- [ ] systemd-analyze security hardening - get a majority as close to 0.0 & OK as possible
+- [ ] write automation scripting for installation on nix-darwin
