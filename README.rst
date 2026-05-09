@@ -15,8 +15,7 @@ Music Production & Pro Audio
 * JACK2
 * Bitwig Studio
 * Crosspipe
-* Easy Effects (latest)
-* VST Support (theoretical, still needs testing)
+* Windows VST/CLAP Support (yabridge)
 
 Terminal-based workflows
 ~~~~~~~~~~~~~~~~~~~~~~~~
