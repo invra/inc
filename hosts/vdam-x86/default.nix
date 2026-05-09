@@ -1,14 +1,11 @@
 { config, ... }:
-let
-  this = config;
-in
 {
   configurations.vdam-x86.module = {
-    imports = with this.flake.modules.nixos; [
+    imports = with config.flake.modules.nixos; [
       base
     ];
-    
-    networking.hostName = "NixOS";  
+
+    networking.hostName = "NixOS";
     hardware.facter.reportPath = ./facter.json;
 
     boot.initrd = {

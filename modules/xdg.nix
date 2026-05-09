@@ -23,36 +23,34 @@
       linux,
       ...
     }:
-    {
-      config = lib.optionalAttrs linux {
-        xdg = {
+    lib.optionalAttrs linux {
+      xdg = {
+        enable = true;
+        mime.enable = true;
+        terminal-exec = {
           enable = true;
-          mime.enable = true;
-          terminal-exec = {
-            enable = true;
-            settings = {
-              default = [ "ghostty.desktop" ];
-            };
-          };
-
-          userDirs = {
-            enable = true;
-            createDirectories = true;
-
-            desktop = "${config.home.homeDirectory}/desk";
-            documents = "${config.home.homeDirectory}/docs";
-            download = "${config.home.homeDirectory}/downloads";
-            music = "${config.home.homeDirectory}/music";
-            pictures = "${config.home.homeDirectory}/pics";
-            publicShare = "${config.home.homeDirectory}/pub";
-            templates = "${config.home.homeDirectory}/templates";
-            videos = "${config.home.homeDirectory}/vids";
+          settings = {
+            default = [ "ghostty.desktop" ];
           };
         };
 
-        home.packages = with pkgs; [
-          xdg-utils
-        ];
+        userDirs = {
+          enable = true;
+          createDirectories = true;
+
+          desktop = "${config.home.homeDirectory}/desk";
+          documents = "${config.home.homeDirectory}/docs";
+          download = "${config.home.homeDirectory}/downloads";
+          music = "${config.home.homeDirectory}/music";
+          pictures = "${config.home.homeDirectory}/pics";
+          publicShare = "${config.home.homeDirectory}/pub";
+          templates = "${config.home.homeDirectory}/templates";
+          videos = "${config.home.homeDirectory}/vids";
+        };
       };
+
+      home.packages = with pkgs; [
+        xdg-utils
+      ];
     };
 }

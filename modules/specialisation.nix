@@ -1,7 +1,8 @@
 {
   flake.modules.nixos.nvidia-gpu =
-    { pkgs, ... }:
+    { pkgs, config, ... }:
     {
+      hardware.nvidia.package = config.boot.kernelPackages.nvidiaPackages.latest;
       specialisation.nvidia-gpu.configuration = {
         services.xserver.videoDrivers = [ "nvidia" ];
       };

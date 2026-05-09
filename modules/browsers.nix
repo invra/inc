@@ -33,7 +33,7 @@
         enable = true;
         defaultBrowser = true;
 
-        extensions =  [
+        extensions = [
           {
             id = "fmkadmapgofadopljbjfkapdkoienihi";
             hash = "sha256-X3DIlm39NyFz8bGKVjubF8JGeS58EirqeETOBk8Hfgc=";
