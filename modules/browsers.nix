@@ -18,17 +18,6 @@
         inputs.helium.homeModules.helium
       ];
 
-      xdg.mimeApps = {
-        enable = true;
-        defaultApplications = {
-          "text/html" = "helium.desktop";
-          "x-scheme-handler/http" = "helium.desktop";
-          "x-scheme-handler/https" = "helium.desktop";
-          "x-scheme-handler/about" = "helium.desktop";
-          "x-scheme-handler/unknown" = "helium.desktop";
-        };
-      };
-
       programs.helium = {
         enable = true;
         defaultBrowser = true;
@@ -67,5 +56,15 @@
     }
     // lib.optionalAttrs linux {
       wayland.windowManager.sway.config.keybindings."Mod1+b" = "exec xdg-open about://blank";
+      xdg.mimeApps = {
+        enable = true;
+        defaultApplications = {
+          "text/html" = "helium.desktop";
+          "x-scheme-handler/http" = "helium.desktop";
+          "x-scheme-handler/https" = "helium.desktop";
+          "x-scheme-handler/about" = "helium.desktop";
+          "x-scheme-handler/unknown" = "helium.desktop";
+        };
+      };
     };
 }
