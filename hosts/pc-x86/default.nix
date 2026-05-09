@@ -7,11 +7,9 @@ in
     imports = with this.flake.modules.nixos; [
       base
     ];
-    networking = {
-      hostId = "0e8e163d";
-      hostName = "NixOS";
-    };
-    facter.reportPath = ./facter.json;
+    
+    networking.hostName = "NixOS";  
+    hardware.facter.reportPath = ./facter.json;
 
     boot.initrd = {
       kernelModules = [
@@ -38,10 +36,10 @@ in
 
     fileSystems = {
       "/" = {
-        device = "/dev/disk/by-uuid/5870ec89-f90d-434c-8a71-46a78213c93d";
+        device = "/dev/disk/by-uuid/195156cd-a0d3-41c7-bae7-b28301f278d3";
         fsType = "ext4";
       };
     };
-    system.stateVersion = "24.11";
+    system.stateVersion = "25.11";
   };
 }

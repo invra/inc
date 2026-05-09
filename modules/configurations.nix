@@ -52,9 +52,6 @@
 
         extraSpecialArgs = {
           inherit inputs;
-          pkgs-23-05 = import inputs.nixpkgs-23-05 {
-            inherit system;
-          };
           linux = isLinux;
           darwin = isDarwin;
         };
@@ -100,7 +97,7 @@
                 ];
                 nixpkgs = {
                   pkgs = import inputs.nixpkgs {
-                    inherit (args.config.facter.report) system;
+                    inherit (args.config.hardware.facter.report) system;
                     inherit (config.nixpkgs) overlays;
                     inherit (config.nixpkgs) allowUnfreePredicate;
 

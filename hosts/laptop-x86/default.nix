@@ -10,11 +10,9 @@ in
         base
         nvidia-gpu
       ];
-      networking = {
-        hostId = "0e8e163d";
-        hostName = "NixOS";
-      };
-      facter.reportPath = ./facter.json;
+      
+      networking.hostName = "NixOS";  
+      hardware.facter.reportPath = ./facter.json;
 
       boot = {
         initrd.availableKernelModules = [
