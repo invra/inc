@@ -10,7 +10,7 @@
       inputs.nixpkgs-lib.follows = "nixpkgs";
     };
     helium = {
-      url = "gitlab:ntgn/helium-flake";
+      url = "gitlab:invra/helium-flake";
       inputs = {
         nixpkgs.follows = "nixpkgs";
         flake-parts.follows = "flake-parts";

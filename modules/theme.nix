@@ -73,7 +73,7 @@ in
 
     darwin.base = {
       imports = [
-        stylixModule
+        # stylixModule
         polyModule
       ];
     };
