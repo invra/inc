@@ -1,42 +1,5 @@
 { inputs, ... }:
 let
-  stylixModule =
-    { pkgs, ... }:
-    {
-      stylix = {
-        enable = true;
-        polarity = "dark";
-        enableReleaseChecks = false;
-        image = ../wallpapers/flake.jpg;
-        base16Scheme = "${pkgs.base16-schemes}/share/themes/rose-pine.yaml";
-
-        icons = {
-          enable = true;
-          dark = "Papirus-Dark";
-          light = "Papirus-Light";
-          package = pkgs.papirus-icon-theme;
-        };
-        cursor = {
-          package = pkgs.bibata-cursors;
-          name = "Bibata-Modern-Classic";
-          size = 24;
-        };
-        fonts = {
-          serif = {
-            package = pkgs.dejavu_fonts;
-            name = "DejaVu Serif";
-          };
-          sansSerif = {
-            package = pkgs.dejavu_fonts;
-            name = "DejaVu Sans";
-          };
-          monospace = {
-            package = pkgs.nerd-fonts.jetbrains-mono;
-            name = "JetBrains Mono Nerd Font";
-          };
-        };
-      };
-    };
   polyModule =
     { pkgs, ... }:
     {
@@ -54,7 +17,6 @@ in
     nixos.base = {
       imports = [
         inputs.stylix.nixosModules.stylix
-        stylixModule
         polyModule
       ];
       fonts = {
@@ -73,7 +35,6 @@ in
 
     darwin.base = {
       imports = [
-        # stylixModule
         polyModule
       ];
     };
@@ -83,7 +44,6 @@ in
       {
         imports = [
           inputs.stylix.nixosModules.stylix
-          stylixModule
         ];
       };
   };
