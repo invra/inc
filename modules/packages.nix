@@ -84,6 +84,7 @@ in
             yt-dlp
             wget
             killall
+            prismlauncher
             (discord.override {
               withOpenASAR = true;
               withVencord = true;
@@ -95,7 +96,6 @@ in
             utm
           ]
           ++ lib.optionals pkgs.stdenv.isLinux [
-            prismlauncher
             wl-clipboard
             wayvnc
             crosspipe
