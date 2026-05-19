@@ -66,6 +66,6 @@
       systemd.services.systemd-boot-random-seed.enable = false;
 
       # Greeter
-      services.displayManager.ly.enable = true;
+      services.displayManager.gdm.enable = true;
     };
 }
