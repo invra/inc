@@ -40,10 +40,11 @@
 
           desktop = "${config.home.homeDirectory}/desk";
           documents = "${config.home.homeDirectory}/docs";
-          download = "${config.home.homeDirectory}/downloads";
+          download = "${config.home.homeDirectory}/dwn";
           music = "${config.home.homeDirectory}/music";
           pictures = "${config.home.homeDirectory}/pics";
           publicShare = "${config.home.homeDirectory}/pub";
+          projects = "${config.home.homeDirectory}/proj";
           templates = "${config.home.homeDirectory}/templates";
           videos = "${config.home.homeDirectory}/vids";
         };
