@@ -16,7 +16,6 @@ in
   flake.modules = {
     nixos.base = {
       imports = [
-        inputs.stylix.nixosModules.stylix
         polyModule
       ];
       fonts = {
@@ -38,13 +37,5 @@ in
         polyModule
       ];
     };
-
-    flake.modules.homeManager.base =
-      { ... }:
-      {
-        imports = [
-          inputs.stylix.nixosModules.stylix
-        ];
-      };
   };
 }
