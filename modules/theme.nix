@@ -1,4 +1,3 @@
-{ inputs, ... }:
 let
   polyModule =
     { pkgs, ... }:
@@ -36,6 +35,17 @@ in
       imports = [
         polyModule
       ];
+    };
+    homeManager.base = { pkgs, ... }: {
+      dconf.settings."org/gnome/desktop/interface".color-scheme = "prefer-dark";
+
+      gtk = {
+        enable = true;
+        theme = {
+          name = "Adwaita-dark";
+          package = pkgs.gnome-themes-extra;
+        };
+      };
     };
   };
 }
