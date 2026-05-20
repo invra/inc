@@ -30,6 +30,17 @@
             };
             pulse.enable = true;
             jack.enable = true;
+            extraConfig.pipewire = {
+              "clock" = {
+                "context.properties" = {
+                  "default.clock.rate" = 48000;
+                  "default.clock.allowed-rates" = [ 44100 48000 ];
+                  "default.clock.quantum" = 1024;
+                  "default.clock.min-quantum" = 16;
+                  "default.clock.max-quantum" = 2048;
+                };
+              };
+            };
           };
 
           libinput.enable = true;
