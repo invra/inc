@@ -7,6 +7,7 @@ let
 in
 flake-parts.lib.mkFlake { inherit inputs; } {
   imports = [
+    (import-tree ./auto)
     (import-tree ./hosts)
     (import-tree ./custom)
     (import-tree ./modules)

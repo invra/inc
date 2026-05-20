@@ -3,3 +3,4 @@ zig-out/
 result
 .zig-cache/
 zig-pkg/
+.build/
