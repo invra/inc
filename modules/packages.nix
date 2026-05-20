@@ -86,8 +86,8 @@ in
             killall
             prismlauncher
             (discord.override {
-              withOpenASAR = true;
-              withVencord = true;
+              # withOpenASAR = true;
+              # withVencord = true;
             })
           ]
           ++ lib.optionals pkgs.stdenv.isDarwin [
