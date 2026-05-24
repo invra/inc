@@ -134,7 +134,7 @@ in
               "Mod1+f1" = "reload";
               "Mod1+Shift+f4" = "exit";
               "Mod1+Return" = "fullscreen";
-              "Mod1+q" = "kill";
+              "Mod1+Q" = "kill";
 
               # Exec bindings
               "Mod4+Return" = "exec ghostty";

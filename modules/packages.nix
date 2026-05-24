@@ -102,6 +102,7 @@ in
             vlc
             pavucontrol
             blender
+            ungoogled-chromium
             wayvnc
           ]
           ++ (lib.optionals (pkgs.stdenv.isLinux && pkgs.stdenv.isx86_64) [
