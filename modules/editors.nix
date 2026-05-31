@@ -2,115 +2,87 @@ let
   polyModule =
     { pkgs, ... }:
     {
-      environment.systemPackages = with pkgs; [ helix ];
+      environment.systemPackages = with pkgs; [ helix  nixd ];
     };
 in
 {
   flake.modules = {
     nixos.base = polyModule;
     darwin.base = polyModule;
-    homeManager.base =
-      { pkgs, ... }:
-      {
-        home.packages = with pkgs; [
-          nixd
-        ];
-        programs = {
-          emacs = {
-            enable = true;
-          };
-          helix = {
-            enable = true;
-            defaultEditor = true;
+    homeManager.base = {
+      programs = {  
+        emacs.enable = true;
+        
+        helix = {
+          enable = true;
+          defaultEditor = true;
 
-            languages.language = [
-              {
-                language-servers = [
-                  "nixd"
-                  "nil"
+          settings = {
+            theme = "rose_pine";
+
+            editor = {
+              auto-pairs = false;
+              color-modes = true;
+              bufferline = "multiple";
+              scrolloff = 100;
+              mouse = false;
+              popup-border = "all";
+              end-of-line-diagnostics = "hint";
+              cursor-shape.insert = "bar";
+              inline-diagnostics.cursor-line = "info";
+              statusline = {
+                left = [
+                  "mode"
+                  "spinner"
                 ];
-                name = "nix";
-              }
-            ];
-
-            settings = {
-              theme = "rose_pine";
-
-              editor = {
-                auto-pairs = false;
-                color-modes = true;
-                bufferline = "multiple";
-                scrolloff = 100;
-                mouse = false;
-                popup-border = "all";
-                end-of-line-diagnostics = "hint";
-                cursor-shape.insert = "bar";
-                inline-diagnostics.cursor-line = "info";
-                statusline = {
-                  left = [
-                    "mode"
-                    "spinner"
-                  ];
-                  center = [
-                    "file-name"
-                    "read-only-indicator"
-                    "file-modification-indicator"
-                  ];
-                  right = [
-                    "diagnostics"
-                    "file-type"
-                    "file-encoding"
-                    "file-line-ending"
-                  ];
-                  workspace-diagnostics = [
-                    "info"
-                    "warning"
-                    "error"
-                  ];
-                };
-                lsp = {
-                  display-inlay-hints = true;
-                  display-progress-messages = true;
-                };
-                indent-guides = {
-                  render = true;
-                  character = "⸽";
-                  skip-levels = 1;
-                };
+                center = [
+                  "file-name"
+                  "read-only-indicator"
+                  "file-modification-indicator"
+                ];
+                right = [
+                  "diagnostics"
+                  "file-type"
+                  "file-encoding"
+                  "file-line-ending"
+                ];
+                workspace-diagnostics = [
+                  "info"
+                  "warning"
+                  "error"
+                ];
               };
-              keys = {
-                normal = {
-                  A-r = ":config-reload";
-                  space = {
-                    w = ":w!";
-                    q = ":bc";
-                  };
+              lsp = {
+                display-inlay-hints = true;
+                display-progress-messages = true;
+              };
+              indent-guides = {
+                render = true;
+                character = "⸽";
+                skip-levels = 1;
+              };
+            };
+            keys = {
+              normal = {
+                A-r = ":config-reload";
+                space = {
+                  w = ":w!";
+                  q = ":bc";
                 };
               };
             };
-            extraPackages = with pkgs; [
-              nil
-              nixd
-              marksman
-              markdownlint-cli2
-              bash-language-server
-            ];
-          };
-          zed-editor = {
-            enable = true;
-            extraPackages = with pkgs; [
-              nil
-              nixd
-              rust-analyzer
-            ];
-            extensions = [
-              "nix"
-              "zig"
-              "toml"
-              "rose-pine-theme"
-            ];
           };
         };
+        zed-editor = {
+          enable = true;
+          extensions = [
+            "rose-pine-theme"
+            "toml"
+            "nix"
+            "zig"
+          ];
+        };
       };
+    };
   };
 }

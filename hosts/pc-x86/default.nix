@@ -10,14 +10,14 @@
 
     boot.initrd = {
       kernelModules = [
+        "hid_generic"
         "xhci_hcd"
         "xhci_pci"
+        "kvm-amd"
+        "sd_mod"
         "usbhid"
-        "hid_generic"
         "nvme"
         "ahci"
-        "sd_mod"
-        "kvm-amd"
       ];
 
       availableKernelModules = [

@@ -15,6 +15,7 @@ let
           fi
         '';
       };
+      environment.systemPackages = with pkgs; if stdenv.isDarwin then [ ghostty-bin ] else [ ghostty ];
     };
 in
 {

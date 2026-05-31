@@ -40,12 +40,6 @@ in
               pciutils
               nautilus
               xwayland-satellite
-            ]
-            ++ lib.optionals stdenv.isLinux [
-              ghostty
-            ]
-            ++ lib.optionals stdenv.isDarwin [
-              ghostty-bin
             ];
         };
 
@@ -71,7 +65,6 @@ in
         home.packages =
           with pkgs;
           [
-            sl
             self.packages.${pkgs.stdenv.system}.dev
             self.packages.${pkgs.stdenv.system}.certified-by-lincoln
             viu
@@ -79,8 +72,6 @@ in
             file
             fd
             unzip
-            nil
-            nixd
             yt-dlp
             wget
             killall
@@ -91,8 +82,6 @@ in
             })
           ]
           ++ lib.optionals pkgs.stdenv.isDarwin [
-            ghostty-bin
-            pika
             utm
           ]
           ++ lib.optionals pkgs.stdenv.isLinux [
@@ -103,7 +92,6 @@ in
             pavucontrol
             blender
             ungoogled-chromium
-            wayvnc
           ]
           ++ (lib.optionals (pkgs.stdenv.isLinux && pkgs.stdenv.isx86_64) [
             wineWow64Packages.stable

@@ -10,18 +10,18 @@
 
     boot.initrd = {
       kernelModules = [
-        "xhci_hcd"
-        "xhci_pci"
-        "usbhid"
         "hid_generic"
-        "nvme"
-        "ahci"
-        "sd_mod"
-        "kvm-amd"
-        "virtio"
         "virtio_pci"
         "virtio_blk"
         "virtio_gpu"
+        "xhci_hcd"
+        "xhci_pci"
+        "kvm-amd"
+        "virtio"
+        "sd_mod"
+        "usbhid"
+        "nvme"
+        "ahci"
       ];
 
       availableKernelModules = [

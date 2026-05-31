@@ -11,16 +11,13 @@
 
     boot = {
       initrd.availableKernelModules = [
-        "xhci_hcd"
-        "xhci_pci"
-        "usbhid"
-        "xhci_hcd"
-        "xhci_pci"
-        "usbhid"
         "thunderbolt"
-        "vmd"
+        "xhci_hcd"
+        "xhci_pci"
+        "usbhid"
         "ahci"
         "nvme"
+        "vmd"
       ];
       kernelModules = [ "kvm-intel" ];
     };
