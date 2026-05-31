@@ -4,7 +4,6 @@ let
     {
       environment.systemPackages = with pkgs; [
         git
-        mercurial
       ];
     };
 in
@@ -55,21 +54,6 @@ in
               };
               init.defaultBranch = "main";
               core.quotepath = "off";
-            };
-          };
-
-          mercurial = {
-            enable = true;
-            package = pkgs.mercurial.override { rustSupport = true; };
-            userName = "Invra";
-            userEmail = "identificationsucks@gmail.com";
-            aliases = {
-              a = "add";
-              p = "push -v";
-              s = "status";
-              c = "commit -m";
-              b = "branch";
-              m = "commit --amend";
             };
           };
 
