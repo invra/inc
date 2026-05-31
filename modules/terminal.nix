@@ -15,7 +15,9 @@ let
           fi
         '';
       };
-      environment.systemPackages = with pkgs; if stdenv.isDarwin then [ ghostty-bin ] else [ ghostty ];
+      environment.systemPackages = with pkgs; [ fastfetch ]
+        ++ lib.optionals stdenv.isLinux [ ghostty ]
+        ++ lib.optionals stdenv.isDarwin [ ghostty-bin ];
     };
 in
 {
@@ -121,119 +123,6 @@ in
             $env.PROMPT_COMMAND = { || create_left_prompt };
             $env.PROMPT_INDICATOR = { || $"(ansi green)λ(ansi reset) " };
           '';
-        };
-
-        fastfetch = {
-          enable = true;
-
-          settings = {
-            logo.source = "nixos";
-            display = {
-              size.binaryPrefix = "si";
-              color = "blue";
-              separator = "  ";
-            };
-            modules = [
-              {
-                type = "os";
-                key = "os   ";
-                keyColor = "blue";
-                format = "{name} {version}";
-              }
-              {
-                type = "kernel";
-                key = "krnl ";
-                keyColor = "blue";
-              }
-              {
-                type = "packages";
-                key = "pkgs ";
-                keyColor = "blue";
-              }
-              {
-                type = "shell";
-                key = "shell";
-                keyColor = "blue";
-              }
-              "break"
-              {
-                type = "wm";
-                key = "wm   ";
-                keyColor = "red";
-              }
-              {
-                type = "terminal";
-                key = "term ";
-                keyColor = "red";
-              }
-              {
-                type = "font";
-                key = "font ";
-                keyColor = "red";
-              }
-              {
-                type = "icons";
-                key = "icon ";
-                keyColor = "red";
-              }
-              "break"
-              {
-                type = "board";
-                key = "pc   ";
-                keyColor = "green";
-              }
-              {
-                type = "cpu";
-                key = "cpu  ";
-                keyColor = "green";
-              }
-              {
-                type = "memory";
-                key = "mem  ";
-                keyColor = "green";
-              }
-              {
-                type = "gpu";
-                key = "gpu  ";
-                keyColor = "green";
-              }
-              {
-                type = "disk";
-                key = "disk ";
-                keyColor = "green";
-              }
-              "break"
-              {
-                type = "localip";
-                key = "ip   ";
-                keyColor = "yellow";
-              }
-              {
-                type = "dns";
-                key = "dns  ";
-                keyColor = "yellow";
-              }
-              "break"
-              {
-                type = "custom";
-                key = "hg   ";
-                format = "https://hg.sr.ht/~invra/";
-                keyColor = "magenta";
-              }
-              {
-                type = "custom";
-                key = "git  ";
-                format = "https://gitlab.com/invra/";
-                keyColor = "magenta";
-              }
-              {
-                type = "custom";
-                key = "darcs";
-                format = "https://hub.darcs.net/invra/";
-                keyColor = "magenta";
-              }
-            ];
-          };
         };
       };
     };
