@@ -2,7 +2,10 @@ let
   polyModule =
     { pkgs, ... }:
     {
-      environment.systemPackages = with pkgs; [ helix  nixd ];
+      environment.systemPackages = with pkgs; [
+        helix
+        nixd
+      ];
     };
 in
 {
@@ -10,9 +13,9 @@ in
     nixos.base = polyModule;
     darwin.base = polyModule;
     homeManager.base = {
-      programs = {  
+      programs = {
         emacs.enable = true;
-        
+
         helix = {
           enable = true;
           defaultEditor = true;

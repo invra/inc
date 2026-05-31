@@ -1,4 +1,5 @@
-{ lib, ... }: {
+{ lib, ... }:
+{
   perSystem =
     { pkgs, ... }:
     {
@@ -12,10 +13,13 @@
           jq
           kdePackages.qtbase
         ];
-        nativeBuildInputs = with pkgs; [
-          swiftpm
-          kdePackages.wrapQtAppsHook
-        ] ++ finalAttrs.runtimeInputs;
+        nativeBuildInputs =
+          with pkgs;
+          [
+            swiftpm
+            kdePackages.wrapQtAppsHook
+          ]
+          ++ finalAttrs.runtimeInputs;
         runtimeInputs = with pkgs; [
           swift-corelibs-libdispatch
         ];
@@ -26,7 +30,7 @@
       });
       packages = {
         # TODO: Implement a build script for swift.
-        swift-bootstrapper = {};
+        swift-bootstrapper = { };
         auto = pkgs.stdenv.mkDerivation (finalAttrs: {
           pname = "auto";
           version = "release";

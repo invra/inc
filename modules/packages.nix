@@ -33,14 +33,12 @@ in
       {
         imports = [ polyModule ];
         environment = {
-          systemPackages =
-            with pkgs;
-            [
-              lsof
-              pciutils
-              nautilus
-              xwayland-satellite
-            ];
+          systemPackages = with pkgs; [
+            lsof
+            pciutils
+            nautilus
+            xwayland-satellite
+          ];
         };
 
         programs = {
