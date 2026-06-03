@@ -1,5 +1,6 @@
 {
   lib,
+  self,
   ...
 }:
 let
@@ -68,10 +69,10 @@ in
     nixos.base =
       { pkgs, ... }:
       {
-        programs.sway = {
-          enable = true;
-          package = pkgs.swayfx;
-        };
+        environment.systemPackages = with pkgs; [
+          river
+          self.packages.${stdenv.system}.beansprout   
+        ];
       };
 
     homeManager.base =
@@ -80,7 +81,7 @@ in
         ...
       }:
       lib.optionalAttrs linux {
-        # TODO: Implement beansprout config here
+
       };
   };
 }
