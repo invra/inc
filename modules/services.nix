@@ -17,6 +17,29 @@
           };
         };
         services = {
+          gitlab = {
+            enable = true;
+            databasePasswordFile = pkgs.writeText "dbPassword" "timtams";
+            initialRootPasswordFile = pkgs.writeText "rootPassword" "";
+            secrets = {
+              secretFile = pkgs.writeText "secret" "Aig5zaic";
+              otpFile = pkgs.writeText "otpsecret" "Riew9mue";
+              dbFile = pkgs.writeText "dbsecret" "we2quaeZ";
+              jwsFile = pkgs.runCommand "oidcKeyBase" {} "${pkgs.openssl}/bin/openssl genrsa 2048 > $out";
+              activeRecordPrimaryKeyFile = pkgs.writeText "arPrimaryKey" "somethingrandom32charslong123456";
+              activeRecordDeterministicKeyFile = pkgs.writeText "arDeterministicKey" "somethingelse32charslong12345678";
+              activeRecordSaltFile = pkgs.writeText "arSalt" "somesalt32charslong123456789012";
+            };
+          };
+          nginx = {
+            enable = true;
+            recommendedProxySettings = true;
+            virtualHosts = {
+              localhost = {
+                locations."/".proxyPass = "http://unix:/run/gitlab/gitlab-workhorse.socket";
+              };
+            };
+          };
           tailscale.enable = true;
           blueman.enable = true;
           udisks2.enable = true;
@@ -63,7 +86,10 @@
           };
         };
         systemd = {
-          services.tailscaled.serviceConfig.Type = "idle";
+          services = {
+            gitlab-backup.environment.BACKUP = "dump";
+            tailscaled.serviceConfig.Type = "idle";
+          };
           network = {
             enable = true;
             wait-online.enable = false;
