@@ -12,5 +12,4 @@ flake-parts.lib.mkFlake { inherit inputs; } {
     (import-tree ./custom)
     (import-tree ./modules)
   ];
-  _module.args.rootPath = ./.;
 }
