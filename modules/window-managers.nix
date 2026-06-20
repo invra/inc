@@ -58,6 +58,7 @@ in
               cmd-enter = "exec-and-forget ${pkgs.ghostty-bin}/bin/ghostty";
               cmd-backslash = "exec-and-forget ${pkgs.emacs}/bin/emacs";
               cmd-shift-s = "exec-and-forget screencapture -i -c";
+              alt-b = "exec-and-forget open -na helium";
               cmd-h = [ ];
               cmd-alt-h = [ ];
             }
