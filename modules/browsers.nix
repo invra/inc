@@ -55,7 +55,6 @@
       };
     }
     // lib.optionalAttrs linux {
-      wayland.windowManager.sway.config.keybindings."Mod1+b" = "exec xdg-open about://blank";
       xdg.mimeApps = {
         enable = true;
         defaultApplications = {

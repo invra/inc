@@ -3,10 +3,7 @@
   flake.modules.homeManager.base =
     { pkgs, linux, ... }:
     lib.optionalAttrs linux {
-      programs.eww = {
-        enable = true;
-      };
-      wayland.windowManager.sway.config.bars = [ ];
+      programs.eww.enable = true;
       xdg.configFile = {
         "eww/eww.scss".text = ''
           * {
