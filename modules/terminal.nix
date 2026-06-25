@@ -78,6 +78,7 @@ in
             font-family = "Lilex";
             background-opacity = if linux then lib.mkForce 0.85 else lib.mkForce 0.95;
             macos-titlebar-style = "hidden";
+            quit-after-last-window-closed = true;
           };
         };
         carapace = {
