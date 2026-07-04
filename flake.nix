@@ -9,6 +9,14 @@
       url = "git+https://codeberg.org/beansprout/beansprout";
       flake = false;
     };
+    nixcord = {
+      url = "github:4evy/nixcord";
+      inputs = {
+        nixpkgs.follows = "nixpkgs";
+        nixpkgs-nixcord.follows = "nixpkgs";
+        flake-parts.follows = "flake-parts";
+      };
+    };
     flake-parts = {
       url = "github:hercules-ci/flake-parts";
       inputs.nixpkgs-lib.follows = "nixpkgs";

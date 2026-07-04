@@ -1,4 +1,5 @@
 {
+  inputs,
   self,
   lib,
   ...
@@ -60,6 +61,9 @@ in
     homeManager.base =
       { pkgs, ... }:
       {
+        imports = [
+          inputs.nixcord.homeModules.nixcord
+        ];
         home.packages =
           with pkgs;
           [
@@ -74,10 +78,6 @@ in
             wget
             killall
             prismlauncher
-            (discord.override {
-              # withOpenASAR = true;
-              # withVencord = true;
-            })
           ]
           ++ lib.optionals pkgs.stdenv.isDarwin [
             utm
@@ -100,6 +100,10 @@ in
           ]);
 
         programs = {
+          nixcord = {
+            enable = true;
+            discord.equicord.enable = true;
+          };
           ripgrep.enable = true;
           btop = {
             enable = true;

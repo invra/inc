@@ -16,6 +16,20 @@
         "url": "https://codeberg.org/beansprout/beansprout"
       }
     },
+    "flake-compat": {
+      "locked": {
+        "lastModified": 1733328505,
+        "narHash": "sha256-NeCCThCEP3eCl2l/+27kNNK7QrwZB1IJCrXfrbv5oqU=",
+        "rev": "ff81ac966bb2cae68946d5ed5fc4994f96d0ffec",
+        "revCount": 69,
+        "type": "tarball",
+        "url": "https://api.flakehub.com/f/pinned/edolstra/flake-compat/1.1.0/01948eb7-9cba-704f-bbf3-3fa956735b52/source.tar.gz"
+      },
+      "original": {
+        "type": "tarball",
+        "url": "https://flakehub.com/f/edolstra/flake-compat/1.tar.gz"
+      }
+    },
     "flake-parts": {
       "inputs": {
         "nixpkgs-lib": [
@@ -99,6 +113,33 @@
         "type": "github"
       }
     },
+    "nixcord": {
+      "inputs": {
+        "flake-compat": "flake-compat",
+        "flake-parts": [
+          "flake-parts"
+        ],
+        "nixpkgs": [
+          "nixpkgs"
+        ],
+        "nixpkgs-nixcord": [
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1783166802,
+        "narHash": "sha256-nZR2BNwCMUau/JeFSLkP4lYBZAK6CM9+SanGNOELQWA=",
+        "owner": "4evy",
+        "repo": "nixcord",
+        "rev": "27e27fdcd738c6773fc8de5144eec284e4debe73",
+        "type": "github"
+      },
+      "original": {
+        "owner": "4evy",
+        "repo": "nixcord",
+        "type": "github"
+      }
+    },
     "nixpkgs": {
       "locked": {
         "lastModified": 1782959384,
@@ -122,6 +163,7 @@
         "helium": "helium",
         "home-manager": "home-manager",
         "nix-darwin": "nix-darwin",
+        "nixcord": "nixcord",
         "nixpkgs": "nixpkgs",
         "treefmt-nix": "treefmt-nix"
       }
