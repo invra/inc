@@ -80,11 +80,11 @@
                  :space-evenly true
                  :halign "start"
                  :spacing 10
-              (button :onclick "${pkgs.mangowc}/bin/mmsg -t 1" 1)
-              (button :onclick "${pkgs.mangowc}/bin/mmsg -t 2" 2)
-              (button :onclick "${pkgs.mangowc}/bin/mmsg -t 3" 3)
-              (button :onclick "${pkgs.mangowc}/bin/mmsg -t 4" 4)
-              (button :onclick "${pkgs.mangowc}/bin/mmsg -t 5" 5)))
+              (button :onclick "${pkgs.mango}/bin/mmsg -t 1" 1)
+              (button :onclick "${pkgs.mango}/bin/mmsg -t 2" 2)
+              (button :onclick "${pkgs.mango}/bin/mmsg -t 3" 3)
+              (button :onclick "${pkgs.mango}/bin/mmsg -t 4" 4)
+              (button :onclick "${pkgs.mango}/bin/mmsg -t 5" 5)))
 
           (defwidget music []
             (box :class "music"

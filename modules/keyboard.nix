@@ -3,8 +3,8 @@
   flake.modules = {
     nixos.base = {
       services.xserver.xkb = {
-        layout = "us";
-        variant = "workman";
+        layout = "us,us";
+        variant = ",workman";
         options = "caps:escape";
       };
     };
