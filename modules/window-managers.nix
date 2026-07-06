@@ -52,6 +52,18 @@ in
             after-startup-command = [
               "exec-and-forget ${pkgs.jankyborders}/bin/borders active_color=0xebbcbaff inactive_color=0x00000000 width=10.0"
             ];
+            workspace-to-monitor-force-assignment = {
+              "1" = "main";
+              "2" = "main";
+              "3" = "main";
+              "4" = "main";
+              "5" = "main";
+              "6" = "secondary";
+              "7" = "secondary";
+              "8" = "secondary";
+              "9" = "secondary";
+              "0" = "secondary";
+            };
             mode.main.binding = {
               alt-space = "layout floating tiling";
               alt-enter = "fullscreen";
