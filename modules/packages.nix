@@ -97,11 +97,12 @@ in
             yabridge
             yabridgectl
             bitwig-studio
+            discord
           ]);
 
         programs = {
           nixcord = {
-            enable = true;
+            enable = false;
             discord.equicord.enable = true;
           };
           ripgrep.enable = true;
@@ -119,7 +120,7 @@ in
             };
           };
           spotify-player = {
-            enable = true;
+            enable = false;
 
             settings = {
               theme = "rose-pine";

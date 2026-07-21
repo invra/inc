@@ -12,7 +12,8 @@ in
   flake.modules = {
     nixos.base = polyModule;
     darwin.base = polyModule;
-    homeManager.base = {
+    homeManager.base = { pkgs, ... }: {
+      home.packages = with pkgs; [ gram ];
       programs = {
         emacs.enable = true;
 
@@ -75,15 +76,6 @@ in
               };
             };
           };
-        };
-        zed-editor = {
-          enable = true;
-          extensions = [
-            "rose-pine-theme"
-            "toml"
-            "nix"
-            "zig"
-          ];
         };
       };
     };
