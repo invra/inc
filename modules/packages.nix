@@ -97,12 +97,11 @@ in
             yabridge
             yabridgectl
             bitwig-studio
-            discord
           ]);
 
         programs = {
           nixcord = {
-            enable = false;
+            enable = true;
             discord.equicord.enable = true;
           };
           ripgrep.enable = true;
