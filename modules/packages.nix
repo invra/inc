@@ -35,10 +35,10 @@ in
         imports = [ polyModule ];
         environment = {
           systemPackages = with pkgs; [
-            lsof
+            xwayland-satellite
             pciutils
             nautilus
-            xwayland-satellite
+            lsof
           ];
         };
 
@@ -78,25 +78,24 @@ in
             wget
             killall
             prismlauncher
+            blender
           ]
           ++ lib.optionals pkgs.stdenv.isDarwin [
             utm
           ]
           ++ lib.optionals pkgs.stdenv.isLinux [
             wl-clipboard
-            wayvnc
-            crosspipe
-            vlc
             pavucontrol
-            blender
-            ungoogled-chromium
+            crosspipe
+            wayvnc
+            vlc
           ]
           ++ (lib.optionals (pkgs.stdenv.isLinux && pkgs.stdenv.isx86_64) [
             wineWow64Packages.stable
+            bitwig-studio
+            yabridgectl
             winetricks
             yabridge
-            yabridgectl
-            bitwig-studio
           ]);
 
         programs = {
