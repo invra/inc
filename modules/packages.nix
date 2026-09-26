@@ -96,6 +96,7 @@ in
             yabridgectl
             winetricks
             yabridge
+            ente-auth
           ]);
 
         programs = {
