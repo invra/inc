@@ -33,10 +33,10 @@
 
     fileSystems = {
       "/" = {
-        device = "/dev/disk/by-uuid/195156cd-a0d3-41c7-bae7-b28301f278d3";
+        device = "/dev/disk/by-uuid/75029aff-3d90-4d1d-98b0-3ce9b7b47c84";
         fsType = "ext4";
       };
     };
-    system.stateVersion = "25.11";
+    system.stateVersion = "26.05";
   };
 }
