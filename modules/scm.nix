@@ -25,6 +25,7 @@ in
               alias = {
                 a = "add";
                 p = "push -v";
+                P = "pull -v";
                 s = "status -s";
                 c = "commit -m";
                 b = "branch --all";
@@ -46,6 +47,7 @@ in
               alias = {
                 a = "add";
                 p = "push -v";
+                st = "status";
                 s = "status -s";
                 c = "commit -m";
                 b = "branch --all";
