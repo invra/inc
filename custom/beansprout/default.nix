@@ -10,7 +10,7 @@
         src = inputs.beansprout-src;
 
         deps = pkgs.callPackage ./build.zig.zon.nix {
-         name = "${finalAttrs.pname}-cache-${finalAttrs.version}";
+          name = "${finalAttrs.pname}-cache-${finalAttrs.version}";
         };
 
         buildInputs = with pkgs; [

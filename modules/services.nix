@@ -25,7 +25,7 @@
               secretFile = pkgs.writeText "secret" "Aig5zaic";
               otpFile = pkgs.writeText "otpsecret" "Riew9mue";
               dbFile = pkgs.writeText "dbsecret" "we2quaeZ";
-              jwsFile = pkgs.runCommand "oidcKeyBase" {} "${pkgs.openssl}/bin/openssl genrsa 2048 > $out";
+              jwsFile = pkgs.runCommand "oidcKeyBase" { } "${pkgs.openssl}/bin/openssl genrsa 2048 > $out";
               activeRecordPrimaryKeyFile = pkgs.writeText "arPrimaryKey" "somethingrandom32charslong123456";
               activeRecordDeterministicKeyFile = pkgs.writeText "arDeterministicKey" "somethingelse32charslong12345678";
               activeRecordSaltFile = pkgs.writeText "arSalt" "somesalt32charslong123456789012";

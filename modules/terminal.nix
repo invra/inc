@@ -15,7 +15,9 @@ let
           fi
         '';
       };
-      environment.systemPackages = with pkgs; [ fastfetch ]
+      environment.systemPackages =
+        with pkgs;
+        [ fastfetch ]
         ++ lib.optionals stdenv.hostPlatform.isLinux [ ghostty ]
         ++ lib.optionals stdenv.hostPlatform.isDarwin [ ghostty-bin ];
     };

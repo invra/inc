@@ -84,7 +84,7 @@ in
       {
         environment.systemPackages = with pkgs; [
           river
-          self.packages.${stdenv.system}.beansprout   
+          self.packages.${stdenv.system}.beansprout
         ];
         services.desktopManager.plasma6.enable = true;
       };
