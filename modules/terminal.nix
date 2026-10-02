@@ -95,14 +95,9 @@ in
         nushell = {
           enable = true;
           shellAliases =
-            let
-              eza = "${pkgs.eza}/bin/eza";
-            in
             {
-              ls = "${eza} --icons always";
-              l = "${eza} --icons -l";
-              la = "${eza} --icons -al";
-              tree = "${eza} --icons --tree --ignore-glob='_darcs|.git|target|bin|obj|Release|Debug'";
+              l = "ls -l";
+              la = "ls -al";
               edit = "taskset -c 0-7 hx";
               fuckoff = "exit";
               doas = if darwin then "sudo" else "${pkgs.doas-sudo-shim}/bin/sudo";
