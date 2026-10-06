@@ -5,18 +5,6 @@
   };
 
   inputs = {
-    beansprout-src = {
-      url = "git+https://codeberg.org/beansprout/beansprout";
-      flake = false;
-    };
-    nixcord = {
-      url = "github:4evy/nixcord";
-      inputs = {
-        nixpkgs.follows = "nixpkgs";
-        nixpkgs-nixcord.follows = "nixpkgs";
-        treefmt-nix.follows = "treefmt-nix";
-      };
-    };
     flake-parts = {
       url = "github:hercules-ci/flake-parts";
       inputs.nixpkgs-lib.follows = "nixpkgs";
@@ -31,6 +19,21 @@
     home-manager = {
       url = "github:nix-community/home-manager";
       inputs.nixpkgs.follows = "nixpkgs";
+    };
+    mangowm = {
+      url = "github:mangowm/mango";
+      inputs = {
+        flake-parts.follows = "flake-parts";
+        nixpkgs.follows = "nixpkgs";
+      };
+    };
+    nixcord = {
+      url = "github:4evy/nixcord";
+      inputs = {
+        nixpkgs.follows = "nixpkgs";
+        nixpkgs-nixcord.follows = "nixpkgs";
+        treefmt-nix.follows = "treefmt-nix";
+      };
     };
     nix-darwin = {
       url = "github:nix-darwin/nix-darwin";

@@ -1,6 +1,6 @@
 {
   lib,
-  self,
+  inputs,
   ...
 }:
 let
@@ -83,8 +83,7 @@ in
       { pkgs, ... }:
       {
         environment.systemPackages = with pkgs; [
-          river
-          self.packages.${stdenv.system}.beansprout
+          mangowc
         ];
         services.desktopManager.plasma6.enable = true;
       };
@@ -96,100 +95,120 @@ in
         ...
       }:
       lib.optionalAttrs linux {
-        xdg.configFile = {
-          "river/init" = {
-            text = ''
-              #!/bin/bash
-              ${self.packages.${pkgs.stdenv.system}.beansprout}/bin/beansprout &
-              eww open bar0
-              eww open bar1
-            '';
-            executable = true;
+        imports = [
+          inputs.mangowm.hmModules.mango
+        ];
+
+        wayland.windowManager.mango = {
+          enable = true;
+          systemd.enable = true;
+
+          settings = {          
+            exec_once = [
+              "dbus-update-activation-environment --systemd WAYLAND_DISPLAY XDG_CURRENT_DESKTOP=wlroots"
+              "systemctl --user restart xdg-desktop-portal"
+              "systemctl --user restart xdg-desktop-portal-wlr"
+              "${pkgs.eww}/bin/eww open bar0"
+              "${pkgs.eww}/bin/eww open bar1"
+              "${pkgs.mako}/bin/mako"
+              "${pkgs.swaybg}/bin/swaybg"
+            ];
+
+            exec = [
+              "${pkgs.swaybg}/bin/swaybg --image ${../wallpapers/flake.jpg}"
+            ];
+                        
+            blur = "0";
+            blur_layer = "0";
+            blur_optimized = "1";
+            blur_params_num_passes = 2;
+            blur_params_radius = 5;
+            blur_params_noise = 0.02;
+            blur_params_brightness = 0.9;
+            blur_params_contrast = 0.9;
+            blur_params_saturation = 1.2;
+            
+            border_px = "4";
+            border_radius = "15";
+            no_radius_when_single = "0";
+            focused_opacity = "1.0";
+            unfocused_opacity = "0.9";
+
+            gap_inner_horizontal = "10";
+            gap_inner_vertical = "10";
+            gap_outer_horizontal = "10";
+            gap_outer_vertical = "10";
+            scratchpad_width_ratio = "0.8";
+            scratchpad_height_ratio = "0.9";
+            root_color = "0x201b14ff";
+            border_color = "0x00000000";
+            focus_color = "0xebbcbaff";
+            maximized_screen_color = "0xf6c177ff";
+            urgent_color = "0xeb6f92ff";
+            scratchpad_color = "0x31748fff";
+            global_color = "0xc4a7e7ff";
+            overlay_color = "0x9ccfd8ff";
+
+            xkb_rules_layout="us,us";
+            xkb_rules_variant=",workman";
+            xkb_rules_options="grp:lalt_lshift_toggle";
+           
+            bind = [
+              "Alt+Shift,F4,quit"
+              "Alt,q,killclient,"
+
+              "Super,R,reload_config"
+
+              "NONE,XF86AudioPlay,spawn,${pkgs.playerctl}/bin/playerctl play-pause"
+              "NONE,XF86AudioNext,spawn,${pkgs.playerctl}/bin/playerctl next"
+              "NONE,XF86AudioPrev,spawn,${pkgs.playerctl}/bin/playerctl previous"
+              "NONE,XF86AudioRaiseVolume,spawn,${pkgs.wireplumber}/bin/wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%+ -l 1.5"
+              "NONE,XF86AudioLowerVolume,spawn,${pkgs.wireplumber}/bin/wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%-"
+              "NONE,XF86AudioMute,spawn,${pkgs.wireplumber}/bin/wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle"
+              "NONE,XF86AudioMicMute,spawn,${pkgs.wireplumber}/bin/wpctl set-mute @DEFAULT_AUDIO_SOURCE@ toggle"
+              "NONE,XF86MonBrightnessUp,spawn,${pkgs.brightnessctl}/bin/brightnessctl set +5%"
+              "NONE,XF86MonBrightnessDown,spawn,${pkgs.brightnessctl}/bin/brightnessctl set 5%-"
+
+              "Super,space,spawn,${pkgs.tofi}/bin/tofi-drun --drun-launch=true"
+              "Super+SHIFT,S,spawn,${pkgs.hyprshot}/bin/hyprshot -m region --clipboard-only"
+              "Super,Return,spawn,${pkgs.ghostty}/bin/ghostty"
+              "Super,F,spawn,${pkgs.nautilus}/bin/nautilus"
+              "Alt,B,spawn,xdg-open https:"
+
+              "Super,g,toggleglobal,"
+              "ALT,Tab,toggleoverview,"
+              "ALT,space,togglefloating,"
+              "ALT,Return,togglefullscreen,"
+
+              "Alt,1,view,1,0"
+              "Alt,2,view,2,0"
+              "Alt,3,view,3,0"
+              "Alt,4,view,4,0"
+              "Alt,5,view,5,0"
+              "CTRL+Super,Left,viewtoleft,0"
+              "CTRL+Super,Right,viewtoright,0"
+
+              "Alt+Shift,1,tag,1,0"
+              "Alt+Shift,2,tag,2,0"
+              "Alt+Shift,3,tag,3,0"
+              "Alt+Shift,4,tag,4,0"
+              "Alt+Shift,5,tag,5,0"
+            ];
+            
+            mousebind = [
+              "Super,btn_left,moveresize,curmove"
+              "Super,btn_right,moveresize,curresize"
+            ];
+            
+            layer_rule = [
+              "animation_type_open:zoom,layer_name:tofi-drun"
+              "animation_type_close:zoom,layer_name:tofi-drun"
+            ];
+
+            window_rule = [
+              "is_floating:1,height:398,width:700,offset_y:99,offset_x:99,is_global:1,is_overlay:1,title:Picture-in-Picture"
+            ];
           };
-          "beansprout/config.kdl".text = ''
-            attach_mode top
-            primary_count 1
-            primary_ratio 0.55
-            single_window_ratio 1.0
-            primary_side left 
-            focus_follows_pointer #true
-            output_focus_follows_pointer #true
-            pointer_warp_on_focus_change #true
-            focus_on_send if_visible
-
-            wallpaper_image_path "~/.config/nix/wallpapers/flake.jpg"
-
-            borders {
-              width 2
-              color_focused "0x89b4fa"
-              color_unfocused "0x1e1e2e"
-            }
-            window_rules {
-              float title="Picture-in-picture"
-              float title="Picture-in-Picture"
-              float title="*Preferences*"
-            }
-            keybinds {
-              spawn Mod4 Return ghostty
-              spawn Mod1 B "xdg-open about://blank"
-              spawn Mod4 Space "tofi-drun --drun-launch=true"
-              spawn Mod1+Shift S "hyprshot -m region --clipboard-only"
-              focus_next_window Mod4 J
-              focus_prev_window Mod4 K
-              focus_next_output Mod1 Period
-              focus_prev_output Mod1 Comma
-              send_to_next_output Mod4+Shift Period
-              send_to_prev_output Mod4+Shift Comma
-              zoom Mod4 Z
-              toggle_float Mod1 F
-              change_primary_ratio Mod4 H 0.05
-              change_primary_ratio Mod4 L -0.05
-              increment_primary_count Mod4 I
-              decrement_primary_count Mod4 D
-              reload_config Mod1 F1
-              toggle_fullscreen Mod1 Return
-              close_window Mod1 Q
-              exit_river Mod1+Shift F4
-              swap_next Mod4+Shift N
-              swap_prev Mod4+Shift P
-              move_left Mod4+Shift H 100
-              move_down Mod4+Shift J 100
-              move_up Mod4+Shift K 100
-              move_right Mod4+Shift L 100
-              resize_width Mod1 H -100
-              resize_height Mod1 J 100
-              resize_height Mod1 K -100
-              resize_width Mod1 L 100
-
-              spawn None XF86AudioRaiseVolume "wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%+ -l 1.5"
-              spawn None XF86AudioLowerVolume "wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%-"
-              spawn None XF86AudioMute "wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle"
-              spawn None XF86AudioMedia "playerctl play-pause"
-              spawn None XF86AudioPlay "playerctl play-pause"
-              spawn None XF86AudioPrev "playerctl previous"
-              spawn None XF86AudioNext "playerctl next"
-
-              tag_bind Mod1 set_output_tags
-              tag_bind Mod1+Shift set_window_tags
-              tag_bind Mod1+Ctrl toggle_output_tags
-              tag_bind Mod1+Ctrl+Shift toggle_window_tags
-            }
-
-            pointer_binds {
-              move_window Mod4 BTN_LEFT
-              resize_window Mod4 BTN_RIGHT
-            }
-
-            keyboard_layout {
-              layout "us,us"
-              variant ",workman"
-              options "grp:caps_toggle"
-            }
-
-            input {
-              accel_profile "flat"
-            }
-          '';
         };
       };
   };
