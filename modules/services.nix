@@ -16,7 +16,6 @@
             enable32Bit = pkgs.stdenv.hostPlatform.isx86_64;
           };
         };
-        security.rtkit.enable = true;
         services = {
           gitlab = {
             enable = true;
@@ -46,53 +45,6 @@
           udisks2.enable = true;
           gvfs.enable = true;
           fwupd.enable = true;
-          pipewire = {
-            enable = true;
-            alsa = {
-              enable = true;
-              support32Bit = true;
-            };
-            pulse.enable = true;
-            jack.enable = true;
-            extraConfig.pipewire = {
-              "10-clock-settings"."context.properties" = {
-                "default.clock.rate" = 192000;
-                "default.clock.allowed-rates" = [ 44100 48000 88200 96000 176400 192000 ];
-
-                "default.clock.quantum" = 1024;
-                "default.clock.min-quantum" = 64;
-                "default.clock.max-quantum" = 4096;
-              };
-            };
-            wireplumber.extraConfig = {
-              "99-disable-suspend" = {
-                "monitor.alsa.rules" = [
-                  {
-                    matches = [
-                      { "node.name" = "~alsa_input.*"; }
-                      { "node.name" = "~alsa_output.*"; }
-                    ];
-                    actions.update-props."session.suspend-timeout-seconds" = 0;
-                  }
-                ];
-              };
-              "99-motu-m4-hardware" = {
-                "monitor.alsa.rules" = [
-                  {
-                    matches = [
-                      { "device.name" = "~alsa_card.usb-MOTU_M4*"; }
-                    ];
-                    actions.update-props = {
-                      "device.profile" = "pro-audio";
-                      "api.alsa.period-size" = 256;
-                      "api.alsa.headroom" = 1024;
-                    };
-                  }
-                ];
-              };      
-            };
-          };
-
           libinput.enable = true;
           openssh.enable = true;
         };
