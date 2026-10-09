@@ -1,5 +1,4 @@
 {
-  inputs,
   self,
   lib,
   ...
@@ -25,7 +24,6 @@ in
     "bitwig-studio6"
     "steam"
     "steam-unwrapped"
-    "discord"
   ];
   flake.modules = {
     darwin.base = polyModule;
@@ -61,9 +59,6 @@ in
     homeManager.base =
       { pkgs, ... }:
       {
-        imports = [
-          inputs.nixcord.homeModules.nixcord
-        ];
         home.packages =
           with pkgs;
           [
@@ -100,10 +95,6 @@ in
           ]);
 
         programs = {
-          nixcord = {
-            enable = true;
-            discord.equicord.enable = true;
-          };
           ripgrep.enable = true;
           btop = {
             enable = true;
