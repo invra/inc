@@ -16,6 +16,7 @@
             enable32Bit = pkgs.stdenv.hostPlatform.isx86_64;
           };
         };
+        security.rtkit.enable = true;
         services = {
           gitlab = {
             enable = true;
@@ -54,18 +55,41 @@
             pulse.enable = true;
             jack.enable = true;
             extraConfig.pipewire = {
-              "clock" = {
-                "context.properties" = {
-                  "default.clock.rate" = 48000;
-                  "default.clock.allowed-rates" = [
-                    44100
-                    48000
-                  ];
-                  "default.clock.quantum" = 1024;
-                  "default.clock.min-quantum" = 16;
-                  "default.clock.max-quantum" = 2048;
-                };
+              "10-clock-settings"."context.properties" = {
+                "default.clock.rate" = 192000;
+                "default.clock.allowed-rates" = [ 44100 48000 88200 96000 176400 192000 ];
+
+                "default.clock.quantum" = 1024;
+                "default.clock.min-quantum" = 64;
+                "default.clock.max-quantum" = 4096;
               };
+            };
+            wireplumber.extraConfig = {
+              "99-disable-suspend" = {
+                "monitor.alsa.rules" = [
+                  {
+                    matches = [
+                      { "node.name" = "~alsa_input.*"; }
+                      { "node.name" = "~alsa_output.*"; }
+                    ];
+                    actions.update-props."session.suspend-timeout-seconds" = 0;
+                  }
+                ];
+              };
+              "99-motu-m4-hardware" = {
+                "monitor.alsa.rules" = [
+                  {
+                    matches = [
+                      { "device.name" = "~alsa_card.usb-MOTU_M4*"; }
+                    ];
+                    actions.update-props = {
+                      "device.profile" = "pro-audio";
+                      "api.alsa.period-size" = 256;
+                      "api.alsa.headroom" = 1024;
+                    };
+                  }
+                ];
+              };      
             };
           };
 
@@ -86,6 +110,7 @@
           };
         };
         systemd = {
+          targets.gitlab.wantedBy = lib.mkForce [ ];
           services = {
             gitlab-backup.environment.BACKUP = "dump";
             tailscaled.serviceConfig.Type = "idle";

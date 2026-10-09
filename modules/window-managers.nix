@@ -188,11 +188,11 @@ in
               "CTRL+Super,Left,viewtoleft,0"
               "CTRL+Super,Right,viewtoright,0"
 
-              "Alt+Shift,1,tag,1,0"
-              "Alt+Shift,2,tag,2,0"
-              "Alt+Shift,3,tag,3,0"
-              "Alt+Shift,4,tag,4,0"
-              "Alt+Shift,5,tag,5,0"
+              "Alt+Ctrl,1,tag,1,0"
+              "Alt+Ctrl,2,tag,2,0"
+              "Alt+Ctrl,3,tag,3,0"
+              "Alt+Ctrl,4,tag,4,0"
+              "Alt+Ctrl,5,tag,5,0"
             ];
             
             mousebind = [

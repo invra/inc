@@ -7,7 +7,6 @@
     };
     nixos.base = {
       security = {
-        rtkit.enable = true;
         sudo.enable = false;
         doas = {
           enable = true;

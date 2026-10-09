@@ -6,7 +6,7 @@
     }:
     {
       boot = {
-        kernelPackages = pkgs.linuxPackages_6_18;
+        kernelPackages = pkgs.linuxPackages_7_2;
 
         kernel.sysctl = {
           "vm.max_map_count" = 2147483642;
@@ -23,7 +23,15 @@
           "quiet"
           "loglevel=3"
           "udev.log-priority=3"
+          # some device on my mobo is fucked up making this
+          # timeout quick up neccissary
+          "usbcore.initial_descriptor_timeout=1000"
         ];
+
+        # make all audio spec devices not go into power-save
+        extraModprobeConfig = ''
+          options snd_usb_audio power_save=0
+        '';
 
         loader = {
           timeout = 1;
