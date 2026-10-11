@@ -10,7 +10,7 @@
       inputs.nixpkgs-lib.follows = "nixpkgs";
     };
     helium = {
-      url = "gitlab:invra/helium-flake";
+      url = "git+https://gitlab.com/invra/helium-flake";
       inputs = {
         nixpkgs.follows = "nixpkgs";
         flake-parts.follows = "flake-parts";
@@ -31,7 +31,6 @@
       url = "github:4evy/nixcord";
       inputs = {
         nixpkgs.follows = "nixpkgs";
-        nixpkgs-nixcord.follows = "nixpkgs";
         treefmt-nix.follows = "treefmt-nix";
       };
     };
