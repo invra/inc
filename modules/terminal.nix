@@ -7,7 +7,8 @@ let
       programs.bash = {
         enable = true;
         interactiveShellInit = ''
-          export NIX_SSL_CERT_FILE="${pkgs.cacert}/etc/ssl/certs/ca-bundle.crt"
+          export NIX_SSL_CERT_FILE="${pkgs.cacert}/etc/ssl/certs/ca-bundle.crt";
+          export NIXPKGS_ALLOW_UNFREE=1;
           export VISUAL="${pkgs.helix}/bin/hx";
           export EDITOR="${pkgs.helix}/bin/hx";
           if ! [ "$TERM" = "dumb" ] && [ -z "$BASH_EXECUTION_STRING" ]; then
