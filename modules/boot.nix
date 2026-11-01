@@ -13,10 +13,7 @@
           "vm.swappiness" = 10;
         };
 
-        initrd = {
-          systemd.enable = true;
-          includeDefaultModules = false;
-        };
+        initrd.includeDefaultModules = false;
 
         kernelParams = [
           "splash"
