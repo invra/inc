@@ -12,8 +12,7 @@ in
   flake.modules = {
     nixos.base = polyModule;
     darwin.base = polyModule;
-    homeManager.base = { pkgs, ... }: {
-      home.packages = with pkgs; [ gram ];
+    homeManager.base = {
       programs = {
         emacs.enable = true;
 

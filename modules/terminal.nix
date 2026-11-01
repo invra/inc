@@ -95,6 +95,7 @@ in
         };
         nushell = {
           enable = true;
+          loadSessionVariables = true;
           shellAliases =
             {
               l = "ls -l";
