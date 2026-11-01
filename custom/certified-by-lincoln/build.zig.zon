@@ -5,8 +5,8 @@
     .minimum_zig_version = "0.15.2",
     .dependencies = .{
         .colored = .{
-            .url = "git+https://github.com/invra/colored.zig#54f9cc316f56f70458bacef117fa18a3f1140bee",
-            .hash = "colored-1.0.0-k8xvmZE2AAAf5ABnPMKeJ8vwoZf-XHyh9hVL0Nd_Zqz2",
+            .url = "git+https://github.com/invra/colored.zig#a7d7d70513f4e86572dee1c9ad7768eb494fa599",
+            .hash = "colored-1.0.0-k8xvmWA4AAAoJU7MVDHGiG9zC7doR7mzdBekj9PI2EnZ",
         },
     },
     .paths = .{

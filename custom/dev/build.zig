@@ -1,23 +1,36 @@
 const std = @import("std");
+const Translator = @import("translate_c").Translator;
 
 pub fn build(b: *std.Build) void {
     const target = b.standardTargetOptions(.{});
     const optimize = b.standardOptimizeOption(.{});
 
     const wf = b.addWriteFiles();
-    const generate_pwd_translate_c_h = wf.add("pwd.h", "#include <pwd.h>");
-    const generate_unistd_translate_c_h = wf.add("unistd.h", "#include <unistd.h>");
+    const pwd_h = wf.add("pwd.h", "#include <pwd.h>");
+    const unistd_h = wf.add("unistd.h", "#include <unistd.h>");
 
-    const pwd_translate_c = b.addTranslateC(.{ .link_libc = true, .target = target, .optimize = optimize, .root_source_file = generate_pwd_translate_c_h });
-    const unistd_translate_c = b.addTranslateC(.{ .link_libc = true, .target = target, .optimize = optimize, .root_source_file = generate_unistd_translate_c_h });
+    const translate_c = b.dependency("translate_c", .{});
+
+    const pwd_translator: Translator = .init(translate_c, .{
+        //
+        .c_source_file = pwd_h,
+        .target = target,
+        .optimize = optimize,
+    });
+    const unistd_translator: Translator = .init(translate_c, .{
+        //
+        .c_source_file = unistd_h,
+        .target = target,
+        .optimize = optimize,
+    });
 
     const utils_mod = b.addModule("dev", .{
         .root_source_file = b.path("src/utils/root.zig"),
         .target = target,
         .imports = &.{
             //
-            .{ .name = "pwd", .module = pwd_translate_c.createModule() },
-            .{ .name = "unistd", .module = unistd_translate_c.createModule() },
+            .{ .name = "pwd", .module = pwd_translator.mod },
+            .{ .name = "unistd", .module = unistd_translator.mod },
         },
     });
 
@@ -40,10 +53,7 @@ pub fn build(b: *std.Build) void {
     run_step.dependOn(&run_cmd.step);
 
     run_cmd.step.dependOn(b.getInstallStep());
-
-    if (b.args) |args| {
-        run_cmd.addArgs(args);
-    }
+    run_cmd.addPassthruArgs();
 
     const utils_mod_tests = b.addTest(.{
         .root_module = utils_mod,

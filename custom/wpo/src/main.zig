@@ -34,11 +34,11 @@ pub fn main(init: std.process.Init) !void {
     const argv = iargs[1..];
 
     const constructed_valid_args: []const []const u8 = comptime blk: {
-        const fields = @typeInfo(Argv1).@"enum".fields;
-        var result: [fields.len][]const u8 = undefined;
-        for (fields, 0..) |field, i| {
+        const field_names = @typeInfo(Argv1).@"enum".field_names;
+        var result: [field_names.len][]const u8 = undefined;
+        for (field_names, 0..) |name, i| {
             var normalized: []const u8 = "";
-            for (field.name) |c| {
+            for (name) |c| {
                 normalized = normalized ++ &[_]u8{if (c == '_') '-' else c};
             }
             result[i] = normalized;
