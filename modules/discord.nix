@@ -89,7 +89,6 @@
             libglvnd
             libnotify
             libpulseaudio
-            libunity
             libuuid
             libva
             libx11
