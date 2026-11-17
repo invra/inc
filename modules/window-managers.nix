@@ -133,6 +133,7 @@ in
                 saturation = 1.1;
               };
               title_bar.mode = "off";
+              shadow.enabled = false;
             };
 
             input = {
