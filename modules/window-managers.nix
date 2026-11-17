@@ -103,13 +103,10 @@ in
           enable = true;
 
           settings = {
+            include.optional.files = [ "~/.config/umbriel/noctalia.toml" ];
             general = {
               autostart = [
-                "${pkgs.eww}/bin/eww open bar0"
-                "${pkgs.eww}/bin/eww open bar1"
-                "${pkgs.mako}/bin/mako"
-                "${pkgs.swaybg}/bin/swaybg"
-                "${pkgs.swaybg}/bin/swaybg --image ${../wallpapers/flake.jpg}"
+                "noctalia"
               ];
               mod_key = "Alt";
               xwayland = true;
@@ -236,30 +233,18 @@ in
                 match.namespace = "launcher";
                 blur = true;
               }
+              {
+                match.namespace = "^noctalia-(bar-[^\"]+|notification|dock|panel|attached-panel|osd|desktop-widget-[^\"]*)$";
+                blur = true;
+                blur_ignore_alpha = 0.1;
+                blur_popups = true;
+                blur_optimized = false;
+              }
             ];
 
             animation = {
               duration_ms = 150;
               layers.enabled = true;
-            };
-
-            colors = {
-              background = "#191724";
-              text_primary = "#e0def4";
-              text_muted = "#6e6a86";
-              accent_primary = "#ebbcba";
-              accent_secondary = "#c4a7e7";
-              warning = "#f6c177";
-              error = "#eb6f92";
-              insert_hint = "#26233a";
-              backdrop = "#1f1d2e";
-              shadow = "#21202e";
-
-              border = {
-                unfocused = "#00000000";
-                focused = "#ebbcba";
-                outer = "#00000000";
-              };
             };
           };
         };

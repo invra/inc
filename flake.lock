@@ -196,6 +196,27 @@
         "url": "https://channels.nixos.org/nixpkgs-unstable/nixexprs.tar.zst"
       }
     },
+    "noctalia": {
+      "inputs": {
+        "nixpkgs": [
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1794878897,
+        "narHash": "sha256-YsqUBxNZlZfwRtOBYZHqRFgdp9dkXOTTUNRKa6WQc2M=",
+        "owner": "noctalia-dev",
+        "repo": "noctalia",
+        "rev": "b2a278271b2bbd4267ce4d16f3c38cc09a81029e",
+        "type": "github"
+      },
+      "original": {
+        "owner": "noctalia-dev",
+        "ref": "cachix",
+        "repo": "noctalia",
+        "type": "github"
+      }
+    },
     "root": {
       "inputs": {
         "flake-parts": "flake-parts",
@@ -204,6 +225,7 @@
         "nix-darwin": "nix-darwin",
         "nixcord": "nixcord",
         "nixpkgs": "nixpkgs",
+        "noctalia": "noctalia",
         "treefmt-nix": "treefmt-nix",
         "umbriel": "umbriel"
       }
