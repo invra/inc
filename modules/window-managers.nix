@@ -159,10 +159,9 @@ in
 
             keybinds = {
               "Mod+Shift+F4" = "session-quit";
-              "Mod+Return" = "window-toggle-maximize-to-edges";
-              "Mod+Space" = "window-focus-switch-floating";
+              "Mod+Return" = "window-toggle-fullscreen";
+              "Mod+Space" = "window-toggle-floating";
               "Mod+Shift+Up" = "keyboard-layout-next";
-              "Mod+Shift+Down" = "keyboard-layout-prev";
               "Mod+Q" = "window-close";
 
               "XF86AudioPlay" = "spawn ${pkgs.playerctl}/bin/playerctl play-pause";
