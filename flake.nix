@@ -20,13 +20,6 @@
       url = "github:nix-community/home-manager";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-    mangowm = {
-      url = "github:mangowm/mango";
-      inputs = {
-        flake-parts.follows = "flake-parts";
-        nixpkgs.follows = "nixpkgs";
-      };
-    };
     nixcord = {
       url = "github:4evy/nixcord";
       inputs = {
@@ -41,6 +34,10 @@
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
     treefmt-nix = {
       url = "github:numtide/treefmt-nix";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+    umbriel = {
+      url = "github:noctalia-dev/umbriel/cachix";
       inputs.nixpkgs.follows = "nixpkgs";
     };
   };
