@@ -16,6 +16,12 @@ let
       }
     ) (lib.range 1 9)
   );
+
+  umbrielPatched =
+    pkgs:
+    inputs.umbriel.packages.${pkgs.stdenv.hostPlatform.system}.default.overrideAttrs (old: {
+      patches = (old.patches or [ ]) ++ [ ../patches/umbriel-fullscreen-above-layers.patch ];
+    });
 in
 {
   flake.modules = {
@@ -79,14 +85,19 @@ in
         };
       };
 
-    nixos.base = {
-      imports = [
-        inputs.umbriel.nixosModules.default
-      ];
+    nixos.base =
+      { pkgs, ... }:
+      {
+        imports = [
+          inputs.umbriel.nixosModules.default
+        ];
 
-      programs.umbriel.enable = true;
-      services.desktopManager.plasma6.enable = true;
-    };
+        programs.umbriel = {
+          enable = true;
+          package = umbrielPatched pkgs;
+        };
+        services.desktopManager.plasma6.enable = true;
+      };
 
     homeManager.base =
       {
@@ -101,6 +112,7 @@ in
 
         programs.umbriel = {
           enable = true;
+          package = umbrielPatched pkgs;
 
           settings = {
             include.optional.files = [ "~/.config/umbriel/noctalia.toml" ];

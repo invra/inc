@@ -55,11 +55,13 @@
           };
           panel = {
             transparency_mode = "glass";
-            floating_offset = 20;
+            floating_offset = 15;
           };
           launcher = {
             show_icons = false;
             categories = false;
+            layout = "simple";
+            compact = true;
           };
           screenshot = {
             save_to_file = false;

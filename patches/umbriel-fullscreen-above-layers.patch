@@ -1,0 +1,51 @@
+diff --git a/src/output/output.cpp b/src/output/output.cpp
+index 3fc6e73..51d3adf 100644
+--- a/src/output/output.cpp
++++ b/src/output/output.cpp
+@@ -1247,19 +1247,33 @@ namespace umbriel {
+   bool Output::fullscreenCoversOutput() const {
+     const Workspace* workspace = m_workspaceGroup != nullptr ? m_workspaceGroup->active() : nullptr;
+     const wlr_box box = layoutBox();
+-    return workspace != nullptr
+-        && box.width > 0
+-        && box.height > 0
+-        && std::ranges::any_of(workspace->allViews(), [&box](const View* view) {
+-             const wlr_box& fullscreen = view->presentedBox();
+-             return view->mapped()
+-                 && (view->layoutFullscreen() || view->currentFullscreen())
+-                 && view->presented()
+-                 && fullscreen.x <= box.x
+-                 && fullscreen.y <= box.y
+-                 && fullscreen.x + fullscreen.width >= box.x + box.width
+-                 && fullscreen.y + fullscreen.height >= box.y + box.height;
+-           });
++    if (workspace == nullptr || box.width <= 0 || box.height <= 0) {
++      return false;
++    }
++    const auto covers = [&box](const wlr_box& outer) {
++      return outer.x <= box.x
++          && outer.y <= box.y
++          && outer.x + outer.width >= box.x + box.width
++          && outer.y + outer.height >= box.y + box.height;
++    };
++    // A fullscreen window that is opening starts below a panel and grows into place. Its presented
++    // box covers the output only once the animation ends, which leaves top-layer panels over it for
++    // the whole transition. A settled, unscrolled workspace already has the fullscreen target box on
++    // the output, so use that to raise the window immediately. Scrolling and sliding workspaces keep
++    // following the presented box, so a window that is leaving stays beneath panels until it is gone.
++    const wlr_scene_tree* fullscreenTree = workspace->fullscreenTree();
++    const bool settled = fullscreenTree == nullptr
++        || (fullscreenTree->node.x == 0 && fullscreenTree->node.y == 0);
++    const bool scrolling = workspace->scrollingLayout() != nullptr;
++    return std::ranges::any_of(workspace->allViews(), [&](const View* view) {
++      if (!view->mapped() || !(view->layoutFullscreen() || view->currentFullscreen()) || !view->presented()) {
++        return false;
++      }
++      if (covers(view->presentedBox())) {
++        return true;
++      }
++      return settled && !scrolling && covers(workspace->fullscreenTargetBox(view));
++    });
+   }
+ 
+   bool Output::autoHdrEligible(const View* view) const {
