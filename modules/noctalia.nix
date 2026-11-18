@@ -11,17 +11,39 @@
     programs.noctalia = {
       enable = true;
       settings = {
+        widget = {
+          media.art_size = 28;
+          active_window.icon_size = 22;
+          sysmon = {
+            visualization = "graph";
+
+          };
+        };
         bar = {
           default = {
-            start = [ "launcher" "workspaces" ];
+            start = [ "launcher" "workspaces" "media" "audio_visualizer" ];
             center = [ "active_window" ];
-            end = [ "tray" "network" "clock" "session" ];
+            end = [ "tray" "ram" "cpu" "volume" "clock" "session" ];
             margin_ends = 0;
             margin_edge = 0;
+            widget_spacing = 24;
             background_opacity = 0.15;
             padding = 15;
             position = "top";
             thickness = 42;
+          };
+        };
+        osd = {
+          position = "bottom_center";
+          offset_y = 30;
+        };
+        notification = {
+          width = 400;
+          offset_x = 15;
+          offset_y = 15;
+          filter.spotify = {
+            play_sound = false;
+            filter = "spotify";
           };
         };
         shell = {
@@ -34,7 +56,15 @@
             default_view = "all";
             show_app_actions = true;
           };
-          panel.transparency_mode = "glass";
+          panel = {
+            transparency_mode = "glass";
+            floating_offset = 20;
+          };
+          launcher = {
+            show_icons = false;
+            categories = false;
+          };
+          screenshot.save_to_file = false;
           umbriel_audio_provider_enabled = true;
         };
         theme = {
