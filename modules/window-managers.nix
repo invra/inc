@@ -174,15 +174,15 @@ in
               "Mod+Shift+Up" = "keyboard-layout-next";
               "Mod+Q" = "window-close";
 
-              "XF86AudioPlay" = "spawn ${pkgs.playerctl}/bin/playerctl play-pause";
-              "XF86AudioNext" = "spawn ${pkgs.playerctl}/bin/playerctl next";
-              "XF86AudioPrev" = "spawn ${pkgs.playerctl}/bin/playerctl previous";
-              "XF86AudioRaiseVolume" = "spawn ${pkgs.wireplumber}/bin/wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%+ -l 1.5";
-              "XF86AudioLowerVolume" = "spawn ${pkgs.wireplumber}/bin/wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%-";
-              "XF86AudioMute" = "spawn ${pkgs.wireplumber}/bin/wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle";
-              "XF86AudioMicMute" = "spawn ${pkgs.wireplumber}/bin/wpctl set-mute @DEFAULT_AUDIO_SOURCE@ toggle";
-              "XF86MonBrightnessUp" = "spawn ${pkgs.brightnessctl}/bin/brightnessctl set +5%";
-              "XF86MonBrightnessDown" = "spawn ${pkgs.brightnessctl}/bin/brightnessctl set 5%-";
+              "XF86AudioPlay" = "spawn noctalia msg media toggle";
+              "XF86AudioNext" = "spawn noctalia msg media next";
+              "XF86AudioPrev" = "spawn noctalia msg media previous";
+              "XF86AudioRaiseVolume" = "spawn noctalia msg volume-up 5";
+              "XF86AudioLowerVolume" = "spawn noctalia msg volume-down 5";
+              "XF86AudioMute" = "spawn noctalia msg volume-mute";
+              "XF86AudioMicMute" = "spawn noctalia msg mic-mute";
+              "XF86MonBrightnessUp" = "spawn noctalia msg brightness-up 5";
+              "XF86MonBrightnessDown" = "spawn noctalia msg brightness-down 5";
 
               "Super+Space" = "spawn ${pkgs.tofi}/bin/tofi-drun --drun-launch=true";
               "Mod+Shift+S" = "spawn noctalia msg screenshot-region";
