@@ -173,7 +173,7 @@ in
               "XF86MonBrightnessDown" = "spawn ${pkgs.brightnessctl}/bin/brightnessctl set 5%-";
 
               "Super+Space" = "spawn ${pkgs.tofi}/bin/tofi-drun --drun-launch=true";
-              "Super+Shift+S" = "spawn ${pkgs.hyprshot}/bin/hyprshot -m region --clipboard-only";
+              "Mod+Shift+S" = "spawn noctalia msg screenshot-region";
               "Super+Return" = "spawn ${pkgs.ghostty}/bin/ghostty";
               "Super+F" = "spawn ${pkgs.nautilus}/bin/nautilus";
               "Mod+B" = "spawn xdg-open https:";

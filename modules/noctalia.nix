@@ -14,10 +14,7 @@
         widget = {
           media.art_size = 28;
           active_window.icon_size = 22;
-          sysmon = {
-            visualization = "graph";
-
-          };
+          sysmon.visualization = "graph";
         };
         bar = {
           default = {
@@ -64,7 +61,12 @@
             show_icons = false;
             categories = false;
           };
-          screenshot.save_to_file = false;
+          screenshot = {
+            save_to_file = false;
+
+            region_dim_opacity = 0.3;
+            show_region_dimensions = false;
+          };
           umbriel_audio_provider_enabled = true;
         };
         theme = {
