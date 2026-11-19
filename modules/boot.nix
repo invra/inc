@@ -59,7 +59,6 @@
             ShowDelay=0
           '';
         };
-
       };
 
       # Greeter

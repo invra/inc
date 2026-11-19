@@ -92,6 +92,24 @@ in
           inputs.umbriel.nixosModules.default
         ];
 
+        services.displayManager.noctalia-greeter = {
+          enable = true;
+          settings = {
+            cursor.size = 24;
+            keyboard = {
+              layout = "us";
+              variant = "workman";
+              options = "caps:escape";
+              repeat_rate = 50;
+              repeat_delay = 200;
+            };
+          };
+          cursorTheme = {
+            package = pkgs.bibata-cursors;
+            name = "Bibata-Modern-Classic";
+          };
+        };
+
         programs.umbriel = {
           enable = true;
           package = umbrielPatched pkgs;
