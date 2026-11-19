@@ -103,6 +103,10 @@ in
               repeat_rate = 50;
               repeat_delay = 200;
             };
+            appearance = {
+              scheme = "Rosé Pine";
+              hide_logo = true;
+            };
           };
           cursorTheme = {
             package = pkgs.bibata-cursors;
