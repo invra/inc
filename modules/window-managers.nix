@@ -174,7 +174,7 @@ in
                 repeat_delay = 200;
               };
               focus.follows_mouse = "always";
-              cursor.hide_timeout_ms = 6000;
+              cursor.hide_timeout_ms = 10000;
               drag_edge_scroll.enabled = false;
             };
 
